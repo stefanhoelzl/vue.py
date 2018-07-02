@@ -1,0 +1,1 @@
+from .vue import Vue

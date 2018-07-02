@@ -1,0 +1,6 @@
+# vue.py
+brython==3.6.2
+
+# testing
+pytest==3.6.2
+pytest-selenium==1.13.0

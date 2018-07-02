@@ -1,0 +1,4 @@
+venv
+.idea
+vue/brython
+.pytest_cache
