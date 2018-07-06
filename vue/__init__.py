@@ -1,1 +1,1 @@
-from .vue import Vue, method
+from .vue import VueComponent, Data, computed, method

@@ -1,0 +1,3 @@
+"""stub to avoid import errors"""
+
+def this(): ...
