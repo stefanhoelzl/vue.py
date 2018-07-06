@@ -39,13 +39,24 @@ class Data:
         self.value = value
 
 
+class Property:
+    def __init__(self):
+        self.vue_property = True
+
+
 class VueComponent:
+    template = ""
+
     @classmethod
     def _vue_init_dict(cls):
-        return {
-            "data": cls._get_init_data(),
+        init_dict = {
+            "data": cls._get_init_data,
+            "props": [p for p in cls._get_vue_object("property")],
             "methods": cls._get_vue_object("method")
         }
+        if cls.template:
+            init_dict.update(template=cls.template)
+        return init_dict
 
     @classmethod
     def _get_vue_object(cls, function_type):
@@ -56,14 +67,16 @@ class VueComponent:
         }
 
     @classmethod
-    def _get_init_data(cls):
+    def _get_init_data(cls, this):
         return {
             k: v.value for k, v in cls._get_vue_object("data").items()
         }
 
     def __new__(cls, el, **data):
         init_dict = cls._vue_init_dict()
-        init_dict.update({
-            "el": el,
-        })
+        init_dict.update(el=el)
         return window.Vue.new(init_dict)
+
+    @classmethod
+    def register(cls):
+        window.Vue.component(cls.__name__, cls._vue_init_dict())

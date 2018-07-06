@@ -8,13 +8,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import *
 
+from vue import *
 
 URL = "http://localhost:8000/tests/selenium/_html/{}.html"
 DEFAULT_TIMEOUT = 1
-
-
-VueComponent = object
-Data = lambda f: f
 
 
 def method(fn):
@@ -31,7 +28,7 @@ def selenium():
     driver.close()
 
 
-def prepare(selenium, app, html):
+def prepare(selenium, app, html=""):
     name = app.__name__
     code = inspect.getsource(app)
     code = "\n".join(l[4:] for l in code.split("\n"))
@@ -136,3 +133,38 @@ def test_v_model(selenium):
     assert element_has_text(selenium, "p", "false")
     selenium.find_element_by_id("c").click()
     assert element_has_text(selenium, "p", "true")
+
+
+def test_component(selenium):
+    def components(el):
+        class SubComponent(VueComponent):
+            template = """
+            <h1 id="header">HEADER</h1>
+            """
+        SubComponent.register()
+
+        class App(VueComponent):
+            template = """
+            <sub-component></sub-component>
+            """
+        return App(el)
+    prepare(selenium, components)
+    assert element_has_text(selenium, "header", "HEADER")
+
+
+def test_component_with_props(selenium):
+    def components_with_properties(el):
+        class SubComponent(VueComponent):
+            text = Property()
+            template = """
+            <h1 id="header">{{ text }}</h1>
+            """
+        SubComponent.register()
+
+        class App(VueComponent):
+            template = """
+            <sub-component text="TEXT"></sub-component>
+            """
+        return App(el)
+    prepare(selenium, components_with_properties)
+    assert element_has_text(selenium, "header", "TEXT")

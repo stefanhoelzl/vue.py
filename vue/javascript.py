@@ -1,3 +1,4 @@
 """stub to avoid import errors"""
 
-def this(): ...
+def this():
+    return None
