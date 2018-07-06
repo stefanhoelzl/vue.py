@@ -8,8 +8,12 @@ env.brython:
 env.pip:
 	pip install -r requirements.txt
 
+.PHONY: env.chrome
+env.chrome:
+	python -c "import chromedriver_install as cdi;cdi.install(file_directory='tests/selenium', overwrite=False)"
+
 .PHONY: env.install
-env.install: env.pip env.brython
+env.install: env.pip env.brython env.chrome
 
 .PHONY: env.serve
 env.serve:
