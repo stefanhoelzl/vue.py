@@ -56,6 +56,7 @@ class VueComponent:
         }
         if cls.template:
             init_dict.update(template=cls.template)
+        init_dict.update(cls._get_lifecycle_hooks())
         return init_dict
 
     @classmethod
@@ -67,14 +68,31 @@ class VueComponent:
         }
 
     @classmethod
-    def _get_init_data(cls, this):
+    def _get_init_data(cls, this=None):
         return {
             k: v.value for k, v in cls._get_vue_object("data").items()
         }
 
+    @classmethod
+    def _get_lifecycle_hooks(cls):
+        lifecycle_hooks = {"beforeCreate": "before_create",
+                           "created": "created",
+                           "beforeMount": "before_mount",
+                           "mounted": "mounted",
+                           "beforeUpdate": "before_update",
+                           "updated": "updated",
+                           "beforeDestroy": "before_destroy",
+                           "destroyed": "destroyed"}
+        return {
+            vue_hook: create_vue_function(getattr(cls, py_hook))
+            for vue_hook, py_hook in lifecycle_hooks.items()
+            if hasattr(cls, py_hook)
+        }
+
+
     def __new__(cls, el, **data):
         init_dict = cls._vue_init_dict()
-        init_dict["data"] = init_dict["data"](None)
+        init_dict["data"] = init_dict["data"]()
         init_dict.update(el=el)
         init_dict.update(propsData=data)
         return window.Vue.new(init_dict)

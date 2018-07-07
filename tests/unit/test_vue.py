@@ -82,3 +82,37 @@ def test_regiser_with_different_name():
         Component.register("my-component")
     component.assert_called_once()
     assert "my-component" == component.call_args[0][0]
+
+
+def test_lifecycle_hooks():
+    class Component(VueComponent):
+        def before_create(self):
+            return self
+        def created(self):
+            return self
+        def before_mount(self):
+            return self
+        def mounted(self):
+            return self
+        def before_update(self):
+            return self
+        def updated(self):
+            return self
+        def before_destroy(self):
+            return self
+        def destroyed(self):
+            return self
+
+    with mock.patch("vue.vue.window.Vue.component") as component:
+        Component.register()
+    component.assert_called_once()
+    assert "beforeCreate" in component.call_args[0][1]
+    assert "created" in component.call_args[0][1]
+    assert "beforeMount" in component.call_args[0][1]
+    assert "mounted" in component.call_args[0][1]
+    assert "beforeUpdate" in component.call_args[0][1]
+    assert "updated" in component.call_args[0][1]
+    assert "beforeDestroy" in component.call_args[0][1]
+    assert "destroyed" in component.call_args[0][1]
+    with mock.patch("vue.vue.javascript.this", return_value="THIS"):
+        assert "THIS" == component.call_args[0][1]["created"]()._this
