@@ -9,9 +9,8 @@ It uses [brython](https://github.com/brython-dev/brython) to run Python in the b
 ```bash
 $ git clone https://github.com/stefanhoelzl/vue.py.git
 $ cd vue.py
-$ make env.install
-
 ```
+_Tested under macOS (should work under Linux)_
 
 ## Demo
 ```bash
@@ -80,5 +79,16 @@ HTML
 </html>
 
 ```
+## Development
+```bash
+$ make env.install
+```
+Installs required python packages, the chromedriver for selenium and brython
+
+```bash
+$ make env.clean
+```
+Cleans up your working directory (also uninstalls python packages).
+
 ## License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/stefanhoelzl/fancy-dict/blob/master/LICENSE) file for details
