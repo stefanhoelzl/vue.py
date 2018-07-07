@@ -86,7 +86,6 @@ def test_component(selenium):
     assert element_has_text(selenium, "header", "HEADER")
 
 
-@pytest.mark.skip
 def test_component_with_props(selenium):
     def components_with_properties(el):
         class SubComponent(VueComponent):
