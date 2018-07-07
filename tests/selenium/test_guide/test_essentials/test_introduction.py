@@ -6,24 +6,27 @@ from vue import *
 def test_declarative_rendering(selenium):
     class DeclarativeRendering(VueComponent):
         message = Data("MESSAGE CONTENT")
-    prepare(selenium, DeclarativeRendering, "{{ message }}")
-    assert element_has_text(selenium, "app", "MESSAGE CONTENT")
+        template = "<div id='content'>{{ message }}</div>"
+    prepare(selenium, DeclarativeRendering)
+    assert element_has_text(selenium, "content", "MESSAGE CONTENT")
 
 
 def test_bind_element_title(selenium):
     class BindElementTitle(VueComponent):
         title = Data("TITLE")
-    prepare(selenium, BindElementTitle,
-            "<div id='withtitle' v-bind:title='title'></div>")
+        template = "<div id='withtitle' v-bind:title='title'></div>"
+    prepare(selenium, BindElementTitle)
     assert element_attribute_has_value(selenium, "withtitle", "title", "TITLE")
 
 
 def test_if_condition(selenium):
     class IfCondition(VueComponent):
         show = Data(False)
-    prepare(selenium, IfCondition,
-            "<div id='notpresent' v-if='show'>DONT SHOW</div>"
-            "<div id='present' />")
+        template = "<div>" \
+                   "    <div id='notpresent' v-if='show'>DONT SHOW</div>" \
+                   "    <div id='present' />" \
+                   "</div>"
+    prepare(selenium, IfCondition)
     assert element_present(selenium, "present")
     assert element_not_present(selenium, "notpresent")
 
@@ -31,10 +34,10 @@ def test_if_condition(selenium):
 def test_for_loop(selenium):
     class ForLoop(VueComponent):
         items = Data(["0", "1", "2"])
-    prepare(selenium, ForLoop,
-            "<ol id='list'>"
-            "   <li v-for='item in items' :id='item'>{{ item }}</li>"
-            "</ol>")
+        template = "<ol id='list'>" \
+                   "   <li v-for='item in items' :id='item'>{{ item }}</li>" \
+                   "</ol>"
+    prepare(selenium, ForLoop)
     for idx in range(3):
         assert element_has_text(selenium, str(idx), str(idx))
 
@@ -42,13 +45,12 @@ def test_for_loop(selenium):
 def test_on_click_method(selenium):
     class OnClickMethod(VueComponent):
         message = Data("message")
-
+        template = "<button @click='reverse' id='btn'>{{ message }}</button>"
         @method
         def reverse(self, event):
             self.message = "".join(reversed(self.message))
 
-    prepare(selenium, OnClickMethod,
-            "<button @click='reverse' id='btn'>{{ message }}</button>")
+    prepare(selenium, OnClickMethod)
     assert element_has_text(selenium, "btn", "message")
     selenium.find_element_by_id("btn").click()
     assert element_has_text(selenium, "btn", "egassem")
@@ -57,9 +59,11 @@ def test_on_click_method(selenium):
 def test_v_model(selenium):
     class VModel(VueComponent):
         clicked = Data(False)
-    prepare(selenium, VModel,
-            "<p id='p'>{{ clicked }}</p>"
-            "<input type='checkbox' id='c' v-model='clicked'>")
+        template = "<div>" \
+                   "    <p id='p'>{{ clicked }}</p>" \
+                   "    <input type='checkbox' id='c' v-model='clicked'>" \
+                   "</div>"
+    prepare(selenium, VModel)
     assert element_has_text(selenium, "p", "false")
     selenium.find_element_by_id("c").click()
     assert element_has_text(selenium, "p", "true")
@@ -82,6 +86,7 @@ def test_component(selenium):
     assert element_has_text(selenium, "header", "HEADER")
 
 
+@pytest.mark.skip
 def test_component_with_props(selenium):
     def components_with_properties(el):
         class SubComponent(VueComponent):
