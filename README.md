@@ -41,7 +41,7 @@ class DemoApp(VueComponent):
     new_todo = Data("")
     todos = Data([{"id": 1, "text": "Like Vue.js", "done": True},
                   {"id": 0, "text": "Try out vue.py", "done": False}])
-    next_id = Data(1)
+    next_id = Data(len(todos.value))
 
     @method
     def add(self, event):
