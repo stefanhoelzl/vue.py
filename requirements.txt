@@ -3,5 +3,5 @@ brython==3.6.2
 
 # testing
 pytest==3.6.2
-selenium=3.13.0
+selenium==3.13.0
 chromedriver-install==0.3.0

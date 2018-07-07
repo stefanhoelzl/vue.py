@@ -15,6 +15,11 @@ env.chrome:
 .PHONY: env.install
 env.install: env.pip env.brython env.chrome
 
+.PHONY: env.clean
+env.clean:
+	git clean -xdf --exclude .idea --exclude venv
+	pip freeze | xargs pip uninstall -y
+
 .PHONY: env.serve
 env.serve:
-	python -m http.server
+	python -m http.server 8000
