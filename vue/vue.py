@@ -2,34 +2,34 @@ from browser import window
 import javascript
 
 
-def vue_function(fn):
+def create_vue_function(fn):
     def fn_(*args, **kwargs):
         return fn(Vue(javascript.this()), *args, **kwargs)
     return fn_
 
 
 def method(fn):
-    fn = vue_function(fn)
+    fn = create_vue_function(fn)
     fn.vue_method = True
     return fn
 
 
 def computed(fn):
-    fn = vue_function(fn)
+    fn = create_vue_function(fn)
     fn.vue_computed = True
     return fn
 
 
 class Vue:
     def __init__(self, this):
-        self._vue = this
+        self._this = this
 
     def __getattr__(self, item):
-        return getattr(self._vue, item)
+        return getattr(self._this, item)
 
     def __setattr__(self, key, value):
-        if key not in ["_vue"]:
-            setattr(self._vue, key, value)
+        if key not in ["_this"]:
+            setattr(self._this, key, value)
         object.__setattr__(self, key, value)
 
 
@@ -74,9 +74,12 @@ class VueComponent:
 
     def __new__(cls, el, **data):
         init_dict = cls._vue_init_dict()
+        init_dict["data"] = init_dict["data"](None)
         init_dict.update(el=el)
+        init_dict.update(propsData=data)
         return window.Vue.new(init_dict)
 
     @classmethod
-    def register(cls):
-        window.Vue.component(cls.__name__, cls._vue_init_dict())
+    def register(cls, name=None):
+        name = name if name else cls.__name__
+        window.Vue.component(name, cls._vue_init_dict())
