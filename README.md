@@ -16,7 +16,7 @@ _Tested under macOS (should work under Linux)_
 ```bash
 $ make env.serve
 ```
-Goto [http://localhost:8000/demo/demo.html] and enjoy vue.py!
+Goto [http://localhost:8000/demo/demo.html](http://localhost:8000/demo/demo.html) and enjoy vue.py!
 
 ## Demo Code
 Python
