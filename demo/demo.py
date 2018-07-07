@@ -1,27 +1,3 @@
-# vue.py
-use [Vue.js](https://www.vuejs.org) with pure python
-
-vue.py provides Python bindings for [Vue.js](https://www.vuejs.org).
-It uses [brython](https://github.com/brython-dev/brython) to run Python in the browser.
-
-
-## Installation
-```bash
-$ git clone https://github.com/stefanhoelzl/vue.py.git
-$ cd vue.py
-$ make env.install
-
-```
-
-## Demo
-```bash
-$ make env.serve
-```
-Goto [http://localhost:8000/demo/demo.html] and enjoy vue.py!
-
-## Demo Code
-Python
-```python
 from vue import VueComponent, Data, method, Property
 
 
@@ -63,22 +39,3 @@ class DemoApp(VueComponent):
 
 
 DemoApp("#app")
-
-```
-HTML
-```html
-<html>
-<head>
-  <link rel="pythonpath" href="/" hreflang="py" />
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="http://localhost:8000/demo/brython.js"></script>
-</head>
-<body onload="brython(1)">
-  <div id="app"></div>
-  <script type="text/python" src="http://localhost:8000/demo/demo.py"></script>
-</body>
-</html>
-
-```
-## License
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/stefanhoelzl/fancy-dict/blob/master/LICENSE) file for details
