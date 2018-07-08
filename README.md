@@ -14,7 +14,7 @@ _Tested under macOS (should work under Linux)_
 
 ## Demo
 ```bash
-$ make env.serve
+$ make serve
 ```
 Goto [http://localhost:8000/demo/demo.html](http://localhost:8000/demo/demo.html) and enjoy vue.py!
 
@@ -80,15 +80,39 @@ HTML
 
 ```
 ## Development
+Get the code
 ```bash
-$ make env.install
+$ git clone https://github.com/stefanhoelzl/vue.py.git
+$ cd vue.py
 ```
-Installs required python packages, the chromedriver for selenium and brython
 
+Install required python packages, the chromedriver for selenium and brython
+```bash
+$ make env.up
+```
+
+Start server (needed for tests)
+```bash
+$ make serve
+```
+
+Run tests
+```bash
+$ make tests          # runs all tets
+$ make tests.unit     # runs unit tests
+$ make test.selenium  # runs selenium tests
+```
+
+Clean up your working directory.
 ```bash
 $ make env.clean
 ```
-Cleans up your working directory (also uninstalls python packages).
+
+Reset your development environment
+_(clean up, reinstall packages and redownload needed files)_
+```bash
+$ make env.reset
+```
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/stefanhoelzl/fancy-dict/blob/master/LICENSE) file for details

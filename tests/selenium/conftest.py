@@ -12,7 +12,14 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.common.exceptions import *
 
-URL = "http://localhost:8000/tests/selenium/_html/{}.html"
+
+TEST_PATH = Path(__file__).parent
+CHROME_DRIVER_PATH = TEST_PATH / "chromedriver"
+HTML_OUTPUT_PATH = TEST_PATH / "_html"
+TEMPLATE_PATH = TEST_PATH / "template.html"
+
+HTTP_HTML_BASE = HTML_OUTPUT_PATH.relative_to(Path(".").absolute())
+URL = "http://localhost:8000/{}/{{}}.html".format(HTTP_HTML_BASE)
 DEFAULT_TIMEOUT = 1
 
 
@@ -31,22 +38,24 @@ def selenium(selenium_session, request):
 
 class SeleniumSession:
     def __init__(self):
-        self.request = None
-        self.logs = []
         self.driver = None
+        self.request = None
+
+        self.logs = []
+        self.output_path = Path(HTML_OUTPUT_PATH)
+        self.output_path.mkdir(exist_ok=True)
 
     def __getattr__(self, item):
         return getattr(self.driver, item)
 
     def __enter__(self):
-        Path("_html").mkdir(exist_ok=True)
         options = webdriver.ChromeOptions()
         options.add_argument("headless")
 
         desired = DesiredCapabilities.CHROME
         desired['loggingPrefs'] = {"browser": "ALL"}
 
-        self.driver = webdriver.Chrome("./chromedriver",
+        self.driver = webdriver.Chrome(CHROME_DRIVER_PATH,
                                        chrome_options=options,
                                        desired_capabilities=desired)
         return self
@@ -68,14 +77,14 @@ class SeleniumSession:
         self.analyze_logs()
         self.logs.clear()
 
-    @staticmethod
-    def _setup_html_with_app(file_name, app):
+    def _setup_html_with_app(self, file_name, app):
         code = inspect.getsource(app)
         code = "\n".join(l[4:] for l in code.split("\n"))
         code += "  app = {}('#app')".format(app.__name__)
-        template = Path("template.html").read_text()
+        template = Path(TEMPLATE_PATH).read_text()
         template = template.replace("CODE", code)
-        Path("_html", "{}.html".format(file_name)).write_text(template)
+        Path(self.output_path, "{}.html".format(file_name))\
+            .write_text(template)
 
     def analyze_logs(self):
         errors = []
