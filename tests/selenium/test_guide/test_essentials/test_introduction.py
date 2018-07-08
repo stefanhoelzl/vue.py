@@ -1,5 +1,3 @@
-from tests.selenium.utils import *
-
 from vue import *
 
 
@@ -7,16 +5,19 @@ def test_declarative_rendering(selenium):
     class DeclarativeRendering(VueComponent):
         message = Data("MESSAGE CONTENT")
         template = "<div id='content'>{{ message }}</div>"
-    prepare(selenium, DeclarativeRendering)
-    assert element_has_text(selenium, "content", "MESSAGE CONTENT")
+
+    with selenium.app(DeclarativeRendering):
+        assert selenium.element_has_text("content", "MESSAGE CONTENT")
 
 
 def test_bind_element_title(selenium):
     class BindElementTitle(VueComponent):
         title = Data("TITLE")
         template = "<div id='withtitle' v-bind:title='title'></div>"
-    prepare(selenium, BindElementTitle)
-    assert element_attribute_has_value(selenium, "withtitle", "title", "TITLE")
+
+    with selenium.app(BindElementTitle):
+        assert selenium.element_attribute_has_value("withtitle",
+                                                    "title", "TITLE")
 
 
 def test_if_condition(selenium):
@@ -26,9 +27,10 @@ def test_if_condition(selenium):
                    "    <div id='notpresent' v-if='show'>DONT SHOW</div>" \
                    "    <div id='present' />" \
                    "</div>"
-    prepare(selenium, IfCondition)
-    assert element_present(selenium, "present")
-    assert element_not_present(selenium, "notpresent")
+
+    with selenium.app(IfCondition):
+        assert selenium.element_present("present")
+        assert selenium.element_not_present("notpresent")
 
 
 def test_for_loop(selenium):
@@ -37,23 +39,25 @@ def test_for_loop(selenium):
         template = "<ol id='list'>" \
                    "   <li v-for='item in items' :id='item'>{{ item }}</li>" \
                    "</ol>"
-    prepare(selenium, ForLoop)
-    for idx in range(3):
-        assert element_has_text(selenium, str(idx), str(idx))
+
+    with selenium.app(ForLoop):
+        for idx in range(3):
+            assert selenium.element_has_text(str(idx), str(idx))
 
 
 def test_on_click_method(selenium):
     class OnClickMethod(VueComponent):
         message = Data("message")
         template = "<button @click='reverse' id='btn'>{{ message }}</button>"
+
         @method
         def reverse(self, event):
             self.message = "".join(reversed(self.message))
 
-    prepare(selenium, OnClickMethod)
-    assert element_has_text(selenium, "btn", "message")
-    selenium.find_element_by_id("btn").click()
-    assert element_has_text(selenium, "btn", "egassem")
+    with selenium.app(OnClickMethod):
+        assert selenium.element_has_text("btn", "message")
+        selenium.find_element_by_id("btn").click()
+        assert selenium.element_has_text("btn", "egassem")
 
 
 def test_v_model(selenium):
@@ -63,10 +67,11 @@ def test_v_model(selenium):
                    "    <p id='p'>{{ clicked }}</p>" \
                    "    <input type='checkbox' id='c' v-model='clicked'>" \
                    "</div>"
-    prepare(selenium, VModel)
-    assert element_has_text(selenium, "p", "false")
-    selenium.find_element_by_id("c").click()
-    assert element_has_text(selenium, "p", "true")
+
+    with selenium.app(VModel):
+        assert selenium.element_has_text("p", "false")
+        selenium.find_element_by_id("c").click()
+        assert selenium.element_has_text("p", "true")
 
 
 def test_component(selenium):
@@ -75,15 +80,18 @@ def test_component(selenium):
             template = """
             <h1 id="header">HEADER</h1>
             """
+
         SubComponent.register()
 
         class App(VueComponent):
             template = """
             <sub-component></sub-component>
             """
+
         return App(el)
-    prepare(selenium, components)
-    assert element_has_text(selenium, "header", "HEADER")
+
+    with selenium.app(components):
+        assert selenium.element_has_text("header", "HEADER")
 
 
 def test_component_with_props(selenium):
@@ -97,13 +105,16 @@ def test_component_with_props(selenium):
             <h2 id="sub">{{ sub }}</h2>
             </div>
             """
+
         SubComponent.register()
 
         class App(VueComponent):
             template = """
             <sub-component text="TEXT"></sub-component>
             """
+
         return App(el)
-    prepare(selenium, components_with_properties)
-    assert element_has_text(selenium, "header", "TEXT")
-    assert element_has_text(selenium, "sub", "SUB")
+
+    with selenium.app(components_with_properties):
+        assert selenium.element_has_text("header", "TEXT")
+        assert selenium.element_has_text("sub", "SUB")

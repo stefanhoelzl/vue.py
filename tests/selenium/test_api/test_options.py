@@ -1,5 +1,3 @@
-from tests.selenium.utils import *
-
 from vue import *
 
 
@@ -11,5 +9,5 @@ def test_app_with_props_and_data(selenium):
             <div id="el">{{ text }}</div>
             """
         return App(el, text="TEXT")
-    prepare(selenium, app_with_props_data)
-    assert element_has_text(selenium, "el", "TEXT")
+    with selenium.app(app_with_props_data):
+        assert selenium.element_has_text("el", "TEXT")

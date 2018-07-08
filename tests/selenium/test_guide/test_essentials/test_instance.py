@@ -1,5 +1,3 @@
-from tests.selenium.utils import *
-
 from vue import *
 
 
@@ -36,16 +34,16 @@ def test_lifecycle_hooks(selenium):
                        "<div v-else id='after' :text='text'></div>"
         return App(el)
 
-    prepare(selenium, lifecycle_hooks)
-    element_present(selenium, "after")
-    logs = list(filter(lambda l: "lh: " in l["message"],
-                       selenium.get_logs()))
-    for idx, log_message in enumerate(["lh: before_create",
-                                       "lh: created",
-                                       "lh: before_mount",
-                                       "lh: mounted",
-                                       "lh: before_update",
-                                       "lh: updated",
-                                       "lh: before_destroy",
-                                       "lh: destroyed"]):
-        assert log_message in logs[idx]["message"]
+    with selenium.app(lifecycle_hooks):
+        selenium.element_present("after")
+        logs = list(filter(lambda l: "lh: " in l["message"],
+                           selenium.get_logs()))
+        for idx, log_message in enumerate(["lh: before_create",
+                                           "lh: created",
+                                           "lh: before_mount",
+                                           "lh: mounted",
+                                           "lh: before_update",
+                                           "lh: updated",
+                                           "lh: before_destroy",
+                                           "lh: destroyed"]):
+            assert log_message in logs[idx]["message"]
