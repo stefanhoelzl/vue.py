@@ -1,5 +1,6 @@
-import inspect
 import re
+import os
+import inspect
 from pathlib import Path
 from contextlib import contextmanager
 
@@ -51,6 +52,10 @@ class SeleniumSession:
     def __enter__(self):
         options = webdriver.ChromeOptions()
         options.add_argument("headless")
+        if os.environ.get("CI"):
+            options.add_argument("disable-gpu")
+            options.add_argument("disable-dev-shm-usage")
+            options.add_argument("no-sandbox")
 
         desired = DesiredCapabilities.CHROME
         desired['loggingPrefs'] = {"browser": "ALL"}
