@@ -17,10 +17,25 @@ def method(fn):
     return fn
 
 
+class Computed:
+    def __init__(self, fn):
+        self._getter = _inject_vue_instance(fn, first_arg_is_this=True)
+        self._setter = None
+        self.vue_computed = True
+
+    def setter(self, fn):
+        self._setter = _inject_vue_instance(fn)
+        return self
+
+    def to_vue_object(self):
+        vue_object = {"get": self._getter}
+        if self._setter:
+            vue_object["set"] = self._setter
+        return vue_object
+
+
 def computed(fn):
-    fn = _inject_vue_instance(fn, first_arg_is_this=True)
-    fn.vue_computed = True
-    return fn
+    return Computed(fn)
 
 
 def watch(name):
@@ -65,7 +80,10 @@ class VueComponent:
             "data": cls._get_init_data,
             "props": [p for p in cls._get_vue_object_map("property")],
             "methods": cls._get_vue_object_map("method"),
-            "computed": cls._get_vue_object_map("computed"),
+            "computed": {
+                n: computed.to_vue_object()
+                for n, computed in cls._get_vue_object_map("computed").items()
+            },
             "watch": {fn.watch_name: fn
                       for fn in cls._get_vue_object_map("watch").values()}
         }

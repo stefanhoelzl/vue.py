@@ -41,3 +41,27 @@ def test_watch(selenium):
     with selenium.app(Watch):
         assert selenium.element_has_text("change", "changed")
 
+
+def test_computed_setter(selenium):
+    class ComputedSetter(VueComponent):
+        message = Data("")
+
+        @computed
+        def reversed_message(self):
+            return self.message[::-1]
+
+        @reversed_message.setter
+        def reversed_message(self, reversed_message):
+            self.message = reversed_message[::-1]
+
+        def created(self):
+            self.reversed_message = "olleh"
+
+        template = """
+        <div>
+            <p id="msg">{{ message }}</p>
+        </div>
+        """
+
+    with selenium.app(ComputedSetter):
+        assert selenium.element_has_text("msg", "hello")
