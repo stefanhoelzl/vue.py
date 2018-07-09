@@ -1,5 +1,4 @@
 venv
 .idea
-js/brython
-js/vuejs
+js
 .pytest_cache
