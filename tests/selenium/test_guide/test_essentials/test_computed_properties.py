@@ -19,3 +19,25 @@ def test_basics(selenium):
     with selenium.app(ComputedPropertiesBasics):
         assert selenium.element_has_text("reversed", "egassem")
 
+
+def test_watch(selenium):
+    class Watch(VueComponent):
+        message = Data("message")
+        new_val = Data("")
+
+        @watch("message")
+        def _message(self, new, old):
+            self.new_val = new
+
+        def created(self):
+            self.message = "changed"
+
+        template = """
+        <div>
+            <p id="change">{{ new_val }}</p>
+        </div>
+        """
+
+    with selenium.app(Watch):
+        assert selenium.element_has_text("change", "changed")
+

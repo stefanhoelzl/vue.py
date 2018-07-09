@@ -78,8 +78,10 @@ class SeleniumSession:
         test_name = self.request.function.__name__
         self._setup_html_with_app(test_name, app)
         self.driver.get(URL.format(test_name))
-        yield
-        self.analyze_logs()
+        try:
+            yield
+        finally:
+            self.analyze_logs()
 
     def _setup_html_with_app(self, file_name, app):
         code = inspect.getsource(app)

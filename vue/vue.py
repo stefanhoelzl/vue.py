@@ -23,6 +23,15 @@ def computed(fn):
     return fn
 
 
+def watch(name):
+    def decorator(fn):
+        fn = _inject_vue_instance(fn)
+        fn.vue_watch = True
+        fn.watch_name = name
+        return fn
+    return decorator
+
+
 class Vue:
     def __init__(self, this):
         self._this = this
@@ -54,9 +63,11 @@ class VueComponent:
     def _vue_init_dict(cls):
         init_dict = {
             "data": cls._get_init_data,
-            "props": [p for p in cls._get_vue_object("property")],
-            "methods": cls._get_vue_object("method"),
-            "computed": cls._get_vue_object("computed"),
+            "props": [p for p in cls._get_vue_object_map("property")],
+            "methods": cls._get_vue_object_map("method"),
+            "computed": cls._get_vue_object_map("computed"),
+            "watch": {fn.watch_name: fn
+                      for fn in cls._get_vue_object_map("watch").values()}
         }
         if cls.template:
             init_dict.update(template=cls.template)
@@ -64,7 +75,7 @@ class VueComponent:
         return init_dict
 
     @classmethod
-    def _get_vue_object(cls, function_type):
+    def _get_vue_object_map(cls, function_type):
         return {
             m: getattr(cls, m)
             for m in dir(cls)
@@ -74,7 +85,7 @@ class VueComponent:
     @classmethod
     def _get_init_data(cls, this=None):
         return {
-            k: v.value for k, v in cls._get_vue_object("data").items()
+            k: v.value for k, v in cls._get_vue_object_map("data").items()
         }
 
     @classmethod
