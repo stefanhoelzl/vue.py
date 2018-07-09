@@ -1,5 +1,7 @@
 # vue.py
-use [Vue.js](https://www.vuejs.org) with pure python
+[![Build Status](https://travis-ci.org/stefanhoelzl/vue.py.svg?branch=master)](https://travis-ci.org/stefanhoelzl/vue.py)
+
+use [Vue.js](https://www.vuejs.org) with pure Python
 
 vue.py provides Python bindings for [Vue.js](https://www.vuejs.org).
 It uses [brython](https://github.com/brython-dev/brython) to run Python in the browser.
