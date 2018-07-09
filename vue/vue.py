@@ -2,20 +2,23 @@ from browser import window
 import javascript
 
 
-def create_vue_function(fn):
+def _inject_vue_instance(fn, first_arg_is_this=False):
     def fn_(*args, **kwargs):
-        return fn(Vue(javascript.this()), *args, **kwargs)
+        args = list(args)
+        vue_instance = javascript.this() if not first_arg_is_this \
+            else args.pop(0)
+        return fn(Vue(vue_instance), *args, **kwargs)
     return fn_
 
 
 def method(fn):
-    fn = create_vue_function(fn)
+    fn = _inject_vue_instance(fn)
     fn.vue_method = True
     return fn
 
 
 def computed(fn):
-    fn = create_vue_function(fn)
+    fn = _inject_vue_instance(fn, first_arg_is_this=True)
     fn.vue_computed = True
     return fn
 
@@ -52,7 +55,8 @@ class VueComponent:
         init_dict = {
             "data": cls._get_init_data,
             "props": [p for p in cls._get_vue_object("property")],
-            "methods": cls._get_vue_object("method")
+            "methods": cls._get_vue_object("method"),
+            "computed": cls._get_vue_object("computed"),
         }
         if cls.template:
             init_dict.update(template=cls.template)
@@ -84,11 +88,10 @@ class VueComponent:
                            "beforeDestroy": "before_destroy",
                            "destroyed": "destroyed"}
         return {
-            vue_hook: create_vue_function(getattr(cls, py_hook))
+            vue_hook: _inject_vue_instance(getattr(cls, py_hook))
             for vue_hook, py_hook in lifecycle_hooks.items()
             if hasattr(cls, py_hook)
         }
-
 
     def __new__(cls, el, **data):
         init_dict = cls._vue_init_dict()
