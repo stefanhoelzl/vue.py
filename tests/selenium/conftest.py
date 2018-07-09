@@ -68,14 +68,18 @@ class SeleniumSession:
         self.logs.extend(new_logs)
         return new_logs
 
+    def clear_logs(self):
+        self.get_logs()
+        self.logs.clear()
+
     @contextmanager
     def app(self, app):
+        self.clear_logs()
         test_name = self.request.function.__name__
         self._setup_html_with_app(test_name, app)
         self.driver.get(URL.format(test_name))
         yield
         self.analyze_logs()
-        self.logs.clear()
 
     def _setup_html_with_app(self, file_name, app):
         code = inspect.getsource(app)
