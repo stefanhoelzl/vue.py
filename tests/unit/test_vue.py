@@ -3,17 +3,6 @@ from unittest import mock
 from vue.vue import *
 
 
-def test_vue():
-    class This:
-        def __init__(self):
-            self.attribute = "value"
-    this = This()
-    vue = Vue(this)
-    assert "value" == vue.attribute
-    this.attribute = "new_value"
-    assert "new_value" == vue.attribute
-
-
 def test_method():
     class Component(VueComponent):
         @method
@@ -114,5 +103,3 @@ def test_lifecycle_hooks():
     assert "updated" in component.call_args[0][1]
     assert "beforeDestroy" in component.call_args[0][1]
     assert "destroyed" in component.call_args[0][1]
-    with mock.patch("vue.vue.javascript.this", return_value="THIS"):
-        assert "THIS" == component.call_args[0][1]["created"]()._this

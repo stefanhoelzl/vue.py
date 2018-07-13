@@ -1,13 +1,15 @@
 from browser import window
 import javascript
 
+from .wrapper import JSObjectWrapper
+
 
 def _inject_vue_instance(fn, first_arg_is_this=False):
     def fn_(*args, **kwargs):
         args = list(args)
         vue_instance = javascript.this() if not first_arg_is_this \
             else args.pop(0)
-        return fn(Vue(vue_instance), *args, **kwargs)
+        return fn(JSObjectWrapper(vue_instance), *args, **kwargs)
     return fn_
 
 
@@ -47,19 +49,6 @@ def watch(name):
     return decorator
 
 
-class Vue:
-    def __init__(self, this):
-        self._this = this
-
-    def __getattr__(self, item):
-        return getattr(self._this, item)
-
-    def __setattr__(self, key, value):
-        if key not in ["_this"]:
-            setattr(self._this, key, value)
-        object.__setattr__(self, key, value)
-
-
 class Data:
     def __init__(self, value):
         self.vue_data = True
@@ -81,8 +70,8 @@ class VueComponent:
             "props": [p for p in cls._get_vue_object_map("property")],
             "methods": cls._get_vue_object_map("method"),
             "computed": {
-                n: computed.to_vue_object()
-                for n, computed in cls._get_vue_object_map("computed").items()
+                n: cmp.to_vue_object()
+                for n, cmp in cls._get_vue_object_map("computed").items()
             },
             "watch": {fn.watch_name: fn
                       for fn in cls._get_vue_object_map("watch").values()}
