@@ -3,6 +3,8 @@ from browser import window
 
 class JSObjectWrapper:
     def __new__(cls, jsobject):
+        if isinstance(jsobject, list):
+            return jsobject
         if window.Array.isArray(jsobject):
             return List(jsobject)
         if hasattr(jsobject, "_isVue") and jsobject._isVue:
@@ -110,7 +112,7 @@ class List:
 
     def __iter__(self):
         def _iter(lst):
-            for i in range(len(lst)):
+            for i in range(lst.__len__()):
                 yield lst[i]
         return _iter(self)
 

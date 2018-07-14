@@ -44,11 +44,30 @@ def watch(name):
 
 
 class Property:
-    def __init__(self):
+    TYPE_MAP = {
+        int: window.Number,
+        float: window.Number,
+        str: window.String,
+        bool: window.Boolean,
+        list: window.Array,
+        object: window.Object,
+        dict: window.Object,
+        None: None
+    }
+
+    def __init__(self, type=None):
+        self.type = self.TYPE_MAP[type]
         self.vue_property = True
+
+    def to_vue_object(self):
+        return {
+            "type": self.type,
+        }
 
 
 class VueComponent:
+    template = ""
+
     @classmethod
     def _vue_init_dict(cls):
         init_dict = cls._get_vue_object_map()
@@ -67,10 +86,11 @@ class VueComponent:
                            "destroyed": "destroyed"}
         object_map = {
             "methods": {},
-            "props": [],
+            "props": {},
             "computed": {},
             "watch": {},
             "data": {},
+            "template": cls.template,
         }
         for obj_name in set(dir(cls))-set(dir(VueComponent)):
             obj = getattr(cls, obj_name)
@@ -85,9 +105,7 @@ class VueComponent:
                 method = _inject_vue_instance(obj)
                 object_map["methods"][obj_name] = method
             elif isinstance(obj, Property):
-                object_map["props"].append(obj_name)
-            elif obj_name == "template":
-                object_map["template"] = obj
+                object_map["props"][obj_name] = obj.to_vue_object()
             else:
                 object_map["data"][obj_name] = obj
         return object_map

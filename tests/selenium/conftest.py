@@ -104,6 +104,7 @@ class SeleniumSession:
             r"[^ ]+ {}".format(re.escape(
                 "7706 Failed to load resource: the server responded with a status of 404 (File not found)")),
         ]
+        self.get_logs()
         for log in self.logs:
             if log['level'] != "INFO":
                 for exception in exceptions:

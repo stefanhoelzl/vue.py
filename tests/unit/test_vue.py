@@ -30,7 +30,9 @@ def test_props():
 
     with mock.patch("vue.vue.window.Vue.new") as new:
         Component("app")
-    assert ["prop"] == new.call_args[0][0]["props"]
+    assert {"prop": {
+        "type": None
+    }} == new.call_args[0][0]["props"]
 
 
 def test_props_data():

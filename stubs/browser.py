@@ -2,6 +2,11 @@
 
 
 class window:
+    String = None
+    Number = None
+    Object = None
+    Boolean = None
+
     class Array:
         @classmethod
         def isArray(cls, obj):
