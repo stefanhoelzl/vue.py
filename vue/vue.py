@@ -1,7 +1,7 @@
 from browser import window
 import javascript
 
-from .wrapper import JSObjectWrapper
+from .wrapper import Vue
 
 
 def _inject_vue_instance(fn, first_arg_is_this=False):
@@ -9,14 +9,8 @@ def _inject_vue_instance(fn, first_arg_is_this=False):
         args = list(args)
         vue_instance = javascript.this() if not first_arg_is_this \
             else args.pop(0)
-        return fn(JSObjectWrapper(vue_instance), *args, **kwargs)
+        return fn(Vue(vue_instance), *args, **kwargs)
     return fn_
-
-
-def method(fn):
-    fn = _inject_vue_instance(fn)
-    fn.vue_method = True
-    return fn
 
 
 class Computed:
@@ -49,67 +43,58 @@ def watch(name):
     return decorator
 
 
-class Data:
-    def __init__(self, value):
-        self.vue_data = True
-        self.value = value
-
-
 class Property:
     def __init__(self):
         self.vue_property = True
 
 
 class VueComponent:
-    template = ""
-
     @classmethod
     def _vue_init_dict(cls):
-        init_dict = {
-            "data": cls._get_init_data,
-            "props": [p for p in cls._get_vue_object_map("property")],
-            "methods": cls._get_vue_object_map("method"),
-            "computed": {
-                n: cmp.to_vue_object()
-                for n, cmp in cls._get_vue_object_map("computed").items()
-            },
-            "watch": {fn.watch_name: fn
-                      for fn in cls._get_vue_object_map("watch").values()}
-        }
-        if cls.template:
-            init_dict.update(template=cls.template)
-        init_dict.update(cls._get_lifecycle_hooks())
+        init_dict = cls._get_vue_object_map()
+        init_dict.update(data=cls._get_init_data)
         return init_dict
 
     @classmethod
-    def _get_vue_object_map(cls, function_type):
-        return {
-            m: getattr(cls, m)
-            for m in dir(cls)
-            if hasattr(getattr(cls, m), "vue_" + function_type)
+    def _get_vue_object_map(cls):
+        lifecycle_hooks = {"before_create": "beforeCreate",
+                           "created": "created",
+                           "before_mount": "beforeMount",
+                           "mounted": "mounted",
+                           "before_update": "beforeUpdate",
+                           "updated": "updated",
+                           "before_destroy": "beforeDestroy",
+                           "destroyed": "destroyed"}
+        object_map = {
+            "methods": {},
+            "props": [],
+            "computed": {},
+            "watch": {},
+            "data": {},
         }
+        for obj_name in set(dir(cls))-set(dir(VueComponent)):
+            obj = getattr(cls, obj_name)
+            if obj_name in lifecycle_hooks:
+                hook = _inject_vue_instance(obj)
+                object_map[lifecycle_hooks[obj_name]] = hook
+            elif hasattr(obj, "vue_computed"):
+                object_map["computed"][obj_name] = obj.to_vue_object()
+            elif hasattr(obj, "vue_watch"):
+                object_map["watch"][obj.watch_name] = obj
+            elif callable(obj):
+                method = _inject_vue_instance(obj)
+                object_map["methods"][obj_name] = method
+            elif isinstance(obj, Property):
+                object_map["props"].append(obj_name)
+            elif obj_name == "template":
+                object_map["template"] = obj
+            else:
+                object_map["data"][obj_name] = obj
+        return object_map
 
     @classmethod
     def _get_init_data(cls, this=None):
-        return {
-            k: v.value for k, v in cls._get_vue_object_map("data").items()
-        }
-
-    @classmethod
-    def _get_lifecycle_hooks(cls):
-        lifecycle_hooks = {"beforeCreate": "before_create",
-                           "created": "created",
-                           "beforeMount": "before_mount",
-                           "mounted": "mounted",
-                           "beforeUpdate": "before_update",
-                           "updated": "updated",
-                           "beforeDestroy": "before_destroy",
-                           "destroyed": "destroyed"}
-        return {
-            vue_hook: _inject_vue_instance(getattr(cls, py_hook))
-            for vue_hook, py_hook in lifecycle_hooks.items()
-            if hasattr(cls, py_hook)
-        }
+        return cls._get_vue_object_map()["data"]
 
     def __new__(cls, el, **data):
         init_dict = cls._vue_init_dict()

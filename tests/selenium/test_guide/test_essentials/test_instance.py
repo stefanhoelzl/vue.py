@@ -24,8 +24,8 @@ def test_lifecycle_hooks(selenium):
                 print("lh: destroyed", self)
         ComponentLifecycleHooks.register("clh")
         class App(VueComponent):
-            show = Data(True)
-            text = Data("created")
+            show = True
+            text = "created"
             def mounted(self):
                 self.text = "mounted"
             def updated(self):

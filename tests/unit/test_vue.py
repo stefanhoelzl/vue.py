@@ -5,7 +5,6 @@ from vue.vue import *
 
 def test_method():
     class Component(VueComponent):
-        @method
         def do(self, event):
             return self, event
 
@@ -18,7 +17,7 @@ def test_method():
 
 def test_data():
     class Component(VueComponent):
-        attribute = Data(1)
+        attribute = 1
 
     with mock.patch("vue.vue.window.Vue.new") as new:
         Component("app")

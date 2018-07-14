@@ -3,7 +3,7 @@ from vue import *
 
 def test_mutation_methods(selenium):
     class MutationMethods(VueComponent):
-        array = Data([1, 2, 3])
+        array = [1, 2, 3]
 
         def created(self):
             print(self.array)                  # 1,2,3

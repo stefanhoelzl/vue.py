@@ -3,7 +3,7 @@ from vue import *
 
 def test_basics(selenium):
     class ComputedPropertiesBasics(VueComponent):
-        message = Data("message")
+        message = "message"
 
         @computed
         def reversed_message(self):
@@ -22,8 +22,8 @@ def test_basics(selenium):
 
 def test_watch(selenium):
     class Watch(VueComponent):
-        message = Data("message")
-        new_val = Data("")
+        message = "message"
+        new_val = ""
 
         @watch("message")
         def _message(self, new, old):
@@ -44,7 +44,7 @@ def test_watch(selenium):
 
 def test_computed_setter(selenium):
     class ComputedSetter(VueComponent):
-        message = Data("")
+        message = ""
 
         @computed
         def reversed_message(self):

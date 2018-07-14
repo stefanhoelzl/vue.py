@@ -3,7 +3,7 @@ from vue import *
 
 def test_declarative_rendering(selenium):
     class DeclarativeRendering(VueComponent):
-        message = Data("MESSAGE CONTENT")
+        message = "MESSAGE CONTENT"
         template = "<div id='content'>{{ message }}</div>"
 
     with selenium.app(DeclarativeRendering):
@@ -12,7 +12,7 @@ def test_declarative_rendering(selenium):
 
 def test_bind_element_title(selenium):
     class BindElementTitle(VueComponent):
-        title = Data("TITLE")
+        title = "TITLE"
         template = "<div id='withtitle' v-bind:title='title'></div>"
 
     with selenium.app(BindElementTitle):
@@ -22,7 +22,7 @@ def test_bind_element_title(selenium):
 
 def test_if_condition(selenium):
     class IfCondition(VueComponent):
-        show = Data(False)
+        show = False
         template = "<div>" \
                    "    <div id='notpresent' v-if='show'>DONT SHOW</div>" \
                    "    <div id='present' />" \
@@ -35,7 +35,7 @@ def test_if_condition(selenium):
 
 def test_for_loop(selenium):
     class ForLoop(VueComponent):
-        items = Data(["0", "1", "2"])
+        items = ["0", "1", "2"]
         template = "<ol id='list'>" \
                    "   <li v-for='item in items' :id='item'>{{ item }}</li>" \
                    "</ol>"
@@ -47,10 +47,9 @@ def test_for_loop(selenium):
 
 def test_on_click_method(selenium):
     class OnClickMethod(VueComponent):
-        message = Data("message")
+        message = "message"
         template = "<button @click='reverse' id='btn'>{{ message }}</button>"
 
-        @method
         def reverse(self, event):
             self.message = "".join(reversed(self.message))
 
@@ -62,7 +61,7 @@ def test_on_click_method(selenium):
 
 def test_v_model(selenium):
     class VModel(VueComponent):
-        clicked = Data(False)
+        clicked = False
         template = "<div>" \
                    "    <p id='p'>{{ clicked }}</p>" \
                    "    <input type='checkbox' id='c' v-model='clicked'>" \
@@ -98,7 +97,7 @@ def test_component_with_props(selenium):
     def components_with_properties(el):
         class SubComponent(VueComponent):
             text = Property()
-            sub = Data("SUB")
+            sub = "SUB"
             template = """
             <div>
             <h1 id="header">{{ text }}</h1>

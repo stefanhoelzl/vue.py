@@ -1,1 +1,1 @@
-from .vue import VueComponent, Data, Property, computed, method, watch
+from .vue import VueComponent, Property, computed, watch
