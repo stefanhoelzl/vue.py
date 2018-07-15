@@ -6,6 +6,38 @@ use [Vue.js](https://www.vuejs.org) with pure Python
 vue.py provides Python bindings for [Vue.js](https://www.vuejs.org).
 It uses [brython](https://github.com/brython-dev/brython) to run Python in the browser.
 
+Here is a simple example of an vue.py component
+```python
+from browser import alert
+from vue import VueComponent
+
+class HelloVuePy(VueComponent):
+    greeting = "Hello vue.py"
+
+    def greet(self, event):
+        alert(self.greeting)
+
+    template = """
+    <button @click="greet">click me</button>
+    """
+
+HelloVuePy("#app")
+```
+
+
+## Development Status
+`vue.py` is currently a Proof-of-Concept.
+
+The goal is to provide a solution to write fully-featured Vue applications in pure Python.
+
+To get an overview what currently is supported, have a look at the [Documentation](docs/index.md).
+
+## Documentation
+Documentation is available [here](docs/index.md).
+
+Simple examples can be found [here](https://github.com/stefanhoelzl/ci-results/tree/vue.py/master/html).
+They are structured like the [Vue.js Guide](https://vuejs.org/v2/guide/)
+
 
 ## Installation
 ```bash
@@ -21,69 +53,7 @@ $ make serve
 ```
 Goto [http://localhost:8000/demo/demo.html](http://localhost:8000/demo/demo.html) and enjoy vue.py!
 
-## Demo Code
-### Python
-```python
-from vue import VueComponent
-
-
-class TodoItem(VueComponent):
-    todo: dict
-
-    template = """
-    <li>
-        <input type="checkbox" v-model="todo.done"></input>
-        <s v-if="todo.done">{{ todo.text }}</s>
-        <span v-else>{{ todo.text }}</span>
-    </li>
-    """
-TodoItem.register()
-
-
-class DemoApp(VueComponent):
-    new_todo = ""
-    todos = [{"id": 1, "text": "Like Vue.js", "done": True},
-             {"id": 0, "text": "Try out vue.py", "done": False}]
-    next_id = len(todos)
-
-    def add(self, event):
-        self.todos.append({"id": self.next_id, "text":  self.new_todo})
-        self.new_todo = ""
-        self.next_id += 1
-
-    template = """
-    <div>
-        <input type="text" placeholder="new todo" v-model="new_todo"></input>
-        <button @click="add">add</button>
-        <ol>
-            <todo-item v-for="todo in todos" :todo="todo" :key="todo.id">
-            </todo-item>
-        </ol>
-    </div>
-    """
-
-
-DemoApp("#app")
-```
-### HTML
-```html
-<html>
-<head>
-  <link rel="pythonpath" href="/" hreflang="py" />
-  <script src="http://localhost:8000/js/vue.js"></script>
-  <script src="http://localhost:8000/js/brython_dist.js"></script>
-</head>
-<body onload="brython(1)">
-  <div id="app"></div>
-  <script type="text/python" src="http://localhost:8000/demo/demo.py"></script>
-</body>
-</html>
-```
-
-## More examples
-More examples can be found [here](https://github.com/stefanhoelzl/ci-results/tree/vue.py/master/html).
-They are organized like the [Vue.js Guide](https://vuejs.org/v2/guide/)
-
+Sources can be found [here](https://github.com/stefanhoelzl/vue.py/tree/master/demo)
 
 ## Development
 Get the code

@@ -14,7 +14,7 @@ class TodoItem(VueComponent):
 TodoItem.register()
 
 
-class DemoApp(VueComponent):
+class TodoApp(VueComponent):
     new_todo = ""
     todos = [{"id": 1, "text": "Like Vue.js", "done": True},
              {"id": 0, "text": "Try out vue.py", "done": False}]
@@ -37,4 +37,4 @@ class DemoApp(VueComponent):
     """
 
 
-DemoApp("#app")
+TodoApp("#app")
