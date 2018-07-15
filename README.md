@@ -38,7 +38,7 @@ Documentation is available [here](docs/index.md).
 Simple examples can be found [here](https://github.com/stefanhoelzl/ci-results/tree/vue.py/master/html).
 They are structured like the [Vue.js Guide](https://vuejs.org/v2/guide/)
 
-More advanced examples can be found [here](https://github.com/stefanhoelzl/vue.py/tree/master/examples).
+More advanced examples can be found [here](https://github.com/stefanhoelzl/vue.py/tree/master/examples/overview.md).
 These are vue.py versions of the [Vue.js examples](https://vuejs.org/v2/examples/)
 
 
