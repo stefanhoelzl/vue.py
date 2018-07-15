@@ -43,26 +43,16 @@ def watch(name):
     return decorator
 
 
-class Property:
-    TYPE_MAP = {
-        int: window.Number,
-        float: window.Number,
-        str: window.String,
-        bool: window.Boolean,
-        list: window.Array,
-        object: window.Object,
-        dict: window.Object,
-        None: None
-    }
+class DataInitializer:
+    def __init__(self, fn):
+        self.fn = fn
 
-    def __init__(self, type=None):
-        self.type = self.TYPE_MAP[type]
-        self.vue_property = True
+    def eval(self, this):
+        return self.fn(this)
 
-    def to_vue_object(self):
-        return {
-            "type": self.type,
-        }
+
+def data(fn):
+    return DataInitializer(fn)
 
 
 class VueComponent:
@@ -73,6 +63,27 @@ class VueComponent:
         init_dict = cls._get_vue_object_map()
         init_dict.update(data=cls._get_init_data)
         return init_dict
+
+    @classmethod
+    def _vue_property(cls, name, typ):
+        type_map = {
+            int: window.Number,
+            float: window.Number,
+            str: window.String,
+            bool: window.Boolean,
+            list: window.Array,
+            object: window.Object,
+            dict: window.Object,
+            None: None
+        }
+        prop = {
+            "type": type_map[typ],
+        }
+        if name not in dir(cls):
+            prop.update(required=True)
+        else:
+            prop.update(default=getattr(cls, name))
+        return prop
 
     @classmethod
     def _get_vue_object_map(cls):
@@ -104,15 +115,21 @@ class VueComponent:
             elif callable(obj):
                 method = _inject_vue_instance(obj)
                 object_map["methods"][obj_name] = method
-            elif isinstance(obj, Property):
-                object_map["props"][obj_name] = obj.to_vue_object()
+            elif obj_name in getattr(cls, "__annotations__", {}):
+                pass
             else:
                 object_map["data"][obj_name] = obj
+        for obj_name, typ in getattr(cls, "__annotations__", {}).items():
+            object_map["props"][obj_name] = cls._vue_property(obj_name, typ)
         return object_map
 
     @classmethod
-    def _get_init_data(cls, this=None):
-        return cls._get_vue_object_map()["data"]
+    def _get_init_data(cls, this):
+        data_ = cls._get_vue_object_map()["data"]
+        for name, date in data_.items():
+            if isinstance(date, DataInitializer):
+                data_[name] = date.eval(this)
+        return data_
 
     def __new__(cls, el, **data):
         init_dict = cls._vue_init_dict()

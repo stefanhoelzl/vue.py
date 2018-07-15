@@ -96,7 +96,7 @@ def test_component(selenium):
 def test_component_with_props(selenium):
     def components_with_properties(el):
         class SubComponent(VueComponent):
-            text = Property()
+            text: str
             sub = "SUB"
             template = """
             <div>

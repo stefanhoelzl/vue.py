@@ -48,7 +48,7 @@ def test_register_with_name(selenium):
 def test_passing_data_with_props(selenium):
     def app(el):
         class SubComponent(VueComponent):
-            prop = Property()
+            prop: str
             template = """
             <div>{{ prop }}</div>
             """

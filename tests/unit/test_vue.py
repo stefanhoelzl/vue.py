@@ -21,23 +21,43 @@ def test_data():
 
     with mock.patch("vue.vue.window.Vue.new") as new:
         Component("app")
-    assert {"attribute": 1} == new.call_args[0][0]["data"]()
+    assert {"attribute": 1} == new.call_args[0][0]["data"]("THIS")
+
+
+def test_data_as_property():
+    class Component(VueComponent):
+        @data
+        def attribute(self):
+            return self
+
+    with mock.patch("vue.vue.window.Vue.new") as new:
+        Component("app")
+    assert {"attribute": "THIS"} == new.call_args[0][0]["data"]("THIS")
 
 
 def test_props():
     class Component(VueComponent):
-        prop = Property()
+        prop: int
 
     with mock.patch("vue.vue.window.Vue.new") as new:
         Component("app")
-    assert {"prop": {
-        "type": None
-    }} == new.call_args[0][0]["props"]
+    assert {"prop": {"type": int, "required": True}} \
+            == new.call_args[0][0]["props"]
+
+
+def test_props_with_default():
+    class Component(VueComponent):
+        prop: int = 100
+
+    with mock.patch("vue.vue.window.Vue.new") as new:
+        Component("app")
+    assert {"prop": {"type": int, "default": 100}} \
+           == new.call_args[0][0]["props"]
 
 
 def test_props_data():
     class Component(VueComponent):
-        prop = Property()
+        prop: str
 
     with mock.patch("vue.vue.window.Vue.new") as new:
         Component("app", prop="PROP")

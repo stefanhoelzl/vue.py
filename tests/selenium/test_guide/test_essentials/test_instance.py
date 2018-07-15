@@ -4,7 +4,7 @@ from vue import *
 def test_lifecycle_hooks(selenium):
     def lifecycle_hooks(el):
         class ComponentLifecycleHooks(VueComponent):
-            text = Property()
+            text: str
             template = "<div>{{ text }}</div>"
             def before_create(self):
                 print("lh: before_created", self)

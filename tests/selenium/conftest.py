@@ -37,6 +37,12 @@ def selenium(selenium_session, request):
     selenium_session.request = None
 
 
+class ErrorLogException(Exception):
+    def __init__(self, errors):
+        super().__init__("\n".join(str(error) for error in errors))
+        self.errors = errors
+
+
 class SeleniumSession:
     def __init__(self):
         self.driver = None
@@ -113,7 +119,7 @@ class SeleniumSession:
                 else:
                     errors.append(log)
         if errors:
-            raise Exception("\n".join(str(error) for error in errors))
+            raise ErrorLogException(errors)
 
     def element_has_text(self, id_, text, timeout=DEFAULT_TIMEOUT):
         return WebDriverWait(self.driver, timeout).until(

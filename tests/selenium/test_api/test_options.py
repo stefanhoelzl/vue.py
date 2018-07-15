@@ -4,7 +4,7 @@ from vue import *
 def test_app_with_props_and_data(selenium):
     def app_with_props_data(el):
         class App(VueComponent):
-            text = Property()
+            text: str
             template = """
             <div id="el">{{ text }}</div>
             """

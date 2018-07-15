@@ -2,10 +2,10 @@
 
 
 class window:
-    String = None
-    Number = None
-    Object = None
-    Boolean = None
+    String = str
+    Number = int
+    Object = object
+    Boolean = bool
 
     class Array:
         @classmethod
