@@ -18,8 +18,9 @@ TEST_PATH = Path(__file__).parent
 CHROME_DRIVER_PATH = TEST_PATH / "chromedriver"
 HTML_OUTPUT_PATH = TEST_PATH / "_html"
 TEMPLATE_PATH = TEST_PATH / "template.html"
-
-URL = "http://localhost:8000/{}/{}.html"
+APP_URL = "http://localhost:8000/{}/{}.html"
+EXAMPLE_URL = "http://localhost:8000/examples/{}"
+EXAMPLE_SCREENSHOT_PATH = TEST_PATH / "_screenshots"
 DEFAULT_TIMEOUT = 1
 
 
@@ -48,13 +49,6 @@ class SeleniumSession:
         self.request = None
 
         self.logs = []
-
-    @property
-    def output_path(self):
-        sub_path = Path(self.request.node.nodeid.split("::", 1)[0])
-        output_path = HTML_OUTPUT_PATH / sub_path.relative_to("selenium")
-        output_path.mkdir(exist_ok=True, parents=True)
-        return output_path
 
     def __getattr__(self, item):
         return getattr(self.driver, item)
@@ -88,25 +82,48 @@ class SeleniumSession:
         self.logs.clear()
 
     @contextmanager
-    def app(self, app):
+    def url(self, url):
         self.clear_logs()
-        test_name = self.request.function.__name__
-        self._setup_html_with_app(test_name, app)
-        url_base = str(self.output_path.relative_to(Path(".").absolute()))
-        self.driver.get(URL.format(url_base, test_name))
+        self.driver.get(url)
         try:
             yield
         finally:
             self.analyze_logs()
 
-    def _setup_html_with_app(self, file_name, app):
+    @contextmanager
+    def app(self, app):
+        test_name = self.request.function.__name__
+        self._create_app_html(test_name, app)
+        url_base = str(self._app_output_path.relative_to(Path(".").absolute()))
+        url = APP_URL.format(url_base, test_name)
+        with self.url(url):
+            yield
+
+    @property
+    def _app_output_path(self):
+        sub_path = Path(self.request.node.nodeid.split("::", 1)[0])
+        output_path = HTML_OUTPUT_PATH / sub_path.relative_to("selenium")
+        output_path.mkdir(exist_ok=True, parents=True)
+        return output_path
+
+    def _create_app_html(self, file_name, app):
         code = inspect.getsource(app)
         code = "\n".join(l[4:] for l in code.split("\n"))
         code += "  app = {}('#app')".format(app.__name__)
         template = Path(TEMPLATE_PATH).read_text()
         template = template.replace("CODE", code)
-        Path(self.output_path, "{}.html".format(file_name))\
+        Path(self._app_output_path, "{}.html".format(file_name))\
             .write_text(template)
+
+    @contextmanager
+    def example(self):
+        test_name = self.request.function.__name__
+        name = test_name[5:]
+        EXAMPLE_SCREENSHOT_PATH.mkdir(exist_ok=True)
+        img_file = EXAMPLE_SCREENSHOT_PATH / "{}.png".format(name)
+        with self.url(EXAMPLE_URL.format(name)):
+            yield
+            self.driver.save_screenshot(str(img_file))
 
     def analyze_logs(self):
         errors = []

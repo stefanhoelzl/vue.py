@@ -8,5 +8,6 @@ TravisCI(
     branch="vue.py",
     results=[
         Directory("tests/selenium/_html", rename="html"),
+        Directory("tests/selenium/_screenshots", rename="examples"),
     ]
 ).commit()
