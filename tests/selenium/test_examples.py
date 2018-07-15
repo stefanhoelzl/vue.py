@@ -1,5 +1,9 @@
+import time
+
+
 def test_markdown_editor(selenium):
     with selenium.example():
+        time.sleep(0.5)
         element = selenium.element_present("markdown")
         element.clear()
         element.send_keys("# Title\n\n")
