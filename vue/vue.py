@@ -67,6 +67,11 @@ def watch(name):
     return decorator
 
 
+def filters(fn):
+    fn.vue_filter = True
+    return fn
+
+
 class DataInitializer:
     def __init__(self, fn):
         self.fn = fn
@@ -127,6 +132,7 @@ class VueComponent:
             "computed": {},
             "watch": {},
             "data": {},
+            "filters": {},
             "template": cls.template,
         }
         validators = {}
@@ -139,6 +145,8 @@ class VueComponent:
                 object_map["computed"][obj_name] = obj.to_vue_object()
             elif hasattr(obj, "vue_watch"):
                 object_map["watch"][obj.watch_name] = obj
+            elif hasattr(obj, "vue_filter"):
+                object_map["filters"][obj_name] = obj
             elif callable(obj):
                 method = _inject_vue_instance(obj)
                 object_map["methods"][obj_name] = method

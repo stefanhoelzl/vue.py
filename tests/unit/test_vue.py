@@ -147,3 +147,15 @@ def test_customize_model():
     with mock.patch("vue.vue.window.Vue.new") as new:
         Component("app")
     assert {"prop": "prop", "event": "event"} == new.call_args[0][0]["model"]
+
+
+def test_filter():
+    class Component(VueComponent):
+        @staticmethod
+        @filters
+        def lower_case(value):
+            return value.lower()
+
+    with mock.patch("vue.vue.window.Vue.new") as new:
+        Component("app")
+    assert "abc" == new.call_args[0][0]["filters"]["lower_case"]("Abc")

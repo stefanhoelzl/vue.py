@@ -1,1 +1,1 @@
-from .vue import VueComponent, data, computed, watch, validator, Model
+from .vue import VueComponent, data, computed, watch, validator, Model, filters
