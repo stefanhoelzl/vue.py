@@ -13,6 +13,18 @@ def _inject_vue_instance(fn, first_arg_is_this=False):
     return fn_
 
 
+class Model:
+    def __init__(self, prop="value", event="input"):
+        self.prop = prop
+        self.event = event
+
+    def to_vue_object(self):
+        return {
+            "prop": self.prop,
+            "event": self.event,
+        }
+
+
 class Computed:
     def __init__(self, fn):
         self._getter = _inject_vue_instance(fn, first_arg_is_this=True)
@@ -134,6 +146,8 @@ class VueComponent:
                 pass
             elif isinstance(obj, Validator):
                 validators[obj.prop] = _inject_vue_instance(obj.fn)
+            elif isinstance(obj, Model):
+                object_map["model"] = obj.to_vue_object()
             else:
                 object_map["data"][obj_name] = obj
         for obj_name, typ in getattr(cls, "__annotations__", {}).items():

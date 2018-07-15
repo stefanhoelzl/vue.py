@@ -138,3 +138,12 @@ def test_lifecycle_hooks():
     assert "updated" in component.call_args[0][1]
     assert "beforeDestroy" in component.call_args[0][1]
     assert "destroyed" in component.call_args[0][1]
+
+
+def test_customize_model():
+    class Component(VueComponent):
+        model = Model(prop="prop", event="event")
+
+    with mock.patch("vue.vue.window.Vue.new") as new:
+        Component("app")
+    assert {"prop": "prop", "event": "event"} == new.call_args[0][0]["model"]
