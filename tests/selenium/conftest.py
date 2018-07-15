@@ -19,8 +19,7 @@ CHROME_DRIVER_PATH = TEST_PATH / "chromedriver"
 HTML_OUTPUT_PATH = TEST_PATH / "_html"
 TEMPLATE_PATH = TEST_PATH / "template.html"
 
-HTTP_HTML_BASE = HTML_OUTPUT_PATH.relative_to(Path(".").absolute())
-URL = "http://localhost:8000/{}/{{}}.html".format(HTTP_HTML_BASE)
+URL = "http://localhost:8000/{}/{}.html"
 DEFAULT_TIMEOUT = 1
 
 
@@ -49,8 +48,13 @@ class SeleniumSession:
         self.request = None
 
         self.logs = []
-        self.output_path = Path(HTML_OUTPUT_PATH)
-        self.output_path.mkdir(exist_ok=True)
+
+    @property
+    def output_path(self):
+        sub_path = Path(self.request.node.nodeid.split("::", 1)[0])
+        output_path = HTML_OUTPUT_PATH / sub_path.relative_to("selenium")
+        output_path.mkdir(exist_ok=True, parents=True)
+        return output_path
 
     def __getattr__(self, item):
         return getattr(self.driver, item)
@@ -88,7 +92,8 @@ class SeleniumSession:
         self.clear_logs()
         test_name = self.request.function.__name__
         self._setup_html_with_app(test_name, app)
-        self.driver.get(URL.format(test_name))
+        url_base = str(self.output_path.relative_to(Path(".").absolute()))
+        self.driver.get(URL.format(url_base, test_name))
         try:
             yield
         finally:
