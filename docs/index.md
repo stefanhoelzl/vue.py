@@ -62,3 +62,4 @@ Now goto [http://localhost:8000/app/app.html](http://localhost:8000/app/app.html
 * [Props](props.md)
 * [Lifecycle Hooks](lifecycle_hooks.md)
 * [Customize V-Model](custom_vmodel.md)
+* [Filter](filter.md)
