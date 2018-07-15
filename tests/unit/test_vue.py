@@ -21,7 +21,7 @@ def test_data():
 
     with mock.patch("vue.vue.window.Vue.new") as new:
         Component("app")
-    assert {"attribute": 1} == new.call_args[0][0]["data"]
+    assert {"attribute": 1} == new.call_args[0][0]["data"]()
 
 
 def test_props():

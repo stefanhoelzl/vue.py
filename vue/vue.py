@@ -116,7 +116,6 @@ class VueComponent:
 
     def __new__(cls, el, **data):
         init_dict = cls._vue_init_dict()
-        init_dict["data"] = init_dict["data"]()
         init_dict.update(el=el)
         init_dict.update(propsData=data)
         return window.Vue.new(init_dict)
