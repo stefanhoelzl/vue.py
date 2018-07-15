@@ -1,0 +1,18 @@
+<html>
+<head>
+  <link rel="pythonpath" href="/" hreflang="py" />
+  <script src="http://localhost:8000/js/vue.js"></script>
+  <script src="http://localhost:8000/js/brython_dist.js"></script>
+  <link rel="stylesheet" media="screen" href="style.css">
+</head>
+<body onload="brython(1)">
+  <script src="https://unpkg.com/marked@0.3.6"></script>
+  <script src="https://unpkg.com/lodash@4.16.0"></script>
+
+  <div id="editor">
+    <textarea :value="input" @input="update"></textarea>
+    <div v-html="compiled_markdown"></div>
+  </div>
+  <script type="text/python" src="http://localhost:8000/examples/markdown_editor/app.py"></script>
+</body>
+</html>
