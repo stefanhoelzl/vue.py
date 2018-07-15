@@ -121,3 +121,30 @@ def test_dont_allow_write_prop(selenium):
         with selenium.app(app):
             assert selenium.element_has_text("component", "text")
     assert "props are readonly!" in selenium.logs[-4]["message"]
+
+
+def test_prop_validator(selenium):
+    def app(el):
+        class SubComponent(VueComponent):
+            prop: str
+
+            @validator("prop")
+            def is_text(self, value):
+                return "text" == value
+
+            template = "<div>{{ prop }}</div>"
+
+        SubComponent.register()
+
+        class App(VueComponent):
+            template = """
+            <sub-component id="component" prop="not text"></sub-component>
+            """
+
+        return App(el)
+
+    with pytest.raises(Exception) as excinfo:
+        with selenium.app(app):
+            selenium.element_has_text("component", "not text")
+    assert "[Vue warn]: Invalid prop: custom validator check failed for prop" \
+           in excinfo.value.errors[0]["message"]

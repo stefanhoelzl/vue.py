@@ -34,6 +34,18 @@ def computed(fn):
     return Computed(fn)
 
 
+class Validator:
+    def __init__(self, prop, fn):
+        self.prop = prop
+        self.fn = fn
+
+
+def validator(prop):
+    def decorator(fn):
+        return Validator(prop, fn)
+    return decorator
+
+
 def watch(name):
     def decorator(fn):
         fn = _inject_vue_instance(fn)
@@ -65,7 +77,7 @@ class VueComponent:
         return init_dict
 
     @classmethod
-    def _vue_property(cls, name, typ):
+    def _vue_property(cls, name, typ, validator):
         type_map = {
             int: window.Number,
             float: window.Number,
@@ -83,6 +95,8 @@ class VueComponent:
             prop.update(required=True)
         else:
             prop.update(default=getattr(cls, name))
+        if validator is not None:
+            prop.update(validator=validator)
         return prop
 
     @classmethod
@@ -103,6 +117,7 @@ class VueComponent:
             "data": {},
             "template": cls.template,
         }
+        validators = {}
         for obj_name in set(dir(cls))-set(dir(VueComponent)):
             obj = getattr(cls, obj_name)
             if obj_name in lifecycle_hooks:
@@ -117,10 +132,14 @@ class VueComponent:
                 object_map["methods"][obj_name] = method
             elif obj_name in getattr(cls, "__annotations__", {}):
                 pass
+            elif isinstance(obj, Validator):
+                validators[obj.prop] = _inject_vue_instance(obj.fn)
             else:
                 object_map["data"][obj_name] = obj
         for obj_name, typ in getattr(cls, "__annotations__", {}).items():
-            object_map["props"][obj_name] = cls._vue_property(obj_name, typ)
+            object_map["props"][obj_name] = cls._vue_property(
+                obj_name, typ, validators.get(obj_name, None)
+            )
         return object_map
 
     @classmethod

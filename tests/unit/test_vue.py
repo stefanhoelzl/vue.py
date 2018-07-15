@@ -55,6 +55,20 @@ def test_props_with_default():
            == new.call_args[0][0]["props"]
 
 
+def test_props_validator():
+    class Component(VueComponent):
+        prop: int
+
+        @validator("prop")
+        def is_lt_100(self, value):
+            return value < 100
+
+    with mock.patch("vue.vue.window.Vue.new") as new:
+        Component("app")
+    assert not new.call_args[0][0]["props"]["prop"]["validator"](100)
+    assert new.call_args[0][0]["props"]["prop"]["validator"](99)
+
+
 def test_props_data():
     class Component(VueComponent):
         prop: str
