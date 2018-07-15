@@ -25,6 +25,8 @@ class Vue:
         # elif hasattr(getattr(self, key), "__set__"):
         #     getattr(self, key).__set__(value)
         else:
+            if key in dir(getattr(self._this, "$props")):
+                raise Exception("props are readonly!")
             setattr(self._this, key, value)
 
 

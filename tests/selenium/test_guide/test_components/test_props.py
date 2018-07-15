@@ -96,3 +96,28 @@ def test_prop_as_initial_value(selenium):
 
     with selenium.app(app):
         assert selenium.element_has_text("component", "text")
+
+
+def test_dont_allow_write_prop(selenium):
+    def app(el):
+        class SubComponent(VueComponent):
+            prop: str
+
+            def created(self):
+                self.prop = "HALLO"
+
+            template = "<div>{{ prop }}</div>"
+
+        SubComponent.register()
+
+        class App(VueComponent):
+            template = """
+            <sub-component id="component" prop="text"></sub-component>
+            """
+
+        return App(el)
+
+    with pytest.raises(Exception):
+        with selenium.app(app):
+            assert selenium.element_has_text("component", "text")
+    assert "props are readonly!" in selenium.logs[-4]["message"]
