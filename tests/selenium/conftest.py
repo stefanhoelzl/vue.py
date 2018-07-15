@@ -21,7 +21,7 @@ TEMPLATE_PATH = TEST_PATH / "template.html"
 APP_URL = "http://localhost:8000/{}/{}.html"
 EXAMPLE_URL = "http://localhost:8000/examples/{}"
 EXAMPLE_SCREENSHOT_PATH = TEST_PATH / "_screenshots"
-DEFAULT_TIMEOUT = 1
+DEFAULT_TIMEOUT = 5
 
 
 @pytest.fixture(scope="session")
