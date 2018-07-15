@@ -2,3 +2,6 @@
 pytest==3.6.2
 selenium==3.13.0
 chromedriver-install==0.3.0
+
+# automation
+cico==0.1.8

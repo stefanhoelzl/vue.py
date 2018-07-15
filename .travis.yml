@@ -14,3 +14,4 @@ script:
   - make ci
 after_script:
   - pkill "make serve"
+  - python deploy.py
