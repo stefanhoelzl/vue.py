@@ -1,6 +1,6 @@
 # Customize V-Model
 To customize the event and prop used by `v-model` a class variable of the type `Model()` can be defined.
-```pyhton
+```python
 from vue import VueComponent, Model
 
 class CustomVModel(VueComponent):

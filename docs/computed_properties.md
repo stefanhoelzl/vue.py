@@ -11,7 +11,7 @@ class ComponentWithMethods(VueComponent):
 ```
 
 computed setters are defined similar to plain python setters
-```pyhton
+```python
 class ComputedSetter(VueComponent):
     message = "Hallo vue.py"
 
