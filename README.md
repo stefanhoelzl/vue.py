@@ -21,13 +21,13 @@ $ make serve
 Goto [http://localhost:8000/demo/demo.html](http://localhost:8000/demo/demo.html) and enjoy vue.py!
 
 ## Demo Code
-Python
+### Python
 ```python
-from vue import VueComponent, Data, method, Property
+from vue import VueComponent
 
 
 class TodoItem(VueComponent):
-    todo = Property()
+    todo: dict
 
     template = """
     <li>
@@ -40,14 +40,13 @@ TodoItem.register()
 
 
 class DemoApp(VueComponent):
-    new_todo = Data("")
-    todos = Data([{"id": 1, "text": "Like Vue.js", "done": True},
-                  {"id": 0, "text": "Try out vue.py", "done": False}])
-    next_id = Data(len(todos.value))
+    new_todo = ""
+    todos = [{"id": 1, "text": "Like Vue.js", "done": True},
+             {"id": 0, "text": "Try out vue.py", "done": False}]
+    next_id = len(todos)
 
-    @method
     def add(self, event):
-        self.todos.push({"id": self.next_id, "text":  self.new_todo})
+        self.todos.append({"id": self.next_id, "text":  self.new_todo})
         self.new_todo = ""
         self.next_id += 1
 
@@ -64,23 +63,27 @@ class DemoApp(VueComponent):
 
 
 DemoApp("#app")
-
 ```
-HTML
+### HTML
 ```html
 <html>
 <head>
   <link rel="pythonpath" href="/" hreflang="py" />
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="http://localhost:8000/demo/brython.js"></script>
+  <script src="http://localhost:8000/js/vue.js"></script>
+  <script src="http://localhost:8000/js/brython_dist.js"></script>
 </head>
 <body onload="brython(1)">
   <div id="app"></div>
   <script type="text/python" src="http://localhost:8000/demo/demo.py"></script>
 </body>
 </html>
-
 ```
+
+## More examples
+More examples can be found [here](https://github.com/stefanhoelzl/ci-results/tree/vue.py/master/html).
+They are organized like the [Vue.js Guide](https://vuejs.org/v2/guide/)
+
+
 ## Development
 Get the code
 ```bash

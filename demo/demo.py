@@ -1,8 +1,8 @@
-from vue import VueComponent, Data, method, Property
+from vue import VueComponent
 
 
 class TodoItem(VueComponent):
-    todo = Property()
+    todo: dict
 
     template = """
     <li>
@@ -15,14 +15,13 @@ TodoItem.register()
 
 
 class DemoApp(VueComponent):
-    new_todo = Data("")
-    todos = Data([{"id": 1, "text": "Like Vue.js", "done": True},
-                  {"id": 0, "text": "Try out vue.py", "done": False}])
-    next_id = Data(len(todos.value))
+    new_todo = ""
+    todos = [{"id": 1, "text": "Like Vue.js", "done": True},
+             {"id": 0, "text": "Try out vue.py", "done": False}]
+    next_id = len(todos)
 
-    @method
     def add(self, event):
-        self.todos.push({"id": self.next_id, "text":  self.new_todo})
+        self.todos.append({"id": self.next_id, "text":  self.new_todo})
         self.new_todo = ""
         self.next_id += 1
 
