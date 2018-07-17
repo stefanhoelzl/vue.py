@@ -1,0 +1,42 @@
+<html>
+<head>
+  <link rel="pythonpath" href="/" hreflang="py" />
+  <script src="http://localhost:8000/js/vue.js"></script>
+  <script src="http://localhost:8000/js/brython_dist.js"></script>
+  <link rel="stylesheet" media="screen" href="style.css">
+</head>
+<body onload="brython(1)">
+  <!-- tree template -->
+  <script type="text/x-template" id="tree-template">
+    <li>
+      <div
+        :class="{bold: is_folder}"
+        @click="toggle"
+        @dblclick="change_type">
+        {{ model.name }}
+        <span v-if="is_folder">[{{ open ? '-' : '+' }}]</span>
+      </div>
+      <ul v-show="open" v-if="is_folder">
+        <tree
+          class="tree"
+          v-for="(model, index) in model.children"
+          :key="index"
+          :model="model">
+        </tree>
+        <li class="add" @click="add_child">+</li>
+      </ul>
+    </li>
+  </script>
+
+  <p>(You can double click on an item to turn it into a folder.)</p>
+
+  <!-- the demo root element -->
+  <ul id="demo">
+    <tree
+      class="tree"
+      :model="tree_data">
+    </tree>
+  </ul>
+  <script type="text/python" src="http://localhost:8000/examples/tree_view/app.py"></script>
+</body>
+</html>
