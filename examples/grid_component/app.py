@@ -16,7 +16,7 @@ class GridComponent(VueComponent):
 
     @computed
     def filtered_data(self):
-        list(
+        return list(
             sorted(
                 filter(lambda f: self.filter_key.lower() in f['name'].lower(),
                        self.content),

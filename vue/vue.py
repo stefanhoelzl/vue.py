@@ -1,7 +1,7 @@
 from browser import window
 import javascript
 
-from .wrapper import Vue
+from .wrapper import Vue, Object
 
 
 def _inject_vue_instance(fn, first_arg_is_this=False):
@@ -9,7 +9,7 @@ def _inject_vue_instance(fn, first_arg_is_this=False):
         args = list(args)
         vue_instance = javascript.this() if not first_arg_is_this \
             else args.pop(0)
-        return fn(Vue(vue_instance), *args, **kwargs)
+        return Object.to_js(fn(Vue(vue_instance), *args, **kwargs))
     return fn_
 
 
