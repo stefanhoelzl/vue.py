@@ -19,3 +19,6 @@ class TestJSObjectWrapper:
         with mock.patch.object(window.Array, "isArray", return_value=True):
             obj = Object.from_js_object(ArrayMock(1, 2, 3))
         assert [1, 2, 3] == obj
+
+    def test_dict(self):
+        assert {"a": 1, "b": 2} == Object.from_js_object({"a": 1, "b": 2})
