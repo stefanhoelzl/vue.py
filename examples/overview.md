@@ -14,3 +14,7 @@ Goto [http://localhost:8000/examples](http://localhost:8000/examples) and select
 ## GitHub Commits
 [![GitHub Commits Screenshot](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/github_commits.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/github_commits)
 
+## Grid Component
+[![Grid Component Screenshot](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/grid_component.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/grid_component)
+
+

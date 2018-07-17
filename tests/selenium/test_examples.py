@@ -26,3 +26,18 @@ def test_github_commits(selenium):
         assert selenium.element_with_tag_name_present("ul")
         time.sleep(1)
         assert 10 == len(selenium.driver.find_elements_by_tag_name("li"))
+
+
+def test_grid_component(selenium):
+    with selenium.example():
+        time.sleep(0.5)
+        query = selenium.element_present("query")
+        query.clear()
+        query.send_keys("j")
+        power = selenium.element_present("power")
+        power.click()
+        rows = selenium.driver.find_elements_by_tag_name("td")
+        assert "Jet Li" == rows[0].text
+        assert "8000" == rows[1].text
+        assert "Jackie Chan" == rows[2].text
+        assert "7000" == rows[3].text
