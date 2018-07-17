@@ -1,36 +1,12 @@
 from browser import window
+from .object import Object
 
 
-class JSObjectWrapper:
-    def __new__(cls, jsobject):
-        if isinstance(jsobject, list):
-            return jsobject
-        if window.Array.isArray(jsobject):
-            return List(jsobject)
-        if hasattr(jsobject, "_isVue") and jsobject._isVue:
-            return Vue(jsobject)
-        return jsobject
+class List(Object):
+    @staticmethod
+    def __can_wrap__(obj):
+        return window.Array.isArray(obj)
 
-
-class Vue:
-    def __init__(self, this):
-        self._this = this
-
-    def __getattr__(self, item):
-        return JSObjectWrapper(getattr(self._this, item))
-
-    def __setattr__(self, key, value):
-        if key in ["_this"]:
-            object.__setattr__(self, key, value)
-        elif hasattr(getattr(self, key), "__set__"):
-            getattr(self, key).__set__(value)
-        else:
-            if key in dir(getattr(self._this, "$props")):
-                raise Exception("props are readonly!")
-            setattr(self._this, key, value)
-
-
-class List:
     def _slice(self, slc):
         if isinstance(slc, int):
             if slc < 0:
@@ -40,9 +16,6 @@ class List:
         stop = slc.stop if slc.stop is not None else len(self)
         return start, stop
 
-    def __init__(self, array):
-        self._array = array
-
     def __eq__(self, other):
         return other == [i for i in self]
 
@@ -50,16 +23,16 @@ class List:
         return [i for i in self]*other
 
     def index(self, obj, start=0, stop=-1):
-        index = self._array.indexOf(obj, start)
+        index = self._js.indexOf(obj, start)
         if index == -1:
             raise ValueError("{} not in list".format(obj))
         return index
 
     def extend(self, iterable):
-        self._array.push(*(i for i in iterable))
+        self._js.push(*(i for i in iterable))
 
     def __len__(self):
-        return self._array.length
+        return self._js.length
 
     def __contains__(self, item):
         try:
@@ -75,20 +48,20 @@ class List:
         return [i for i in self].count(obj)
 
     def reverse(self):
-        self._array.reverse()
+        self._js.reverse()
 
     def __delitem__(self, key):
         start, stop = self._slice(key)
-        self._array.splice(start, stop-start)
+        self._js.splice(start, stop-start)
 
     def __setitem__(self, key, value):
         start, stop = self._slice(key)
         value = value if isinstance(value, list) else [value]
-        self._array.splice(start, stop-start, *value)
+        self._js.splice(start, stop-start, *value)
 
     def __getitem__(self, item):
         start, stop = self._slice(item)
-        value = self._array.slice(start, stop)
+        value = self._js.slice(start, stop)
         if isinstance(item, int):
             return value[0]
         return value
@@ -100,16 +73,16 @@ class List:
         raise NotImplemented()
 
     def append(self, obj):
-        self._array.push(obj)
+        self._js.push(obj)
 
     def insert(self, index, obj):
-        self._array.splice(index, 0, obj)
+        self._js.splice(index, 0, obj)
 
     def remove(self, obj):
-        index = self._array.indexOf(obj)
+        index = self._js.indexOf(obj)
         while index != -1:
-            del self[self._array.indexOf(obj)]
-            index = self._array.indexOf(obj)
+            del self[self._js.indexOf(obj)]
+            index = self._js.indexOf(obj)
 
     def __iadd__(self, other):
         raise NotImplemented()
@@ -121,7 +94,7 @@ class List:
         return _iter(self)
 
     def pop(self, index=-1):
-        return self._array.splice(index, 1)[0]
+        return self._js.splice(index, 1)[0]
 
     def sort(self, key=None, reverse=False):
         self[:] = sorted(self, key=key, reverse=reverse)
@@ -140,3 +113,6 @@ class List:
 
     def __repr__(self):
         return "[{}]".format(", ".join(repr(i) for i in self))
+
+
+Object.SubClasses.append(List)
