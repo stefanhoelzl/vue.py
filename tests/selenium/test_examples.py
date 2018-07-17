@@ -48,6 +48,34 @@ def test_tree_view(selenium):
         assert selenium.find_elements_by_tag_name("li")[9].text == "new stuff"
 
 
+def test_svg_graph(selenium):
+    with selenium.example():
+        time.sleep(0.5)
+        selenium.find_elements_by_tag_name("button")[5].click()
+
+        a = selenium.find_elements_by_tag_name("input")[0]
+        d = selenium.find_elements_by_tag_name("input")[3]
+        ActionChains(selenium.driver)\
+            .click_and_hold(a)\
+            .move_by_offset(20, 0)\
+            .release()\
+            .perform()
+
+        ActionChains(selenium.driver)\
+            .click_and_hold(d)\
+            .move_by_offset(5, 0)\
+            .release()\
+            .perform()
+
+        polygon = selenium.find_elements_by_tag_name("polygon")[0]
+        points = "100.0,46.4 " \
+                 "176.0845213036123,75.2786404500042 " \
+                 "147.02282018339787,164.72135954999578 " \
+                 "74.60767710096516,134.94953415699774 " \
+                 "23.91547869638771,75.27864045000422"
+        assert points == polygon.get_attribute("points")
+
+
 def test_github_commits(selenium):
     with selenium.example():
         assert selenium.element_with_tag_name_present("ul")

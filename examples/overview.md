@@ -19,3 +19,6 @@ Goto [http://localhost:8000/examples](http://localhost:8000/examples) and select
 
 ## Tree View
 [![Tree View Screenshot](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/tree_view.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/tree_view)
+
+## SVG Graph
+[![SVG Graph Screenshot](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/svg_graph.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/svg_graph)
