@@ -8,7 +8,8 @@ class Object:
             if sub_class.__can_wrap__(jsobj):
                 return sub_class(jsobj)
         if jsobj.__class__.__name__ == "JSObject" \
-           and not callable(jsobj) and cls.Default:
+           and not callable(jsobj) and not isinstance(jsobj, dict) \
+            and cls.Default:
             return cls.Default(jsobj)
         return jsobj
 

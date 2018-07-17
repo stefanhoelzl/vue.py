@@ -5,7 +5,7 @@ from .object import Object
 class List(Object):
     @staticmethod
     def __can_wrap__(obj):
-        return window.Array.isArray(obj)
+        return window.Array.isArray(obj) and not isinstance(obj, list)
 
     def _slice(self, slc):
         if isinstance(slc, int):

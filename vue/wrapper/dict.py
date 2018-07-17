@@ -7,7 +7,7 @@ class Dict(Object):
         return other == {k: v for k, v in self.items()}
 
     def __getitem__(self, item):
-        return self._js[item]
+        return self.from_js_object(self._js[item])
 
     def __iter__(self):
         return (k for k in self.keys())
