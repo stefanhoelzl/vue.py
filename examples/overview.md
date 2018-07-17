@@ -17,4 +17,5 @@ Goto [http://localhost:8000/examples](http://localhost:8000/examples) and select
 ## Grid Component
 [![Grid Component Screenshot](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/grid_component.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/grid_component)
 
-
+## Tree View
+[![Tree View Screenshot](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/tree_view.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/tree_view)
