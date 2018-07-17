@@ -15,6 +15,19 @@ def test_method():
     assert "do" in new.call_args[0][0]["methods"]
 
 
+def test_method_as_coroutine():
+    import asyncio
+    class Component(VueComponent):
+        @asyncio.coroutine
+        def co(self):
+            return self
+
+    with mock.patch("vue.vue.window.Vue.new") as new, \
+         mock.patch("vue.vue.javascript.this"):
+        Component("app")
+    assert "co" in new.call_args[0][0]["methods"]
+
+
 def test_data():
     class Component(VueComponent):
         attribute = 1

@@ -1,5 +1,6 @@
 import json
-from browser import ajax
+import asyncio
+
 from vue import VueComponent, filters, watch
 
 
@@ -28,15 +29,11 @@ class App(VueComponent):
     def format_date(value):
         return value.replace("T", " ").replace("Z", "")
 
+    @asyncio.coroutine
     def fetch_data(self):
-        def update_commits(r):
-            self.commits = json.loads(r.text)
-
         self.commits = []
-        req = ajax.ajax()
-        req.bind('complete', update_commits)
-        req.open('GET', url.format(self.current_branch), True)
-        req.send()
+        req = yield asyncio.HTTPRequest(url.format(self.current_branch))
+        self.commits = json.loads(req.response)
 
 
 App("#commits")

@@ -13,6 +13,19 @@ def _inject_vue_instance(fn, first_arg_is_this=False):
     return fn_
 
 
+def _wrap_coroutine(coroutine):
+    def wrapper(*args, **kwargs):
+        import asyncio
+        return asyncio.ensure_future(coroutine(*args, **kwargs))
+    return wrapper
+
+
+def _wrap_method(method):
+    if hasattr(method, "__coroutinefunction__"):
+        method = _wrap_coroutine(method)
+    return _inject_vue_instance(method)
+
+
 class Model:
     def __init__(self, prop="value", event="input"):
         self.prop = prop
@@ -148,8 +161,7 @@ class VueComponent:
             elif hasattr(obj, "vue_filter"):
                 object_map["filters"][obj_name] = obj
             elif callable(obj):
-                method = _inject_vue_instance(obj)
-                object_map["methods"][obj_name] = method
+                object_map["methods"][obj_name] = _wrap_method(obj)
             elif obj_name in getattr(cls, "__annotations__", {}):
                 pass
             elif isinstance(obj, Validator):
