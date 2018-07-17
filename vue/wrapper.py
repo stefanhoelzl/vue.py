@@ -134,7 +134,7 @@ class List:
         raise NotImplemented()
 
     def __set__(self, new):
-        raise NotImplementedError()
+        self[:] = new
 
     def __repr__(self):
         return "[{}]".format(", ".join(repr(i) for i in self))

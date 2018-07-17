@@ -166,3 +166,8 @@ class TestList:
         l = List(ArrayMock(4, 3, 6, 1))
         l.reverse()
         assert [1, 6, 3, 4] == l
+
+    def test_set(self):
+        l = List(ArrayMock(4, 3, 6, 1))
+        l.__set__([1, 2, 3, 4])
+        assert [1, 2, 3, 4] == l
