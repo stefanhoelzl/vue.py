@@ -7,7 +7,7 @@ url = 'https://api.github.com/repos/stefanhoelzl/vue.py/commits?per_page=10&sha=
 
 
 class App(VueComponent):
-    branches = ['master', 'dev']
+    branches = ['master', '2948e6b']
     current_branch = "master"
     commits = []
 
@@ -32,6 +32,7 @@ class App(VueComponent):
         def update_commits(r):
             self.commits[:] = json.loads(r.text)
 
+        self.commits[:] = []
         req = ajax.ajax()
         req.bind('complete', update_commits)
         req.open('GET', url.format(self.current_branch), True)

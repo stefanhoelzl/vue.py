@@ -153,6 +153,11 @@ class SeleniumSession:
             ec.presence_of_element_located((By.ID, id_))
         )
 
+    def element_with_tag_name_present(self, tag, timeout=DEFAULT_TIMEOUT):
+        return WebDriverWait(self.driver, timeout).until(
+            ec.presence_of_element_located((By.TAG_NAME, tag))
+        )
+
     def element_not_present(self, id_, timeout=DEFAULT_TIMEOUT):
         def check(driver_):
             try:

@@ -10,3 +10,7 @@ Goto [http://localhost:8000/examples](http://localhost:8000/examples) and select
 
 ## Markdown Editor
 [![Markdown Editor Screenshot](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/markdown_editor.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/markdown_editor)
+
+## GitHub Commits
+[![GitHub Commits Screenshot](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/github_commits.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/github_commits)
+

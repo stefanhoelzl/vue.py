@@ -19,3 +19,10 @@ def test_markdown_editor(selenium):
         element.send_keys("## Sub Title\n")
         element.send_keys("\n")
         selenium.element_has_text("sub-title", "Sub Title")
+
+
+def test_github_commits(selenium):
+    with selenium.example():
+        assert selenium.element_with_tag_name_present("ul")
+        time.sleep(1)
+        assert 10 == len(selenium.driver.find_elements_by_tag_name("li"))
