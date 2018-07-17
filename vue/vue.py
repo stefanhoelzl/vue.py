@@ -87,7 +87,7 @@ def filters(fn):
 
 class DataInitializer:
     def __init__(self, fn):
-        self.fn = fn
+        self.fn = _inject_vue_instance(fn, first_arg_is_this=True)
 
     def eval(self, this):
         return self.fn(this)
