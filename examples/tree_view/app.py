@@ -46,8 +46,8 @@ class Tree(VueComponent):
     def change_type(self, ev=None):
         if not self.is_folder:
             self.model["children"] = []
-        self.add_child()
-        self.open = True
+            self.add_child()
+            self.open = True
 
     def add_child(self, ev=None):
         self.model["children"].append({"name": "new stuff"})

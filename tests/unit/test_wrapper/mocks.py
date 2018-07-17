@@ -1,3 +1,8 @@
+class VueMock:
+    @staticmethod
+    def set(obj, key, value):
+        obj[key] = value
+
 class ObjectMock:
     @staticmethod
     def entries(dct):

@@ -2,14 +2,15 @@ from unittest import mock
 
 import pytest
 
-from tests.unit.test_wrapper.mocks import ObjectMock
+from tests.unit.test_wrapper.mocks import ObjectMock, VueMock
 
 from vue.wrapper.dict import window, Dict
 
 
 @pytest.fixture(scope="module", autouse=True)
 def window_object():
-    with mock.patch.object(window, "Object", new=ObjectMock):
+    with mock.patch.object(window, "Object", new=ObjectMock), \
+         mock.patch.object(window, "Vue", new=VueMock):
         yield
 
 

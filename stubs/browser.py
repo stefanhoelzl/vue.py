@@ -20,3 +20,7 @@ class window:
         @classmethod
         def component(cls, name, opts):
             return None
+
+        @classmethod
+        def set(cls, key, value):
+            pass

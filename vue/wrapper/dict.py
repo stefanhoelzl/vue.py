@@ -33,7 +33,10 @@ class Dict(Object):
         raise NotImplementedError()
 
     def __setitem__(self, key, value):
-        self._js[key] = value
+        if key not in self:
+            window.Vue.set(self._js, key, value)
+        else:
+            self._js[key] = value
 
     def get(self, k, default=None):
         if k not in self:
