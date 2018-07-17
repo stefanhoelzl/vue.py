@@ -33,6 +33,8 @@ class Vue:
 class List:
     def _slice(self, slc):
         if isinstance(slc, int):
+            if slc < 0:
+                slc = len(self) + slc
             return slc, slc+1
         start = slc.start if slc.start is not None else 0
         stop = slc.stop if slc.stop is not None else len(self)

@@ -112,9 +112,9 @@ class TestList:
 
     def test_getitem(self):
         assert 3 == List(ArrayMock(1, 2, 3))[2]
-
-    def test_getitem_range(self):
-        assert [2, 3] == List(ArrayMock(1, 2, 3))[1:3]
+        assert [2, 3] == List(ArrayMock(1, 2, 3, 4))[1:3]
+        assert 3 == List(ArrayMock(1, 2, 3))[-1]
+        assert [2] == List(ArrayMock(1, 2, 3))[-2:-1]
 
     def test_delitem(self):
         l = List(ArrayMock(1, 2, 3))
@@ -135,6 +135,11 @@ class TestList:
         l = List(ArrayMock(1, 2, 3))
         l[:] = [5]
         assert [5] == l
+
+    def test_setitem_negative(self):
+        l = List(ArrayMock(1, 2, 3, 4))
+        l[-3:-1] = [8, 9]
+        assert [1, 8, 9, 4] == l
 
     def test_iter(self):
         assert [1, 2, 3] == [i for i in List(ArrayMock(1, 2, 3))]
