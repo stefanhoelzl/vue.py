@@ -64,3 +64,7 @@ class TestDict:
         assert {"a": 2, "b": 1, "c": 0} == d
         d.update({"c": 3, "d": 0})
         assert {"a": 2, "b": 1, "c": 3, "d": 0} == d
+
+    def test_bool(self):
+        assert not Dict({})
+        assert Dict({"a": 0})

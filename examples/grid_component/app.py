@@ -2,15 +2,13 @@ from vue import VueComponent, data, computed, filters
 
 
 class GridComponent(VueComponent):
+    template = "#grid-template"
+
     content: list
     columns: list
     filter_key: str
 
-    template = "#grid-template"
-
-    @data
-    def sort_key(self):
-        return self.columns[0]
+    sort_key = ''
 
     @data
     def sort_orders(self):
@@ -18,12 +16,12 @@ class GridComponent(VueComponent):
 
     @computed
     def filtered_data(self):
-        return list(
+        list(
             sorted(
                 filter(lambda f: self.filter_key.lower() in f['name'].lower(),
                        self.content),
-                reverse=self.sort_orders[self.sort_key],
-                key=lambda c: c[self.sort_key]
+                reverse=self.sort_orders.get(self.sort_key, False),
+                key=lambda c: c.get(self.sort_key, self.columns[0])
             )
         )
 

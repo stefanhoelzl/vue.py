@@ -63,8 +63,8 @@ class List(Object):
         start, stop = self._slice(item)
         value = self._js.slice(start, stop)
         if isinstance(item, int):
-            return value[0]
-        return value
+            return self.from_js_object(value[0])
+        return [self.from_js_object(i) for i in value]
 
     def __reversed__(self):
         raise NotImplementedError()
@@ -94,7 +94,7 @@ class List(Object):
         return _iter(self)
 
     def pop(self, index=-1):
-        return self._js.splice(index, 1)[0]
+        return self.from_js_object(self._js.splice(index, 1)[0])
 
     def sort(self, key=None, reverse=False):
         self[:] = sorted(self, key=key, reverse=reverse)

@@ -76,5 +76,8 @@ class Dict(Object):
     def __set__(self, new):
         raise NotImplementedError()
 
+    def __bool__(self):
+        return len(self) > 0
+
 
 Object.Default = Dict

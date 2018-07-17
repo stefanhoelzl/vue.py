@@ -1,5 +1,3 @@
-from browser import window
-
 class Object:
     SubClasses = []
     Default = None
