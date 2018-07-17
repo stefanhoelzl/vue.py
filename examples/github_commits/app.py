@@ -30,9 +30,9 @@ class App(VueComponent):
 
     def fetch_data(self):
         def update_commits(r):
-            self.commits[:] = json.loads(r.text)
+            self.commits = json.loads(r.text)
 
-        self.commits[:] = []
+        self.commits = []
         req = ajax.ajax()
         req.bind('complete', update_commits)
         req.open('GET', url.format(self.current_branch), True)
