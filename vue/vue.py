@@ -173,7 +173,7 @@ class VueComponent:
             elif hasattr(obj, "vue_filter"):
                 object_map["filters"][obj_name] = obj
             elif hasattr(obj, "vue_directive"):
-                object_map["directives"][obj_name] = obj
+                object_map["directives"][obj_name.replace("_", "-")] = obj
             elif callable(obj):
                 object_map["methods"][obj_name] = _wrap_method(obj)
             elif obj_name in getattr(cls, "__annotations__", {}):

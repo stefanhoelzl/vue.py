@@ -224,3 +224,15 @@ def test_function_directive():
                                                              "binding",
                                                              "vnode",
                                                              "old_vnode")
+
+
+def test_directive_replace_dash():
+    class Component(VueComponent):
+        @staticmethod
+        @directive
+        def focus_dashed(el, binding, vnode, old_vnode):
+            return el, binding, vnode, old_vnode
+
+    with mock.patch("vue.vue.window.Vue.new") as new:
+        Component("app")
+    assert "focus-dashed" in new.call_args[0][0]["directives"]
