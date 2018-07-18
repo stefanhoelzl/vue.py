@@ -33,7 +33,7 @@ env.clean:
 
 .PHONY: env.down
 env.down:
-	git clean -xdf --exclude .idea --exclude venv
+	git clean -xdf --exclude .idea --exclude venv --exclude debug
 	pip freeze | xargs pip uninstall -y
 
 .PHONY: serve

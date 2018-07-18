@@ -2,5 +2,4 @@ venv
 .idea
 js
 .pytest_cache
-todo.md
 debug

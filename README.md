@@ -32,6 +32,8 @@ The goal is to provide a solution to write fully-featured Vue applications in pu
 
 To get an overview what currently is supported, have a look at the [Documentation](docs/index.md).
 
+Have a look [here](todo.md) to see whats planned!
+
 ## Documentation
 Documentation is available [here](docs/index.md).
 
