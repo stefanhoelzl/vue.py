@@ -1,11 +1,24 @@
 """stub to avoid import errors"""
 
+import local_storage
+
+
+def bind(target, ev):
+    pass
+
 
 class window:
     String = str
     Number = int
     Object = object
     Boolean = bool
+
+    @staticmethod
+    def bind(el, ev):
+        pass
+
+    class location:
+        hash = ''
 
     class Array:
         @classmethod
