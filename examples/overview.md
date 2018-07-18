@@ -25,3 +25,6 @@ Goto [http://localhost:8000/examples](http://localhost:8000/examples) and select
 
 ## Modal Component
 [![Modal Component](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/modal_component.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/modal_component)
+
+## TodoMVC
+[![TodoMVC](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/todo_mvc.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/todo_mvc)
