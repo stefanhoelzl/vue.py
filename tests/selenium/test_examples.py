@@ -76,6 +76,7 @@ def test_modal_component(selenium):
         time.sleep(1)
         show_button = selenium.element_present("show-modal")
         show_button.click()
+        time.sleep(1)
         assert selenium.element_present("modal_view", timeout=2)
 
 
