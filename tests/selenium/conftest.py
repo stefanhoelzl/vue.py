@@ -141,7 +141,8 @@ class SeleniumSession:
                     if re.match(exception, log["message"]):
                         break
                 else:
-                    errors.append(log)
+                    if log["source"] not in ['deprecation']:
+                        errors.append(log)
         if errors:
             raise ErrorLogException(errors)
 
