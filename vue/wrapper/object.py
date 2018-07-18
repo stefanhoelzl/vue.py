@@ -7,9 +7,7 @@ class Object:
         for sub_class in cls.SubClasses:
             if sub_class.__can_wrap__(jsobj):
                 return sub_class(jsobj)
-        if jsobj.__class__.__name__ == "JSObject" \
-           and not callable(jsobj) and not isinstance(jsobj, dict) \
-            and cls.Default:
+        if cls.Default and cls.Default.__can_wrap__(jsobj):
             return cls.Default(jsobj)
         return jsobj
 
