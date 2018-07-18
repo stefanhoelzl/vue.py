@@ -174,6 +174,42 @@ def test_filter():
     assert "abc" == new.call_args[0][0]["filters"]["lower_case"]("Abc")
 
 
+def test_watch():
+    class Component(VueComponent):
+        @watch("data")
+        def lower_case(self, new, old):
+            return old, new
+
+    with mock.patch("vue.vue.window.Vue.new") as new:
+        Component("app")
+    result = new.call_args[0][0]["watch"]["data"]["handler"]("new", "old")
+    assert "new", "old" == result
+
+
+def test_watch_deep():
+    class Component(VueComponent):
+        @watch("data", deep=True)
+        def lower_case(self, new, old):
+            return new, old
+
+    with mock.patch("vue.vue.window.Vue.new") as new:
+        Component("app")
+    is_deep = new.call_args[0][0]["watch"]["data"]["deep"]
+    assert is_deep
+
+
+def test_watch_immediate():
+    class Component(VueComponent):
+        @watch("data", immediate=True)
+        def lower_case(self, new, old):
+            return new, old
+
+    with mock.patch("vue.vue.window.Vue.new") as new:
+        Component("app")
+    is_immediate = new.call_args[0][0]["watch"]["data"]["immediate"]
+    assert is_immediate
+
+
 def test_function_directive():
     class Component(VueComponent):
         @staticmethod

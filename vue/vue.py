@@ -76,10 +76,12 @@ def validator(prop):
     return decorator
 
 
-def watch(name):
+def watch(name, deep=False, immediate=False):
     def decorator(fn):
         fn = _inject_vue_instance(fn)
         fn.vue_watch = True
+        fn.vue_watch_deep = deep
+        fn.vue_watch_immediate = immediate
         fn.watch_name = name
         return fn
     return decorator
@@ -163,7 +165,11 @@ class VueComponent:
             elif hasattr(obj, "vue_computed"):
                 object_map["computed"][obj_name] = obj.to_vue_object()
             elif hasattr(obj, "vue_watch"):
-                object_map["watch"][obj.watch_name] = obj
+                object_map["watch"][obj.watch_name] = {
+                    "handler": obj,
+                    "deep": obj.vue_watch_deep,
+                    "immediate": obj.vue_watch_immediate,
+                }
             elif hasattr(obj, "vue_filter"):
                 object_map["filters"][obj_name] = obj
             elif hasattr(obj, "vue_directive"):
