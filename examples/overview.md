@@ -22,3 +22,6 @@ Goto [http://localhost:8000/examples](http://localhost:8000/examples) and select
 
 ## SVG Graph
 [![SVG Graph Screenshot](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/svg_graph.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/svg_graph)
+
+## Modal Component
+[![Modal Component](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/modal_component.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/modal_component)
