@@ -20,6 +20,6 @@
 
 ## Vue.py Universe
 * python version of vuex
-  * synchronize over WebSockets with pythonb backend
+  * synchronize over WebSockets with python backend
 * desktop toolkit
   * based on [pywebview](https://github.com/r0x0r/pywebview) ??
