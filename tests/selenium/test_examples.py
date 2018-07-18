@@ -1,6 +1,7 @@
 import time
 
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 
 
 def test_markdown_editor(selenium):
@@ -78,6 +79,34 @@ def test_modal_component(selenium):
         show_button.click()
         time.sleep(1)
         assert selenium.element_present("modal_view", timeout=2)
+
+
+def test_todo_mvc(selenium):
+    with selenium.example():
+        time.sleep(0.5)
+        title_input = selenium.element_present("title-input")
+        title_input.clear()
+        title_input.send_keys("new todo")
+        title_input.send_keys(Keys.ENTER)
+        title_input.send_keys("completed")
+        title_input.send_keys(Keys.ENTER)
+
+        toggle_buttons = selenium.driver.find_elements_by_class_name("toggle")
+        assert 2 == len(toggle_buttons)
+
+        toggle_buttons[1].click()
+        selenium.element_present("show-active").click()
+        labels = selenium.driver.find_elements_by_tag_name("label")
+        assert 1 == len(labels)
+        assert "new todo" == labels[0].text
+
+        selenium.element_present("show-all").click()
+        labels = selenium.driver.find_elements_by_tag_name("label")
+        assert 2 == len(labels)
+        assert "new todo" == labels[0].text
+        assert "completed" == labels[1].text
+
+
 
 
 def test_github_commits(selenium):

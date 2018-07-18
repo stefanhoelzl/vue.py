@@ -14,6 +14,7 @@
         autofocus autocomplete="off"
         placeholder="What needs to be done?"
         v-model="new_todo"
+        id="title-input"
         @keyup.enter="add_todo">
     </header>
     <section class="main" v-show="todos.length" v-cloak>
@@ -42,9 +43,9 @@
         <strong>{{ remaining }}</strong> {{ remaining | pluralize }} left
       </span>
       <ul class="filters">
-        <li><a href="#/all" :class="{ selected: visibility == 'all' }">All</a></li>
-        <li><a href="#/active" :class="{ selected: visibility == 'active' }">Active</a></li>
-        <li><a href="#/completed" :class="{ selected: visibility == 'completed' }">Completed</a></li>
+        <li><a href="#all" :class="{ selected: visibility == 'all' }" id="show-all">All</a></li>
+        <li><a href="#active" :class="{ selected: visibility == 'active' }" id="show-active">Active</a></li>
+        <li><a href="#completed" :class="{ selected: visibility == 'completed' }" id="show-acompleted">Completed</a></li>
       </ul>
       <button class="clear-completed" @click="remove_completed" v-show="todos.length > remaining">
         Clear completed
