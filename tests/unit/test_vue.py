@@ -172,3 +172,19 @@ def test_filter():
     with mock.patch("vue.vue.window.Vue.new") as new:
         Component("app")
     assert "abc" == new.call_args[0][0]["filters"]["lower_case"]("Abc")
+
+
+def test_function_directive():
+    class Component(VueComponent):
+        @staticmethod
+        @directive
+        def focus(el, binding, vnode, old_vnode):
+            return el, binding, vnode, old_vnode
+
+    with mock.patch("vue.vue.window.Vue.new") as new:
+        Component("app")
+    res = ("el", "binding", "vnode", "old_vnode")
+    assert res == new.call_args[0][0]["directives"]["focus"]("el",
+                                                             "binding",
+                                                             "vnode",
+                                                             "old_vnode")
