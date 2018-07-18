@@ -122,8 +122,10 @@ class SeleniumSession:
         EXAMPLE_SCREENSHOT_PATH.mkdir(exist_ok=True)
         img_file = EXAMPLE_SCREENSHOT_PATH / "{}.png".format(name)
         with self.url(EXAMPLE_URL.format(name)):
-            yield
-            self.driver.save_screenshot(str(img_file))
+            try:
+                yield
+            finally:
+                self.driver.save_screenshot(str(img_file))
 
     def analyze_logs(self):
         errors = []

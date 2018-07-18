@@ -71,6 +71,14 @@ def test_svg_graph(selenium):
         assert 5 == len(polygon.get_attribute("points").split(" "))
 
 
+def test_modal_component(selenium):
+    with selenium.example():
+        time.sleep(1)
+        show_button = selenium.element_present("show-modal")
+        show_button.click()
+        assert selenium.element_present("modal_view", timeout=2)
+
+
 def test_github_commits(selenium):
     with selenium.example():
         assert selenium.element_with_tag_name_present("ul")
