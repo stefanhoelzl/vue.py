@@ -56,11 +56,11 @@ class Dict(Object):
     def values(self):
         return window.Object.values(self._js)
 
-    def update(self, __m=None, **kwargs):
-        if __m is None:
-            __m = {}
-        __m.update(kwargs)
-        window.Object.assign(self._js, __m)
+    def update(self, _m=None, **kwargs):
+        if _m is None:
+            _m = {}
+            _m.update(kwargs)
+        window.Object.assign(self._js, _m)
 
     def clear(self):
         while len(self) > 0:
