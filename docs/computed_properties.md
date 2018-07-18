@@ -36,3 +36,17 @@ class Watch(VueComponent):
     def log_message_changes(self, new, old):
         print("'message' changed from '{}' to '{}'".format(old, new)
 ```
+
+
+`deep` and `immediate` watchers can be configured via arguments
+
+```python
+from vue import VueComponent, watch
+
+class Watch(VueComponent):
+    message = ""
+
+    @watch("message", deep=True, immediate=True)
+    def log_message_changes(self, new, old):
+        print("'message' changed from '{}' to '{}'".format(old, new)
+```
