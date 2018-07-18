@@ -128,9 +128,9 @@ class SeleniumSession:
     def analyze_logs(self):
         errors = []
         exceptions = [
-            r"[^ ]+ 7692 Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
-            r"[^ ]+ {}".format(re.escape(
-                "7706 Failed to load resource: the server responded with a status of 404 (File not found)")),
+            r"[^ ]+ \d+ Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
+            r"[^ ]+ \d+ {}".format(re.escape(
+                "Failed to load resource: the server responded with a status of 404 (File not found)")),
         ]
         self.get_logs()
         for log in self.logs:
