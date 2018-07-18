@@ -3,6 +3,11 @@ class VueMock:
     def set(obj, key, value):
         obj[key] = value
 
+    @staticmethod
+    def delete(obj, key):
+        del obj[key]
+
+
 class ObjectMock:
     @staticmethod
     def entries(dct):

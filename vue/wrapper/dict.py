@@ -17,11 +17,16 @@ class Dict(Object):
     def __iter__(self):
         return (k for k in self.keys())
 
-    def pop(self, k, **kwargs):
-        raise NotImplementedError()
+    def pop(self, k, default=...):
+        if k not in self and not isinstance(default, type(Ellipsis)):
+            return default
+        item = self[k]
+        del self[k]
+        return item
 
     def popitem(self):
-        raise NotImplementedError()
+        key = self.keys()[0]
+        return key, self.pop(key)
 
     def setdefault(self, k, default=None):
         if k not in self:
@@ -35,7 +40,7 @@ class Dict(Object):
         return item in self.keys()
 
     def __delitem__(self, key):
-        raise NotImplementedError()
+        window.Vue.delete(self._js, key)
 
     def __setitem__(self, key, value):
         if key not in self:
@@ -58,7 +63,8 @@ class Dict(Object):
         window.Object.assign(self._js, __m)
 
     def clear(self):
-        raise NotImplementedError()
+        while len(self) > 0:
+            self.popitem()
 
     @classmethod
     def fromkeys(seq):
@@ -82,7 +88,8 @@ class Dict(Object):
         )
 
     def __set__(self, new):
-        raise NotImplementedError()
+        self.clear()
+        self.update(new)
 
     def __bool__(self):
         return len(self) > 0

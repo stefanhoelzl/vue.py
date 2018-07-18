@@ -22,5 +22,9 @@ class window:
             return None
 
         @classmethod
-        def set(cls, key, value):
+        def set(cls, obj, key, value):
+            pass
+
+        @classmethod
+        def delete(cls, obj, key):
             pass

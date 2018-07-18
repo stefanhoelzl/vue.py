@@ -69,3 +69,40 @@ class TestDict:
     def test_bool(self):
         assert not Dict({})
         assert Dict({"a": 0})
+
+    def test_delitem(self):
+        d = Dict({"a": 0, "b": 1})
+        del d["a"]
+        assert {"b": 1} == d
+
+    def test_pop(self):
+        d = Dict({"a": 0, "b": 1})
+        assert 1 == d.pop("b")
+        assert {"a": 0} == d
+
+    def test_pop_default(self):
+        d = Dict({"a": 0, "b": 1})
+        assert "default" == d.pop("c", "default")
+        assert {"a": 0, "b": 1} == d
+
+    def test_pop_key_error(self):
+        d = Dict({"a": 0, "b": 1})
+        with pytest.raises(KeyError):
+            d.pop("c")
+
+    def test_popitem(self):
+        d = Dict({"a": 2})
+        assert ("a", 2) == d.popitem()
+        assert {} == d
+
+    def test_clear(self):
+        d = Dict({"a": 0, "b": 1})
+        d.clear()
+        assert not d
+
+    def test_set(self):
+        d = Dict({"a": 0, "b": 1})
+        old_id = id(d)
+        d.__set__({"c": 1, "d": 2})
+        assert old_id == id(d)
+        assert {"c": 1, "d": 2} == d
