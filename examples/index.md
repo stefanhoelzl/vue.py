@@ -44,5 +44,5 @@ $ cd vue.py
 $ make env.up
 $ make serve
 ```
-Goto [http://localhost:8000/examples] and select the example
+Goto [http://localhost:8000/examples](http://localhost:8000/examples) and select the example
 
