@@ -1,0 +1,10 @@
+theme: jekyll-theme-cayman
+title: vue.py
+description: Pythonic Vue.js
+include:
+  - __init__.py
+navigation:
+  - title: Documentation
+    link: docs
+  - title: Gallery
+    link: examples

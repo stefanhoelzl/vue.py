@@ -3,5 +3,5 @@ venv
 js
 .pytest_cache
 debug
-gh-pages
+gh-pages-build
 examples/*/*.png

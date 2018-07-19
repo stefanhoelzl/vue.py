@@ -54,18 +54,18 @@ tests:
 
 .PHONY: ci.docs
 ci.docs:
-	rm -Rf gh-pages
+	rm -Rf gh-pages-build
+	mkdir gh-pages-build
+	cp -Rf gh-pages/* gh-pages-build
 
-	mkdir gh-pages
-	cp -R README.md planning.md docs examples vue gh-pages
-	cp jekyll.yml gh-pages/_config.yml
+	cp -R README.md planning.md docs examples vue gh-pages-build
 
-	mkdir gh-pages/js
-	cp js/vue.js gh-pages/js
-	cp js/brython_dist.js gh-pages/js
+	mkdir gh-pages-build/js
+	cp js/vue.js gh-pages-build/js
+	cp js/brython_dist.js gh-pages-build/js
 
-	mkdir gh-pages/tests
-	cp -R tests/selenium/_html/* gh-pages/tests
+	mkdir gh-pages-build/tests
+	cp -R tests/selenium/_html/* gh-pages-build/tests
 
 .PHONY: ci
 ci: tests ci.docs
