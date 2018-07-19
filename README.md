@@ -34,6 +34,8 @@ To get an overview what currently is supported, have a look at the [Documentatio
 
 Have a look [here](todo.md) to see whats planned!
 
+See also the [Limitations](docs/pyjs_bridge.md)
+
 ## Documentation
 Documentation is available [here](docs/index.md).
 

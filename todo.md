@@ -10,11 +10,6 @@
 ## Docs
 * host on gh-pages
   *  live examples possible (jsfiddle?)
-* documenting the limitations
-  * wrapper around dict/list
-    * `json.dumps` breaks
-    * problem when passing Dict/List to js function (e.g. elastic header example)
-
 
 ## Tools
 * cmd line tool to init vue.py project

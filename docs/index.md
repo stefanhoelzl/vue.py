@@ -56,11 +56,15 @@ App("#app")
 Now goto [http://localhost:8000/app/app.html](http://localhost:8000/app/app.html) and see your first vue.py app.
 
 ## How to use Vue.js concepts
-* [Instance and Components](instance_components.md)
-* [Data and Methods](data_methods.md)
-* [Computed Properties and Watchers](computed_properties.md)
-* [Props](props.md)
-* [Lifecycle Hooks](lifecycle_hooks.md)
-* [Customize V-Model](custom_vmodel.md)
-* [Filter](filter.md)
-* [Custom Directives](custom_directives.md)
+* [Instance and Components](vue_concepts/instance_components.md)
+* [Data and Methods](vue_concepts/data_methods.md)
+* [Computed Properties and Watchers](vue_concepts/computed_properties.md)
+* [Props](vue_concepts/props.md)
+* [Lifecycle Hooks](vue_concepts/lifecycle_hooks.md)
+* [Customize V-Model](vue_concepts/custom_vmodel.md)
+* [Filter](vue_concepts/filter.md)
+* [Custom Directives](vue_concepts/custom_directives.md)
+
+
+## Python/Javascript Bridge
+[here](pyjs_bridge.md)
