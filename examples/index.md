@@ -1,11 +1,9 @@
 # Example Gallery
 
 ## Markdown Editor
-[Demo](https://stefanhoelzl.github.io/vue.py/examples/markdown_editor)
-
 [Source](https://github.com/stefanhoelzl/vue.py/tree/master/examples/markdown_editor)
 
-![Markdown Editor Screenshot](https://raw.githubusercontent.com/stefanhoelzl/vue.py/gh-pages/examples/markdown_editor/screenshot.png)
+<iframe src="https://stefanhoelzl.github.io/vue.py/examples/markdown_editor"></iframe>
 
 ## GitHub Commits
 [Demo](https://stefanhoelzl.github.io/vue.py/examples/github_commits)

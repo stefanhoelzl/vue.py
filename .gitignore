@@ -4,4 +4,4 @@ js
 .pytest_cache
 debug
 gh-pages-build
-examples/*/*.png
+examples/*/screenshot.png

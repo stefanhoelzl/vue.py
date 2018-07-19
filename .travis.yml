@@ -20,6 +20,5 @@ deploy:
   github-token: $GH_TOKEN
   keep-history: true
   local-dir: gh-pages-build
-  committer-from-gh: true
   on:
     branch: master
