@@ -1,30 +1,35 @@
 # Example Gallery
 
+<iframe src="markdown_editor"></iframe>
+
+## Markdown Editor
+![Markdown Editor Screenshot](markdown_editor/screenshot.png)
+
+## GitHub Commits
+![GitHub Commits Screenshot](github_commits/screenshot.png)
+
+## Grid Component
+![Grid Component Screenshot](grid_component/screenshot.png)
+
+## Tree View
+![Tree View Screenshot](tree_view/screenshot.png)
+
+## SVG Graph
+![SVG Graph Screenshot](svg_graph/screenshot.png)
+
+## Modal Component
+![Modal Component Screenshot](modal_component/screenshot.png)
+
+## TodoMVC
+![TodoMVC Screenshot](todo_mvc/screenshot.png)
+
+## Run Examples Local
+
 ```bash
 $ git clone https://github.com/stefanhoelzl/vue.py.git
 $ cd vue.py
 $ make env.up
 $ make serve
 ```
-Goto [http://localhost:8000/examples](http://localhost:8000/examples) and select the example
+Goto [http://localhost:8000/examples] and select the example
 
-## Markdown Editor
-[![Markdown Editor Screenshot](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/markdown_editor.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/markdown_editor)
-
-## GitHub Commits
-[![GitHub Commits Screenshot](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/github_commits.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/github_commits)
-
-## Grid Component
-[![Grid Component Screenshot](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/grid_component.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/grid_component)
-
-## Tree View
-[![Tree View Screenshot](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/tree_view.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/tree_view)
-
-## SVG Graph
-[![SVG Graph Screenshot](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/svg_graph.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/svg_graph)
-
-## Modal Component
-[![Modal Component](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/modal_component.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/modal_component)
-
-## TodoMVC
-[![TodoMVC](https://raw.githubusercontent.com/stefanhoelzl/ci-results/vue.py/master/examples/todo_mvc.png)](https://github.com/stefanhoelzl/vue.py/tree/master/examples/todo_mvc)
