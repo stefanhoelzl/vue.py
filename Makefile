@@ -56,9 +56,8 @@ tests:
 ci.docs:
 	rm -Rf gh-pages-build
 	mkdir gh-pages-build
-	cp -Rf gh-pages/* gh-pages-build
 
-	cp -R README.md planning.md docs examples vue gh-pages-build
+	cp -Rf docs/* README.md examples vue gh-pages-build
 
 	mkdir gh-pages-build/js
 	cp js/vue.js gh-pages-build/js

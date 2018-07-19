@@ -3,7 +3,13 @@
 ## Markdown Editor
 [Source](https://github.com/stefanhoelzl/vue.py/tree/master/examples/markdown_editor)
 
-<iframe src="https://stefanhoelzl.github.io/vue.py/examples/markdown_editor"></iframe>
+<iframe
+    frameborder="0"
+    width="100%"
+    height="500"
+    sandbox="allow-scripts allow-forms allow-same-origin allow-modals"
+    src="//stefanhoelzl.github.io/vue.py/examples/markdown_editor">
+</iframe>
 
 ## GitHub Commits
 [Demo](https://stefanhoelzl.github.io/vue.py/examples/github_commits)
