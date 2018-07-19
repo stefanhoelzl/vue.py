@@ -8,7 +8,7 @@ python:
 install:
   - make env.up
 before_script:
-  - make serve &
+  - make serve > http.log &
   - sleep 5
 script:
   - make ci
