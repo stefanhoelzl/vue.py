@@ -3,7 +3,7 @@ from browser import window, load
 CACHE = {}
 
 
-def js_import(path):
+def js_load(path):
     if path in CACHE:
         return CACHE[path]
     before = dir(window)
@@ -19,3 +19,7 @@ def js_import(path):
         mods = mods.popitem()[1]
     CACHE[path] = mods
     return mods
+
+
+def js_lib(name):
+    return getattr(window, name)
