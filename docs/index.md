@@ -34,13 +34,12 @@ add a `app.html` file where your app lives
 ```html
 <html>
 <head>
-  <link rel="pythonpath" href="/" hreflang="py" />
   <script src="http://localhost:8000/js/vue.js"></script>
   <script src="http://localhost:8000/js/brython_dist.js"></script>
 </head>
-<body onload="brython(1)">
+<body onload="brython({debug: 1, pythonpath: '/'})">
   <div id="app"></div>
-  <script type="text/python" src="http://localhost:8000/app/app.py"></script>
+  <script type="text/python" src="app.py"></script>
 </body>
 </html>
 ```

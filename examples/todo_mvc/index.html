@@ -1,12 +1,11 @@
 <html>
 <head>
-  <link rel="pythonpath" href="/" hreflang="py" />
   <script src="http://localhost:8000/js/vue.js"></script>
   <script src="http://localhost:8000/js/brython_dist.js"></script>
   <link rel="stylesheet" type="text/css" href="https://unpkg.com/todomvc-app-css@2.0.6/index.css">
   <link rel="stylesheet" media="screen" href="style.css">
 </head>
-<body onload="brython(1)">
+<body onload="brython({debug: 1, pythonpath: '/'})">
   <section class="todoapp">
     <header class="header">
       <h1>todos</h1>

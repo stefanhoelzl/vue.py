@@ -1,11 +1,10 @@
 <html>
 <head>
-  <link rel="pythonpath" href="/" hreflang="py" />
   <script src="http://localhost:8000/js/vue.js"></script>
   <script src="http://localhost:8000/js/brython_dist.js"></script>
   <link rel="stylesheet" media="screen" href="style.css">
 </head>
-<body onload="brython(1)">
+<body onload="brython({debug: 1, pythonpath: '/'})">
   <!-- component template -->
   <script type="text/x-template" id="grid-template">
     <table>
