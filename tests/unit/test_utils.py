@@ -1,6 +1,7 @@
 import pytest
 from unittest import mock
-from vue import js_import, utils
+from vue import utils
+from vue.utils import js_load
 
 
 @pytest.fixture(autouse=True, scope="function")
@@ -30,23 +31,23 @@ def fix_and_window():
 
 class TestJsImport:
     def test_single(self):
-        assert "a" == js_import("path;a")
+        assert "a" == js_load("path;a")
 
     def test_multiple(self):
-        assert {"a": "a", "b": "b"} == js_import("path;a,b")
+        assert {"a": "a", "b": "b"} == js_load("path;a,b")
 
     def test_different(self):
-        assert "a" == js_import("first;a")
-        assert "b" == js_import("second;b")
+        assert "a" == js_load("first;a")
+        assert "b" == js_load("second;b")
         assert 2 == utils.load.call_count
 
     def test_using_cache(self):
-        assert "a" == js_import("path;a")
-        assert "a" == js_import("path;a")
+        assert "a" == js_load("path;a")
+        assert "a" == js_load("path;a")
         assert 1 == utils.load.call_count
 
     def test_none(self):
-        assert js_import("path;") is None
+        assert js_load("path;") is None
 
     def test_ignore_dollar(self):
-        assert js_import("path;$test") is None
+        assert js_load("path;$test") is None
