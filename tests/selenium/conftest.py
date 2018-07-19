@@ -20,7 +20,7 @@ HTML_OUTPUT_PATH = TEST_PATH / "_html"
 TEMPLATE_PATH = TEST_PATH / "template.html"
 APP_URL = "http://localhost:8000/{}/{}.html"
 EXAMPLE_URL = "http://localhost:8000/examples/{}"
-EXAMPLE_SCREENSHOT_PATH = TEST_PATH / "_screenshots"
+EXAMPLE_SCREENSHOT_PATH = "examples/{}/screenshot.png"
 DEFAULT_TIMEOUT = 5
 
 
@@ -119,8 +119,7 @@ class SeleniumSession:
     def example(self):
         test_name = self.request.function.__name__
         name = test_name[5:]
-        EXAMPLE_SCREENSHOT_PATH.mkdir(exist_ok=True)
-        img_file = EXAMPLE_SCREENSHOT_PATH / "{}.png".format(name)
+        img_file = Path(EXAMPLE_SCREENSHOT_PATH.format(name))
         with self.url(EXAMPLE_URL.format(name)):
             try:
                 yield
