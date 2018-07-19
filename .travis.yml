@@ -18,7 +18,7 @@ deploy:
   provider: pages
   skip-cleanup: true
   github-token: $GH_TOKEN
-  keep-history: false
+  keep-history: true
   local-dir: gh-pages
   committer-from-gh: true
   on:
