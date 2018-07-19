@@ -3,8 +3,12 @@
 import local_storage
 
 
+def load(path):
+    ...
+
+
 def bind(target, ev):
-    pass
+    ...
 
 
 class window:
@@ -15,7 +19,7 @@ class window:
 
     @staticmethod
     def bind(el, ev):
-        pass
+        ...
 
     class location:
         hash = ''
@@ -36,8 +40,8 @@ class window:
 
         @classmethod
         def set(cls, obj, key, value):
-            pass
+            ...
 
         @classmethod
         def delete(cls, obj, key):
-            pass
+            ...

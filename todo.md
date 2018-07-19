@@ -23,9 +23,6 @@
 ## Internals
 * solve issue with `import asyncio`
   * needs very long to load page
-* implicit load vue.js
-  * also other js libs
-  * use `load`
 
 ## Vue.py Universe
 * python version of vuex
