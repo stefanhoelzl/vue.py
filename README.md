@@ -39,7 +39,7 @@ See also the [Limitations](docs/pyjs_bridge.md)
 ## Documentation
 Documentation is available [here](docs/index.md).
 
-Examples can be found [here](examples/overview).
+Examples can be found [here](examples/index.md).
 These are vue.py versions of the [Vue.js examples](https://vuejs.org/v2/examples/)
 
 

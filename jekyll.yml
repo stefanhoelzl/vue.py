@@ -1,1 +1,2 @@
-include: [__init__.py]
+include:
+  - __init__.py
