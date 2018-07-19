@@ -4,6 +4,8 @@ description: Pythonic Vue.js
 include:
   - __init__.py
 navigation:
+  - title: Start
+    link: /
   - title: Documentation
     link: docs
   - title: Gallery

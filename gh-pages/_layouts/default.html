@@ -15,10 +15,10 @@
     <header class="page-header" role="banner">
       <h1 class="project-name">{{ site.title | default: site.github.repository_name }}</h1>
       <h2 class="project-tagline">{{ site.description | default: site.github.project_tagline }}</h2>
-        <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
         {%- for nav_item in site.navigation -%}
           <a href="{{ nav_item.link | relative_url }}" class="btn">{{ nav_item.title }}</a>
         {%- endfor -%}
+        <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
     </header>
 
     <main id="content" class="main-content" role="main">
