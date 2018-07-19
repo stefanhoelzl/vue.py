@@ -30,16 +30,16 @@ HelloVuePy("#app")
 
 The goal is to provide a solution to write fully-featured Vue applications in pure Python.
 
-To get an overview what currently is supported, have a look at the [Documentation](docs/index.md).
+To get an overview what currently is supported, have a look at the [Documentation](https://stefanhoelzl.github.io/vue.py/docs/).
 
-Have a look [here](planning.md) to see whats planned!
+Have a look [here](https://stefanhoelzl.github.io/vue.py/planning.html) to see whats planned!
 
-See also the [Limitations](docs/pyjs_bridge.md)
+See also the [Limitations](https://stefanhoelzl.github.io/vue.py/docs/pyjs_bridge.html)
 
 ## Documentation
-Documentation is available [here](docs/index.md).
+Documentation is available [here](https://stefanhoelzl.github.io/vue.py/docs/).
 
-Examples can be found [here](examples/index.md).
+Examples can be found [here](https://stefanhoelzl.github.io/vue.py/examples).
 These are vue.py versions of the [Vue.js examples](https://vuejs.org/v2/examples/)
 
 
