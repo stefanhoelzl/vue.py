@@ -32,7 +32,7 @@ The goal is to provide a solution to write fully-featured Vue applications in pu
 
 To get an overview what currently is supported, have a look at the [Documentation](docs/index.md).
 
-Have a look [here](todo.md) to see whats planned!
+Have a look [here](planning.md) to see whats planned!
 
 See also the [Limitations](docs/pyjs_bridge.md)
 

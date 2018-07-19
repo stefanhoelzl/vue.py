@@ -57,7 +57,7 @@ ci.docs:
 	rm -Rf gh-pages
 
 	mkdir gh-pages
-	cp -R README.md todo.md docs examples gh-pages
+	cp -R README.md planning.md docs examples gh-pages
 
 	mkdir gh-pages/js
 	cp js/vue.js gh-pages/js
