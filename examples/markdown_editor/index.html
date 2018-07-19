@@ -4,7 +4,7 @@
   <script src="../../js/brython_dist.js"></script>
   <link rel="stylesheet" media="screen" href="style.css">
 </head>
-<body onload="brython({debug: 1, pythonpath: '../..'})">
+<body onload="brython({debug: 1, pythonpath: ['../..']})">
   <script src="https://unpkg.com/marked@0.3.6"></script>
   <div id="editor">
     <textarea :value="input" @input="update" id="markdown"></textarea>

@@ -58,6 +58,7 @@ ci.docs:
 
 	mkdir gh-pages
 	cp -R README.md planning.md docs examples vue gh-pages
+	cp jekyll.yml gh-pages/_config.yml
 
 	mkdir gh-pages/js
 	cp js/vue.js gh-pages/js

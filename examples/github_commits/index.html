@@ -4,7 +4,7 @@
   <script src="../../js/brython_dist.js"></script>
   <link rel="stylesheet" media="screen" href="style.css">
 </head>
-<body onload="brython({debug: 1, pythonpath: '../..'})">
+<body onload="brython({debug: 1, pythonpath: ['../..']})">
   <div id="commits">
     <h1>Latest vue.py Commits</h1>
     <template v-for="branch in branches">
