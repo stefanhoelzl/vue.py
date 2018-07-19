@@ -8,8 +8,6 @@
 * ...
 
 ## Docs
-* host on gh-pages
-  *  live examples possible (jsfiddle?)
 
 ## Tools
 * cmd line tool to init vue.py project
