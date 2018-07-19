@@ -2,6 +2,7 @@ from browser.local_storage import storage
 from browser import window
 import json
 from vue import VueComponent, computed, filters, watch, directive
+from vue.wrapper import Object
 
 STORAGE_KEY = 'todos-vue.py'
 
@@ -55,7 +56,7 @@ class App(VueComponent):
 
     @watch("todos", deep=True)
     def save_todos(self, new, old):
-        ToDoStorage.save([{k: v for k, v in i.items()} for i in self.todos])
+        ToDoStorage.save(Object.to_py(new))
 
     @computed
     def filtered_todos(self):
@@ -100,8 +101,8 @@ class App(VueComponent):
             return
 
         self.edited_todo = None
-        todo.title = todo.title.strip()
-        if not todo.title:
+        todo["title"] = todo["title"].strip()
+        if not todo["title"]:
             self.remove_todo(todo)
 
     def cancel_edit(self, todo):

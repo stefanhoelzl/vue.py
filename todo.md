@@ -1,12 +1,19 @@
 ## Features
+* make $-methods available
+  * e.g. `$emit`
 * plugins
 * local component registration
 * global filter registration
+* full directives
 * ...
 
 ## Docs
 * host on gh-pages
-  *  live examples possible
+  *  live examples possible (jsfiddle?)
+* documenting the limitations
+  * wrapper around dict/list
+    * `json.dumps` breaks
+    * problem when passing Dict/List to js function (e.g. elastic header example)
 
 
 ## Tools
@@ -14,9 +21,11 @@
 * make available on pip
 
 ## Internals
-* wrap all args to vue method (computed, method, filters, ...)
 * solve issue with `import asyncio`
   * needs very long to load page
+* implicit load vue.js
+  * also other js libs
+  * use `load`
 
 ## Vue.py Universe
 * python version of vuex

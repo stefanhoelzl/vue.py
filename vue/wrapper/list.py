@@ -4,6 +4,10 @@ from .object import Object
 
 class List(Object):
     @staticmethod
+    def __unwraps__():
+        return list, tuple
+
+    @staticmethod
     def __can_wrap__(obj):
         return window.Array.isArray(obj) and not isinstance(obj, list)
 
@@ -23,7 +27,7 @@ class List(Object):
         return [i for i in self]*other
 
     def index(self, obj, start=0, stop=-1):
-        index = self._js.indexOf(obj, start)
+        index = self._js.indexOf(Object.to_js(obj), start)
         if index == -1:
             raise ValueError("{} not in list".format(obj))
         return index
@@ -63,8 +67,8 @@ class List(Object):
         start, stop = self._slice(item)
         value = self._js.slice(start, stop)
         if isinstance(item, int):
-            return self.from_js_object(value[0])
-        return [self.from_js_object(i) for i in value]
+            return Object.from_js(value[0])
+        return [Object.from_js(i) for i in value]
 
     def __reversed__(self):
         raise NotImplementedError()
@@ -73,16 +77,16 @@ class List(Object):
         raise NotImplemented()
 
     def append(self, obj):
-        self._js.push(obj)
+        self._js.push(Object.to_js(obj))
 
     def insert(self, index, obj):
-        self._js.splice(index, 0, obj)
+        self._js.splice(index, 0, Object.to_js(obj))
 
     def remove(self, obj):
-        index = self._js.indexOf(obj)
+        index = self._js.indexOf(Object.to_js(obj))
         while index != -1:
-            del self[self._js.indexOf(obj)]
-            index = self._js.indexOf(obj)
+            del self[self._js.indexOf(Object.to_js(obj))]
+            index = self._js.indexOf(Object.to_js(obj))
 
     def __iadd__(self, other):
         raise NotImplemented()
@@ -94,7 +98,7 @@ class List(Object):
         return _iter(self)
 
     def pop(self, index=-1):
-        return self.from_js_object(self._js.splice(index, 1)[0])
+        return Object.from_js(self._js.splice(index, 1)[0])
 
     def sort(self, key=None, reverse=False):
         self[:] = sorted(self, key=key, reverse=reverse)
@@ -113,6 +117,14 @@ class List(Object):
 
     def __repr__(self):
         return "[{}]".format(", ".join(repr(i) for i in self))
+
+    def __py__(self):
+        return [Object.to_py(item) for item in self]
+
+    def __js__(self):
+        if isinstance(self, (list, tuple)):
+            return [Object.to_js(item) for item in self]
+        return self._js
 
 
 Object.SubClasses.append(List)

@@ -4,15 +4,20 @@ from .object import Object
 
 class Dict(Object):
     @staticmethod
+    def __unwraps__():
+        return dict
+
+    @staticmethod
     def __can_wrap__(obj):
-        return obj.__class__.__name__ == "JSObject" \
+        return (not hasattr(obj, "__class__") or
+                obj.__class__.__name__ == "JSObject") \
                and not callable(obj) and not isinstance(obj, dict)
 
     def __eq__(self, other):
         return other == {k: v for k, v in self.items()}
 
     def __getitem__(self, item):
-        return self.from_js_object(self._js[item])
+        return Object.from_js(self._js[item])
 
     def __iter__(self):
         return (k for k in self.keys())
@@ -37,16 +42,16 @@ class Dict(Object):
         return len(self.items())
 
     def __contains__(self, item):
-        return item in self.keys()
+        return Object.to_js(item) in self.keys()
 
     def __delitem__(self, key):
-        window.Vue.delete(self._js, key)
+        window.Vue.delete(self._js, Object.to_js(key))
 
     def __setitem__(self, key, value):
         if key not in self:
-            window.Vue.set(self._js, key, value)
+            window.Vue.set(self._js, Object.to_js(key), Object.to_js(value))
         else:
-            self._js[key] = value
+            self._js[Object.to_js(key)] = Object.to_js(value)
 
     def get(self, k, default=None):
         if k not in self:
@@ -54,13 +59,13 @@ class Dict(Object):
         return self[k]
 
     def values(self):
-        return window.Object.values(self._js)
+        return Object.from_js(window.Object.values(self._js))
 
     def update(self, _m=None, **kwargs):
         if _m is None:
             _m = {}
             _m.update(kwargs)
-        window.Object.assign(self._js, _m)
+        window.Object.assign(self._js, Object.to_js(_m))
 
     def clear(self):
         while len(self) > 0:
@@ -74,10 +79,10 @@ class Dict(Object):
         raise NotImplementedError()
 
     def items(self):
-        return window.Object.entries(self._js)
+        return Object.from_js(window.Object.entries(self._js))
 
     def keys(self):
-        return window.Object.keys(self._js)
+        return Object.from_js(window.Object.keys(self._js))
 
     def __str__(self):
         return repr(self)
@@ -93,6 +98,14 @@ class Dict(Object):
 
     def __bool__(self):
         return len(self) > 0
+
+    def __py__(self):
+        return {Object.to_py(k): Object.to_py(v) for k, v in self.items()}
+
+    def __js__(self):
+        if isinstance(self, dict):
+            return {Object.to_js(k): Object.to_js(v) for k, v in self.items()}
+        return self._js
 
 
 Object.Default = Dict
