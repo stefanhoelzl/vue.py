@@ -52,5 +52,19 @@ tests.unit:
 tests:
 	PYTHONPATH=$(PYTHONPATH) pytest tests
 
+.PHONY: ci.docs
+ci.docs:
+	rm -Rf gh-pages
+
+	mkdir gh-pages
+	cp -R README.md todo.md docs examples gh-pages
+
+	mkdir gh-pages/js
+	cp js/vue.js gh-pages/js
+	cp js/brython_dist.js gh-pages/js
+
+	mkdir gh-pages/tests
+	cp -R tests/selenium/_html/* gh-pages/tests
+
 .PHONY: ci
-ci: tests
+ci: tests ci.docs

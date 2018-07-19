@@ -3,3 +3,4 @@ venv
 js
 .pytest_cache
 debug
+gh-pages
