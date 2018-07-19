@@ -119,8 +119,8 @@ def test_dont_allow_write_prop(selenium):
 
     with pytest.raises(Exception):
         with selenium.app(app):
-            assert selenium.element_has_text("component", "text")
-    assert "props are readonly!" in selenium.logs[-4]["message"]
+            with pytest.raises(TimeoutError):
+                selenium.element_has_text("component", "HALLO")
 
 
 def test_prop_validator(selenium):

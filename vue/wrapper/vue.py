@@ -15,9 +15,8 @@ class Vue(Object):
         elif hasattr(getattr(self, key), "__set__"):
             getattr(self, key).__set__(value)
         else:
-            if key in dir(getattr(self._js, "$props")):
-                raise Exception("props are readonly!")
-            setattr(self._js, key, value)
+            if key not in dir(getattr(self._js, "$props")):
+                setattr(self._js, key, value)
 
 
 Object.SubClasses.append(Vue)
