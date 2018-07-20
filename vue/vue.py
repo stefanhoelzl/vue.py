@@ -1,7 +1,7 @@
 from browser import window
 import javascript
 
-from .wrapper import Vue, Object
+from .wrapper import Object
 
 
 def _inject_vue_instance(fn, first_arg_is_this=False):
@@ -9,9 +9,17 @@ def _inject_vue_instance(fn, first_arg_is_this=False):
         args = list(args)
         vue_instance = javascript.this() if not first_arg_is_this \
             else args.pop(0)
-        args = tuple(Object.from_js(arg) for arg in args)
-        return Object.to_js(fn(Vue(vue_instance), *args, **kwargs))
+        fn_wrapped = _wrap_in_and_out_types(fn)
+        return fn_wrapped(vue_instance, *args, **kwargs)
     return fn_
+
+
+def _wrap_in_and_out_types(fn):
+    def wrapper(*args, **kwargs):
+        args = tuple(Object.from_js(arg) for arg in args)
+        kwargs = {k: Object.from_js(v) for k, v in kwargs.items()}
+        return Object.to_js(fn(*args, **kwargs))
+    return wrapper
 
 
 def _wrap_coroutine(coroutine):

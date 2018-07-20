@@ -41,7 +41,7 @@ def test_data_as_property():
     class Component(VueComponent):
         @data
         def attribute(self):
-            return self._js
+            return self
 
     with mock.patch("vue.vue.window.Vue.new") as new:
         Component("app")
