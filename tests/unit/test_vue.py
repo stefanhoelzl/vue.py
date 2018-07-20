@@ -226,6 +226,57 @@ def test_function_directive():
                                                              "old_vnode")
 
 
+def test_full_directive_different_hooks():
+    class Component(VueComponent):
+        @staticmethod
+        @directive("focus")
+        def bind():
+            return "bind"
+
+        @staticmethod
+        @directive("focus")
+        def inserted():
+            return "inserted"
+
+        @staticmethod
+        @directive("focus")
+        def update():
+            return "update"
+
+        @staticmethod
+        @directive("focus")
+        def component_updated():
+            return "componentUpdated"
+
+        @staticmethod
+        @directive("focus")
+        def unbind():
+            return "unbind"
+
+    with mock.patch("vue.vue.window.Vue.new") as new:
+        Component("app")
+    directive_map = new.call_args[0][0]["directives"]["focus"]
+    for fn_name in ("bind", "inserted", "update",
+                    "componentUpdated", "unbind"):
+        assert fn_name == directive_map[fn_name]()
+
+
+def test_full_directive_single_hook():
+    class Component(VueComponent):
+        @staticmethod
+        @directive("focus", "bind", "inserted",
+                   "update", "component_updated", "unbind")
+        def hook():
+            return "hook"
+
+    with mock.patch("vue.vue.window.Vue.new") as new:
+        Component("app")
+    directive_map = new.call_args[0][0]["directives"]["focus"]
+    for fn_name in ("bind", "inserted", "update",
+                    "componentUpdated", "unbind"):
+        assert "hook" == directive_map[fn_name]()
+
+
 def test_directive_replace_dash():
     class Component(VueComponent):
         @staticmethod

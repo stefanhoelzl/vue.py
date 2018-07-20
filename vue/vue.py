@@ -69,10 +69,32 @@ def computed(fn):
     return Computed(fn)
 
 
-def directive(fn):
-    fn =  _wrap_in_and_out_types(fn)
+def _directive(fn, *hooks):
+    fn = _wrap_in_and_out_types(fn)
+    fn.vue_directive_name = fn.__name__
+    fn.vue_directive_hooks = hooks
     fn.vue_directive = True
     return fn
+
+
+def _function_directive(fn):
+    return _directive(fn)
+
+
+def _directive_hook(name, *hooks):
+    def wrapper(fn):
+        _hooks = (fn.__name__,) if not hooks else hooks
+        fn.__name__ = name
+        return _directive(fn, *_hooks)
+    return wrapper
+
+
+def directive(fn, *hooks):
+    if callable(fn):
+        return _function_directive(fn)
+    if not hooks:
+        return _directive_hook(fn)
+    return _directive_hook(fn, *hooks)
 
 
 class Validator:
@@ -168,6 +190,7 @@ class VueComponent:
             "directives": {},
             "template": cls.template,
         }
+        directives = {}
         validators = {}
         for obj_name in set(dir(cls))-set(dir(VueComponent)):
             obj = getattr(cls, obj_name)
@@ -185,7 +208,15 @@ class VueComponent:
             elif hasattr(obj, "vue_filter"):
                 object_map["filters"][obj_name] = obj
             elif hasattr(obj, "vue_directive"):
-                object_map["directives"][obj_name.replace("_", "-")] = obj
+                directive_name = obj.vue_directive_name.replace("_", "-")
+                hooks = obj.vue_directive_hooks
+                if not hooks:
+                    directives[directive_name] = obj
+                else:
+                    for hook in hooks:
+                        if hook == "component_updated":
+                            hook = "componentUpdated"
+                        directives.setdefault(directive_name, {})[hook] = obj
             elif callable(obj):
                 object_map["methods"][obj_name] = _wrap_method(obj)
             elif obj_name in getattr(cls, "__annotations__", {}):
@@ -200,6 +231,7 @@ class VueComponent:
             object_map["props"][obj_name] = cls._vue_property(
                 obj_name, typ, validators.get(obj_name, None)
             )
+        object_map['directives'].update(directives)
         return object_map
 
     @classmethod
@@ -214,7 +246,7 @@ class VueComponent:
         init_dict = cls._vue_init_dict()
         init_dict.update(el=el)
         init_dict.update(propsData=data)
-        return window.Vue.new(init_dict)
+        return Object.from_js(window.Vue.new(init_dict))
 
     @classmethod
     def register(cls, name=None):
