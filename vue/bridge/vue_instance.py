@@ -20,7 +20,7 @@ class VueInstance(Object):
         elif hasattr(getattr(self, key), "__set__"):
             getattr(self, key).__set__(value)
         else:
-            if key not in dir(getattr(self._js, "$props")):
+            if key not in dir(getattr(self._js, "$props", [])):
                 setattr(self._js, key, value)
 
 

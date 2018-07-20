@@ -1,6 +1,6 @@
 from unittest import mock
 
-from vue.vue import *
+from vue import *
 
 
 def test_method():
@@ -9,7 +9,7 @@ def test_method():
             return self, event
 
     with mock.patch("vue.vue.window.Vue.new") as new, \
-        mock.patch("vue.vue.javascript.this", return_value="THIS"):
+        mock.patch("vue.decorators.base.javascript.this", return_value="THIS"):
         c = Component("app")
         assert "SELF", "EVENT" == c.do("EVENT")
     assert "do" in new.call_args[0][0]["methods"]
@@ -23,7 +23,7 @@ def test_method_as_coroutine():
             return self
 
     with mock.patch("vue.vue.window.Vue.new") as new, \
-         mock.patch("vue.vue.javascript.this"):
+         mock.patch("vue.decorators.base.javascript.this"):
         Component("app")
     assert "co" in new.call_args[0][0]["methods"]
 
@@ -64,8 +64,8 @@ def test_props_with_default():
 
     with mock.patch("vue.vue.window.Vue.new") as new:
         Component("app")
-    assert {"prop": {"type": int, "default": 100}} \
-           == new.call_args[0][0]["props"]
+    props = {"prop": {"type": int, "default": 100}}
+    assert props == new.call_args[0][0]["props"]
 
 
 def test_props_validator():

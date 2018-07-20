@@ -2,8 +2,8 @@ from unittest import mock
 
 from browser import window
 
-from vue.wrapper import Object
-from vue.wrapper.vue_instance import VueInstance
+from vue.bridge import Object
+from vue.bridge.vue_instance import VueInstance
 
 from .mocks import ArrayMock
 

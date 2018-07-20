@@ -2,9 +2,9 @@ from unittest import mock
 
 import pytest
 
-from tests.unit.test_wrapper.mocks import ObjectMock, VueMock
+from tests.unit.test_bridge.mocks import ObjectMock, VueMock
 
-from vue.wrapper.dict import window, Dict
+from vue.bridge.dict import window, Dict
 
 
 @pytest.fixture(scope="module", autouse=True)

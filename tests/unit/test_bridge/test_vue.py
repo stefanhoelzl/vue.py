@@ -1,7 +1,7 @@
 from unittest import mock
 import pytest
 from .mocks import ArrayMock
-from vue.wrapper.vue_instance import VueInstance
+from vue.bridge.vue_instance import VueInstance
 from browser import window
 
 

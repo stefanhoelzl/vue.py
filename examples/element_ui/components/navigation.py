@@ -21,6 +21,7 @@ class NavigationItem(VueComponent):
                 v-for="sub_item in item.children"
                 :key="sub_item.id"
                 :item="sub_item"
+                @click="$emit('click', $event)"
                 >
             </navigation-item>
         </template>

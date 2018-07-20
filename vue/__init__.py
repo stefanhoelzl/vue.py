@@ -1,2 +1,3 @@
-from .vue import VueComponent, \
-    data, computed, watch, validator, Model, filters, directive
+from .vue import VueComponent
+from .decorators import computed, validator, directive, filters, watch, \
+    data, Model

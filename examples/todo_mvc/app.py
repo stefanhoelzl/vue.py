@@ -2,7 +2,7 @@ from browser.local_storage import storage
 from browser import window
 import json
 from vue import VueComponent, computed, filters, watch, directive
-from vue.wrapper import Object
+from vue.bridge import Object
 
 STORAGE_KEY = 'todos-vue.py'
 
@@ -10,17 +10,17 @@ STORAGE_KEY = 'todos-vue.py'
 class ToDoStorage:
     NEXT_UID = 0
 
-    @staticmethod
-    def next_uid():
-        uid = ToDoStorage.NEXT_UID
-        ToDoStorage.NEXT_UID += 1
+    @classmethod
+    def next_uid(cls):
+        uid = cls.NEXT_UID
+        cls.NEXT_UID += 1
         return uid
 
-    @staticmethod
-    def fetch():
+    @classmethod
+    def fetch(cls):
+        cls.NEXT_UID = 0
         todos = json.loads(storage.get(STORAGE_KEY, '[]'))
-        ToDoStorage.NEXT_UID = len(todos)
-        return [{"id": ToDoStorage.next_uid(), **todo} for todo in todos]
+        return [{"id": cls.next_uid(), **todo} for todo in todos]
 
     @staticmethod
     def save(todos):
@@ -36,7 +36,7 @@ class VisibilityFilters:
 
     @staticmethod
     def all(todos):
-        return todos
+        return [todo for todo in todos]
 
     @staticmethod
     def active(todos):

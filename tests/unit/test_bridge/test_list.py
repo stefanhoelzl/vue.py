@@ -1,6 +1,6 @@
 import pytest
 
-from vue.wrapper.list import List
+from vue.bridge.list import List
 from .mocks import ArrayMock
 
 
