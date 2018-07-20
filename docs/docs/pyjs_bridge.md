@@ -23,6 +23,49 @@ html = marked("# Title")
 This uses the optimized methods a Browser uses to load all dependencies.
 And provides also access to all object in the Javascript namespace.
 
+## Vue Reactivity
+To keep the reactivity of Vue.js and at the same time providing a
+Pythonic interface, all attribuets of vue.py components are wrapped in
+custom types.
+These types provide the same interfaes than native python types, but use
+the javascript types in the background.
+
+Just making dicts out of Javascript object, method calls, would look
+rather unusual.
+```python
+element['focus']()
+```
+To avoid this, wrapped dicts can also access items as attributes, this leads to
+more readable code
+```python
+element.focus()
+```
+
+By wrapping the javascript types, it is also possible
+to improve the original Vue.js behavior. In Vue.js this is forbidden.
+```javascript
+var vm = new Vue({
+  data: {
+    reactive: {yes: 0}
+  }
+})
+// `vm.reactive.yes` is now reactive
+
+vm.no = 2
+// `vm.reactive.no` is NOT reactive
+```
+
+Your have to use `Vue.set()`. vue.py takes care of this under the hood.
+```python
+class App(VueComponent):
+    reactive = {"yes": 0}
+
+app = App("#element")
+# `vm.reactive.yes` is now reactive
+
+app.reactive["also"] = 2  # `vm.reactive.also` is now also reactive
+```
+
 ## Limitations
 ## Usable Types
 For now vue.py only supports basics types (int, float, str, bool, list, dict), since these can be converted fairly simple to their Javascript equivalentive.
