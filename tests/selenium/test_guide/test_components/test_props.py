@@ -145,6 +145,6 @@ def test_prop_validator(selenium):
 
     with pytest.raises(Exception) as excinfo:
         with selenium.app(app):
-            selenium.element_has_text("component", "not text")
+            assert selenium.element_has_text("component", "not text")
     assert "[Vue warn]: Invalid prop: custom validator check failed for prop" \
            in excinfo.value.errors[0]["message"]
