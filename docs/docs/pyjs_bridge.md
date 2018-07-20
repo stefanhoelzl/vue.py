@@ -24,10 +24,17 @@ This uses the optimized methods a Browser uses to load all dependencies.
 And provides also access to all object in the Javascript namespace.
 
 ## Limitations
+## Usable Types
+For now vue.py only supports basics types (int, float, str, bool, list, dict), since these can be converted fairly simple to their Javascript equivalentive.
+Writing own classes and using them for Component properties may not work.
+
+This may change in the future, but for now it is not planned to work on this issue.
+
+### Due To Wrapping Types
 Due to restrictions of Brython in combination with the reactivity system in Vue.js are custom wrapper around component data and props neccessary.
 This is done mostly in the background, there are some limitations to consider.
 
-### When Native Python Types Assumed
+#### When Native Python Types Are Assumed
 The wrapper around lists and dictionaries provide the same interface than native python types but due to restrictions in Brython, they are no subclasses of `list`/`dict`.
 This can lead to problems when passing this methods to other native python methods.
 Therefore a helper is provided to convert a wrapped Javascript object into a native python type.
@@ -54,7 +61,7 @@ class MyComponent(VueComponent):
 **When converting to native python types reactivity may get lost!**
 
 
-### When Native Javascript Types Assumed
+#### When Native Javascript Types Are Assumed
 A similar problem exists when passing wrapper variables to native javascript methods.
 Brython can convert native Python types like lists and dicts to their javascript equivalent.
 Since the wrapper types are not real lists/dicts Brython cannot convert them.
@@ -79,7 +86,7 @@ class MyComponent(VueComponent):
         return js_json.stringify(Object.to_js(self.content))
 ```
 
-### Are These Limitations Forever?
+#### Are These Limitations Forever?
 I hope not!
 
 Currently the main reason for this limitations is [Brython Issue 893](https://github.com/brython-dev/brython/issues/893).

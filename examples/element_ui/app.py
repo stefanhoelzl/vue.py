@@ -1,5 +1,4 @@
 from vue import VueComponent
-from vue.wrapper import Object
 
 
 class App(VueComponent):
