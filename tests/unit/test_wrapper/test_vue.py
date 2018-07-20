@@ -1,4 +1,5 @@
 from unittest import mock
+import pytest
 from .mocks import ArrayMock
 from vue.wrapper.vue import Vue
 from browser import window
@@ -15,6 +16,18 @@ class TestVue:
         assert "value" == vue.attribute
         this.attribute = "new_value"
         assert "new_value" == vue.attribute
+
+    def test_get_dollar_attribute(self):
+        class This:
+            def __getattr__(self, item):
+                if item == "$dollar":
+                    return "DOLLAR"
+                return super().__getattribute__(item)
+
+        vue = Vue(This())
+        assert "DOLLAR" == vue.dollar
+        with pytest.raises(AttributeError):
+            assert not vue.no_dollar
 
     def test_setattr(self):
         class This:

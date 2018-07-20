@@ -7,7 +7,12 @@ class Vue(Object):
         return hasattr(obj, "_isVue") and obj._isVue
 
     def __getattr__(self, item):
-        return Object.from_js(getattr(self._js, item))
+        try:
+            return Object.from_js(getattr(self._js, item))
+        except AttributeError:
+            if not item.startswith("$"):
+                return self.__getattr__("${}".format(item))
+            raise
 
     def __setattr__(self, key, value):
         if key in ["_js"]:
