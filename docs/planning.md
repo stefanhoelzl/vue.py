@@ -1,8 +1,10 @@
+# Future Plans
+
 ## Features
-* plugins
+* plugins and mixins
 * local component registration
 * global filter registration
-* full directives
+* global directives
 * ...
 
 ## Docs
@@ -17,8 +19,8 @@
   * needs very long to load page
 
 ## Vue.py Universe
-* python version of vue-router
-* python version of vuex
+* python bindings of vue-router
+* python bindings of vuex
   * synchronize over WebSockets with python backend
 * desktop toolkit
   * based on [pywebview](https://github.com/r0x0r/pywebview) ??
