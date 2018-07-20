@@ -9,6 +9,7 @@ def _inject_vue_instance(fn, first_arg_is_this=False):
         args = list(args)
         vue_instance = javascript.this() if not first_arg_is_this \
             else args.pop(0)
+        args = tuple(Object.from_js(arg) for arg in args)
         return Object.to_js(fn(Vue(vue_instance), *args, **kwargs))
     return fn_
 
