@@ -106,3 +106,12 @@ class TestDict:
         d.__set__({"c": 1, "d": 2})
         assert old_id == id(d)
         assert {"c": 1, "d": 2} == d
+
+    def test_getattr(self):
+        d = Dict({"a": 0, "b": 1})
+        assert 1 == d.b
+
+    def test_setattr(self):
+        d = Dict({"a": 1})
+        d.a = 2
+        assert {"a": 2} == d

@@ -105,6 +105,14 @@ class Dict(Object):
     def __bool__(self):
         return len(self) > 0
 
+    def __getattr__(self, item):
+        return self[item]
+
+    def __setattr__(self, key, value):
+        if key in ["_js"]:
+            return super().__setattr__(key, value)
+        self[key] = value
+
     def __py__(self):
         return {Object.to_py(k): Object.to_py(v) for k, v in self.items()}
 
