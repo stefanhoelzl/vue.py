@@ -9,14 +9,18 @@ class Dict(Object):
 
     @staticmethod
     def __can_wrap__(obj):
-        return (not hasattr(obj, "__class__") or
-                obj.__class__.__name__ == "JSObject") \
-               and not callable(obj) and not isinstance(obj, dict)
+        return (str(type(obj)) == "<undefined>") or \
+               (obj.__class__.__name__ == "JSObject"
+                and not callable(obj) and not isinstance(obj, dict))
 
     def __eq__(self, other):
         return other == {k: v for k, v in self.items()}
 
     def __getitem__(self, item):
+        if str(type(self._js)) == "<undefined>":  # Workaround
+            for key, value in window.Object.entries(self._js):
+                if key == item:
+                    return Object.from_js(value)
         return Object.from_js(self._js[item])
 
     def __iter__(self):
@@ -59,7 +63,7 @@ class Dict(Object):
         return self[k]
 
     def values(self):
-        return Object.from_js(window.Object.values(self._js))
+        return tuple(self[key] for key in self)
 
     def update(self, _m=None, **kwargs):
         if _m is None:
@@ -79,10 +83,12 @@ class Dict(Object):
         raise NotImplementedError()
 
     def items(self):
-        return Object.from_js(window.Object.entries(self._js))
+        return tuple((key, self[key]) for key in self)
 
     def keys(self):
-        return Object.from_js(window.Object.keys(self._js))
+        if str(type(self._js)) == "<undefined>":  # Workaround
+            return window.Object.keys(self._js)
+        return [Object.from_js(key) for key in self._js]
 
     def __str__(self):
         return repr(self)

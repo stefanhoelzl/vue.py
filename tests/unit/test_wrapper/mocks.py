@@ -10,18 +10,6 @@ class VueMock:
 
 class ObjectMock:
     @staticmethod
-    def entries(dct):
-        return list(dct.items())
-
-    @staticmethod
-    def keys(dct):
-        return list(dct.keys())
-
-    @staticmethod
-    def values(dct):
-        return list(dct.values())
-
-    @staticmethod
     def assign(target, *sources):
         for source in sources:
             target.update(source)

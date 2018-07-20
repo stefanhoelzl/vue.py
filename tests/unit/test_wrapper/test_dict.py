@@ -19,7 +19,7 @@ class TestDict:
         assert "value" == Dict({"key": "value"})["key"]
 
     def test_items(self):
-        assert [("a", 1), ("b", 2)] == Dict({"a": 1, "b": 2}).items()
+        assert (("a", 1), ("b", 2)) == Dict({"a": 1, "b": 2}).items()
 
     def test_eq(self):
         assert {"a": 1} != Dict({"a": 2})
@@ -52,7 +52,7 @@ class TestDict:
         assert "default" == Dict({"a": 0, "b": 1}).get("c", "default")
 
     def test_values(self):
-        assert [0, 1] == Dict({"a": 0, "b": 1}).values()
+        assert (0, 1) == Dict({"a": 0, "b": 1}).values()
 
     def test_repr(self):
         assert str({"a": 0, "b": 1}) == str(Dict({"a": 0, "b": 1}))
