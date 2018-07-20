@@ -8,6 +8,7 @@ class NavigationItem(VueComponent):
         <span slot="title">{{ item.group }}</span>
     </el-menu-item-group>
     <component v-else
+        @click="click()"
         :is="item_tag" 
         :disabled="item.disabled"
         :index="item.id">
@@ -48,6 +49,12 @@ class NavigationItem(VueComponent):
     def is_submenu(self):
         return "children" in self.item
 
+    def click(self):
+        self.notify.info({
+            "title": "Navigation",
+            "message": self.item.get("title", "NO TITLE")
+        })
+
 
 NavigationItem.register()
 
@@ -57,6 +64,7 @@ class NavigationMenu(VueComponent):
     template = """
     <div>
         <el-menu
+            @select="select"
             class="navigation-menu">
             <navigation-item 
                 v-for="item in content"
@@ -68,6 +76,9 @@ class NavigationMenu(VueComponent):
     </div>
     """
 
+    def select(self, index, path, *args):
+        self.emit("select", index, path)
+
 
 NavigationMenu.register()
 
@@ -75,7 +86,10 @@ NavigationMenu.register()
 class App(VueComponent):
     template = """
     <div>
-        <navigation-menu :content="navigation_menu"></navigation-menu>
+        <navigation-menu 
+            @select="selected"
+            :content="navigation_menu">
+        </navigation-menu>
     </div>
     """
 
@@ -83,12 +97,12 @@ class App(VueComponent):
         {"id": "One", "title": "Navigation One", "icon": "el-icon-location",
          "children": [
              {"group": "Group One"},
-             {"id": "OneOneOne", "title": "Item One"},
-             {"id": "OneOneTwo", "title": "Item Two"},
+             {"id": "One", "title": "Item One"},
+             {"id": "Two", "title": "Item Two"},
              {"group": "Group Two"},
-             {"id": "OneTwoOne", "title": "Item Three"},
-             {"id": "OneTwoTwo", "title": "Item Four", "children": [
-                 {"id": "OneThree", "title": "Item Five"}
+             {"id": "Three", "title": "Item Three"},
+             {"id": "Four", "title": "Item Four", "children": [
+                 {"id": "Five", "title": "Item Five"}
              ]},
          ]
          },
@@ -97,6 +111,9 @@ class App(VueComponent):
          "disabled": True},
         {"id": "Four", "title": "Navigation Four", "icon": "el-icon-setting"},
     ]
+
+    def selected(self, index, path):
+        print(index, path)
 
 
 App("#app")
