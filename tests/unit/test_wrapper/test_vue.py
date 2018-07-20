@@ -1,7 +1,7 @@
 from unittest import mock
 import pytest
 from .mocks import ArrayMock
-from vue.wrapper.vue import Vue
+from vue.wrapper.vue_instance import VueInstance
 from browser import window
 
 
@@ -12,7 +12,7 @@ class TestVue:
                 self.attribute = "value"
 
         this = This()
-        vue = Vue(this)
+        vue = VueInstance(this)
         assert "value" == vue.attribute
         this.attribute = "new_value"
         assert "new_value" == vue.attribute
@@ -24,7 +24,7 @@ class TestVue:
                     return "DOLLAR"
                 return super().__getattribute__(item)
 
-        vue = Vue(This())
+        vue = VueInstance(This())
         assert "DOLLAR" == vue.dollar
         with pytest.raises(AttributeError):
             assert not vue.no_dollar
@@ -40,7 +40,7 @@ class TestVue:
                 return self.__getattribute__(item)
 
         this = This()
-        vue = Vue(this)
+        vue = VueInstance(this)
         vue.attribute = True
         assert vue.attribute
         assert this.attribute
@@ -56,7 +56,7 @@ class TestVue:
                 return self.__getattribute__(item)
 
         this = This()
-        vue = Vue(this)
+        vue = VueInstance(this)
         list_id = id(this.list)
         with mock.patch.object(window.Array, "isArray", return_value=True):
             vue.list = [0, 1, 2]

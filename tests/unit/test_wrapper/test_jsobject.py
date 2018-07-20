@@ -3,7 +3,7 @@ from unittest import mock
 from browser import window
 
 from vue.wrapper import Object
-from vue.wrapper.vue import Vue
+from vue.wrapper.vue_instance import VueInstance
 
 from .mocks import ArrayMock
 
@@ -13,7 +13,7 @@ class TestJSObjectWrapper:
         class This:
             def _isVue(self):
                 return True
-        assert isinstance(Object.from_js(This()), Vue)
+        assert isinstance(Object.from_js(This()), VueInstance)
 
     def test_array(self):
         with mock.patch.object(window.Array, "isArray", return_value=True):
