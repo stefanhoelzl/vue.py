@@ -26,5 +26,5 @@ class ComponentLifecycleHooks(VueComponent):
         print("on beforeDestroy")
 
     def destroyed(self):
-        print("on beforeDestroyed")
+        print("on destroyed")
 ```
