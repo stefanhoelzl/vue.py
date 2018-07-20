@@ -55,3 +55,26 @@ Keyword-arguments can be used to pass [propsData](https://vuejs.org/v2/api/#prop
 ```python
 App("#app", prop="value")
 ```
+
+
+## API
+### Dollar Methods
+$-methods like `$emit` can be called by omitting the `$`
+```python
+from vue import VueComponent
+
+class MyComponent(VueComponent):
+    def created(self):
+        self.emit("creation", "Arg")
+```
+
+In the case your Component has another attribute with the same name, you can use a workaround and directly call `getattr()`
+```python
+from vue import VueComponent
+
+class MyComponent(VueComponent):
+    emit = "already used"
+    def created(self):
+        getattr(self, "$emit")("creation", "Arg")
+```
+

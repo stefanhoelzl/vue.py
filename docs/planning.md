@@ -1,6 +1,4 @@
 ## Features
-* make $-methods available
-  * e.g. `$emit`
 * plugins
 * local component registration
 * global filter registration
