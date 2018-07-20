@@ -12,4 +12,4 @@ class CustomDirective(VueComponent):
 
 The `@staticmethod` decorator is only necessary to avoid IDE checker errors.
 
-Dashes in directive names get replaced, so `custom_focus` gets `v-custom-focus`.
+Underscores in directive names get replaced by dashes, so `custom_focus` gets `v-custom-focus`.
