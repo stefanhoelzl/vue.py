@@ -3,20 +3,27 @@
 ## Features
 * plugins and mixins
 * local component registration
-* global filter registration
+* access to Vue object (global configuration etc.)
+* global filters
 * global directives
 * ...
+
+## Bugs and Issues
+* investigate directive arguments
+  * different hooks get different arguments??
+* solve issue with `import asyncio`
+  * needs very long to load page
 
 ## Docs
 * embed examples in gallery
 
 ## Tools
 * cmd line tool to init vue.py project
+* pre-transpile to javascript
 * make available on pip
 
 ## Internals
-* solve issue with `import asyncio`
-  * needs very long to load page
+* write tests for decorators
 
 ## Vue.py Universe
 * python bindings of vue-router
