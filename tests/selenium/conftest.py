@@ -116,11 +116,14 @@ class SeleniumSession:
             .write_text(template)
 
     @contextmanager
-    def example(self):
+    def example(self, hash_=None):
         test_name = self.request.function.__name__
         name = test_name[5:]
         img_file = Path(EXAMPLE_SCREENSHOT_PATH.format(name))
-        with self.url(EXAMPLE_URL.format(name)):
+        url = EXAMPLE_URL.format(name)
+        if hash_:
+            url = "{}#{}".format(url, hash_)
+        with self.url(url):
             try:
                 yield
             finally:

@@ -107,10 +107,8 @@ def test_todo_mvc(selenium):
         assert "completed" == labels[1].text
 
 
-
-
 def test_github_commits(selenium):
-    with selenium.example():
+    with selenium.example(hash_="testing"):
         assert selenium.element_with_tag_name_present("ul")
-        time.sleep(1)
+        time.sleep(2)
         assert 10 == len(selenium.driver.find_elements_by_tag_name("li"))

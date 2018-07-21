@@ -3,8 +3,12 @@ import asyncio
 
 from vue import VueComponent, filters, watch
 
+from browser import window
 
 url = 'https://api.github.com/repos/stefanhoelzl/vue.py/commits?per_page=10&sha={}'
+
+if window.location.hash == "#testing":
+    url = "data.json"
 
 
 class App(VueComponent):
