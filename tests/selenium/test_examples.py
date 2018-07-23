@@ -107,6 +107,13 @@ def test_todo_mvc(selenium):
         assert "completed" == labels[1].text
 
 
+def test_mqtt_dashboard(selenium):
+    with selenium.example():
+        selenium.element_present("btn").click()
+        time.sleep(0.1)
+        assert selenium.element_has_text("btn", "CLOSED")
+
+
 def test_github_commits(selenium):
     with selenium.example(hash_="testing"):
         assert selenium.element_with_tag_name_present("ul")

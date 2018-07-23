@@ -16,6 +16,11 @@
 
 ![Markdown Editor Screenshot](https://raw.githubusercontent.com/stefanhoelzl/vue.py/gh-pages/examples/markdown_editor/screenshot.png)
 
+## MQTT Dashboard
+[Demo](https://stefanhoelzl.github.io/vue.py/examples/mqtt_dashboard) / [Source](https://github.com/stefanhoelzl/vue.py/tree/master/examples/mqtt_dashboard)
+
+![Markdown Editor Screenshot](https://raw.githubusercontent.com/stefanhoelzl/vue.py/gh-pages/examples/markdown_editor/screenshot.png)
+
 ## GitHub Commits
 [Demo](https://stefanhoelzl.github.io/vue.py/examples/github_commits) / [Source](https://github.com/stefanhoelzl/vue.py/tree/master/examples/github_commits)
 

@@ -27,16 +27,16 @@ class window:
     class Array:
         @classmethod
         def isArray(cls, obj):
-            return False
+            ...
 
     class Vue:
         @classmethod
         def new(cls, *args, **kwargs):
-            return None
+            ...
 
         @classmethod
         def component(cls, name, opts):
-            return None
+            ...
 
         @classmethod
         def set(cls, obj, key, value):
@@ -45,3 +45,9 @@ class window:
         @classmethod
         def delete(cls, obj, key):
             ...
+
+
+class timer:
+    @staticmethod
+    def set_interval(fn, interval):
+        ...
