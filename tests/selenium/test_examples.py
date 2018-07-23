@@ -112,6 +112,7 @@ def test_mqtt_dashboard(selenium):
         selenium.element_present("btn").click()
         time.sleep(0.1)
         assert selenium.element_has_text("btn", "CLOSED")
+        selenium.allowed_errors.append("Unexpected response code: 307")
 
 
 def test_github_commits(selenium):

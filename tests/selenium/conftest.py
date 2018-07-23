@@ -48,6 +48,7 @@ class SeleniumSession:
         self.driver = None
         self.request = None
 
+        self.allowed_errors = []
         self.logs = []
 
     def __getattr__(self, item):
@@ -78,6 +79,7 @@ class SeleniumSession:
         return new_logs
 
     def clear_logs(self):
+        self.allowed_errors.clear()
         self.get_logs()
         self.logs.clear()
 
@@ -139,7 +141,7 @@ class SeleniumSession:
         self.get_logs()
         for log in self.logs:
             if log['level'] != "INFO":
-                for exception in exceptions:
+                for exception in exceptions + self.allowed_errors:
                     if re.match(exception, log["message"]):
                         break
                 else:
