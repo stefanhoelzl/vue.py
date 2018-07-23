@@ -13,7 +13,7 @@ LOADING_TOPIC = "vuepyloading"
 WINDOW_TOPIC = "vuepywindow"
 
 mqtt = js_lib("mqtt")
-client = mqtt.connect('mqtt://test.mosquitto.org:8080')
+client = mqtt.connect('mqtts://test.mosquitto.org:8081')
 
 
 class App(VueComponent):
