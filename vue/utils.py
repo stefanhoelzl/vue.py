@@ -22,4 +22,7 @@ def js_load(path):
 
 
 def js_lib(name):
-    return getattr(window, name)
+    attr = getattr(window, name)
+    if dir(attr) == ["default"]:
+        return attr.default
+    return attr

@@ -1,11 +1,11 @@
 import pytest
 from unittest import mock
 from vue import utils
-from vue.utils import js_load
+from vue.utils import *
 
 
-@pytest.fixture(autouse=True, scope="function")
-def fix_and_window():
+@pytest.fixture
+def fix_load_and_window():
     utils.CACHE.clear()
 
     class WindowMock:
@@ -29,7 +29,8 @@ def fix_and_window():
         yield
 
 
-class TestJsImport:
+@pytest.mark.usefixtures("fix_load_and_window")
+class TestJsLoad:
     def test_single(self):
         assert "a" == js_load("path;a")
 
@@ -51,3 +52,25 @@ class TestJsImport:
 
     def test_ignore_dollar(self):
         assert js_load("path;$test") is None
+
+
+class TestJsLib:
+    def test_getattr_of_window(self):
+        class WindowMock:
+            attribute = "ATTRIBUTE"
+
+        with mock.patch.object(utils, "window", new=WindowMock):
+            assert "ATTRIBUTE" == js_lib("attribute")
+
+    def test_get_default(self):
+        class AttributeWithDefault:
+            default = "DEFAULT"
+
+            def __dir__(self):
+                return ["default"]
+
+        class WindowMock:
+            attribute = AttributeWithDefault()
+
+        with mock.patch.object(utils, "window", new=WindowMock):
+            assert "DEFAULT" == js_lib("attribute")
