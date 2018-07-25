@@ -1,18 +1,18 @@
 class VueMock:
     @staticmethod
     def set(obj, key, value):
-        obj[key] = value
+        setattr(obj, key, value)
 
     @staticmethod
     def delete(obj, key):
-        del obj[key]
+        delattr(obj, key)
 
 
 class ObjectMock:
     @staticmethod
     def assign(target, *sources):
         for source in sources:
-            target.update(source)
+            target.attributes.update(source)
         return target
 
 
