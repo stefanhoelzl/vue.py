@@ -1,19 +1,18 @@
 import random
 
-from browser import timer
+from browser import timer, window
 
-from vue import VueComponent
-from vue.bridge import Object
+from vue import VueComponent, custom
 
 from vue.utils import js_lib
 
 
-TEMP_TOPIC = "vuepytemperature"
-LOADING_TOPIC = "vuepyloading"
-WINDOW_TOPIC = "vuepywindow"
+TEMP_TOPIC = "vuepy/temperature"
+LOADING_TOPIC = "vuepy/loading"
+WINDOW_TOPIC = "vuepy/window"
 
-mqtt = js_lib("mqtt")
-client = mqtt.connect('mqtts://test.mosquitto.org:8081')
+VueMqtt = js_lib("VueMqtt")
+window.Vue.use(VueMqtt, 'mqtts://test.mosquitto.org:8081')
 
 
 class App(VueComponent):
@@ -48,42 +47,40 @@ class App(VueComponent):
     </el-container>
     """
 
-    def created(self):
-        client.on("message", self.on_messsage)
-        client.subscribe(LOADING_TOPIC)
-        client.subscribe(TEMP_TOPIC)
-        client.subscribe(WINDOW_TOPIC)
+    def publish_loading(self):
+        val = self.loading
+        if val < 100:
+            val += 1
+        else:
+            val = 0
+        self.mqtt.publish(LOADING_TOPIC, str(val))
 
-    def on_messsage(self, topic, message, packet):
-        val = Object.to_js(message).toString()
-        if topic == LOADING_TOPIC:
-            self.loading = int(val)
-        elif topic == TEMP_TOPIC:
-            self.temperature = int(val)
-        elif topic == WINDOW_TOPIC:
-            self.window_open = bool(int(val))
+    def publish_temperature(self):
+        val = self.temperature
+        val += random.randint(-1, 1)
+        self.mqtt.publish(TEMP_TOPIC, str(val))
+
+    def created(self):
+        self.mqtt.subscribe(LOADING_TOPIC)
+        self.mqtt.subscribe(TEMP_TOPIC)
+        self.mqtt.subscribe(WINDOW_TOPIC)
+        timer.set_interval(lambda: self.publish_loading(), 100)
+        timer.set_interval(lambda: self.publish_temperature(), 1000)
+
+    @custom("mqtt", name=LOADING_TOPIC)
+    def on_loading_changed(self, data, topic):
+        self.loading = int(str(data))
+
+    @custom("mqtt", name=TEMP_TOPIC)
+    def on_temperature_changed(self, data, topic):
+        self.temperature = int(str(data))
+
+    @custom("mqtt", name=WINDOW_TOPIC)
+    def on_window_open_changed(self, data, topic):
+        self.window_open = bool(int(str(data)))
 
     def tgl_window(self, ev=None):
-        client.publish(WINDOW_TOPIC, str(int(not self.window_open)))
+        self.mqtt.publish(WINDOW_TOPIC, str(int(not self.window_open)))
 
 
 app = App("#app")
-
-
-def loading():
-    val = app.loading
-    if val < 100:
-        val += 1
-    else:
-        val = 0
-    client.publish(LOADING_TOPIC, str(val))
-
-
-def temperature():
-    val = app.temperature
-    val += random.randint(-1, 1)
-    client.publish(TEMP_TOPIC, str(val))
-
-
-timer.set_interval(loading, 100)
-timer.set_interval(temperature, 1000)

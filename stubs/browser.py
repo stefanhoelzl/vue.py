@@ -46,6 +46,10 @@ class window:
         def delete(cls, obj, key):
             ...
 
+        @classmethod
+        def use(cls, plugin, *args):
+            ...
+
 
 class timer:
     @staticmethod
