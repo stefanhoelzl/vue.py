@@ -87,6 +87,9 @@ class Dict(Object):
         return [Object.from_js(key) for key in self._js]
 
     def __str__(self):
+        if hasattr(self, "toString"):
+            if callable(self.toString):
+                return self.toString()
         return repr(self)
 
     def __repr__(self):
@@ -102,7 +105,10 @@ class Dict(Object):
         return len(self) > 0
 
     def __getattr__(self, item):
-        return self[item]
+        try:
+            return self[item]
+        except KeyError:
+            raise AttributeError(item)
 
     def __setattr__(self, key, value):
         if key in ["_js"]:

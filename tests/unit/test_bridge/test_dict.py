@@ -139,3 +139,8 @@ class TestDict:
         d = make_dict({"a": 1})
         d.a = 2
         assert {"a": 2} == d
+
+    def test_str_toString(self):
+        d = make_dict({})
+        d.toString = lambda: "STRING"
+        assert "STRING" == str(d)
