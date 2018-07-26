@@ -2,7 +2,6 @@ from .base import pyjs_bridge, VueDecorator
 
 
 class LifecycleHook(VueDecorator):
-    __overwrite__ = True
     mapping = {"before_create": "beforeCreate",
                "created": "created",
                "before_mount": "beforeMount",

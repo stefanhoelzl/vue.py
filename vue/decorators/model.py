@@ -3,7 +3,6 @@ from .base import VueDecorator
 
 class Model(VueDecorator):
     __key__ = "model"
-    __overwrite__ = True
 
     def __init__(self, prop="value", event="input"):
         self.prop = prop
