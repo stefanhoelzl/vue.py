@@ -231,6 +231,21 @@ def test_directive_replace_dash():
     assert "focus-dashed" in init_dict["directives"]
 
 
+def test_mixins():
+    class Component(VueComponent):
+        mixins = [{"created": "fn"}]
+
+    init_dict = Component.init_dict()
+    assert [{"created": "fn"}] in init_dict["mixins"]
+
+
+def test_vuepy_mixin():
+    class Component(VueComponent):
+        mixins = [Mixin]
+
+    assert [{}] in Component.init_dict()["mixins"]
+
+
 def test_attributes_from_base_class():
     class Component(VueComponent):
         template = "TEMPLATE"

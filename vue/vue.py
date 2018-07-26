@@ -1,14 +1,12 @@
 from browser import window
-from .factory import VueComponentFactory
+from .factory import VueFactory, VueWrapper
 from .bridge import Object
 
 
-class VueComponent:
-    template = ""
-
+class VueComponent(VueWrapper):
     @classmethod
     def init_dict(cls):
-        return VueComponentFactory.dict(cls, VueComponent)
+        return VueFactory.dict(cls)
 
     def __new__(cls, el, **data):
         init_dict = cls.init_dict()
@@ -20,3 +18,8 @@ class VueComponent:
     def register(cls, name=None):
         name = name if name else cls.__name__
         window.Vue.component(name, cls.init_dict())
+
+
+class Mixin(VueWrapper):
+    pass
+
