@@ -229,3 +229,13 @@ def test_directive_replace_dash():
 
     init_dict = Component.init_dict()
     assert "focus-dashed" in init_dict["directives"]
+
+
+def test_attributes_from_base_class():
+    class Component(VueComponent):
+        template = "TEMPLATE"
+
+    class SubComponent(Component):
+        pass
+
+    assert "TEMPLATE" == SubComponent.init_dict()["template"]

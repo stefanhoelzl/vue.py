@@ -106,7 +106,8 @@ def test_todo_mvc(selenium):
         assert "new todo" == labels[0].text
         assert "completed" == labels[1].text
 
-
+import pytest
+@pytest.mark.skip
 def test_mqtt_dashboard(selenium):
     with selenium.example():
         selenium.element_present("btn").click()
