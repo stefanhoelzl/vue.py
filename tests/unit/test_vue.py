@@ -27,11 +27,19 @@ class VueMock(mock.MagicMock):
 
     @contextmanager
     def directive(self):
-        with mock.patch("vue.vue.window.Vue.directive", new=self) as component:
+        with mock.patch("vue.vue.window.Vue.directive", new=self) as directive:
             yield self
-        self.directive_name = component.call_args[0][0]
-        self._directive = component.call_args[0][1] \
-            if len(component.call_args[0]) > 1 else None
+        self.directive_name = directive.call_args[0][0]
+        self._directive = directive.call_args[0][1] \
+            if len(directive.call_args[0]) > 1 else None
+
+    @contextmanager
+    def filter(self):
+        with mock.patch("vue.vue.window.Vue.filter", new=self) as flt:
+            yield self
+        flt._filter_name = flt.call_args[0][0]
+        flt._filter = flt.call_args[0][1]
+
 
 
 class TestVueComponent:
@@ -83,3 +91,9 @@ class TestVue:
         with VueMock().directive() as dirctv:
             Vue.directive("my-directive", function_directive)
         assert "a" == dirctv._directive("a")
+
+    def test_register_filter(self):
+        with VueMock().filter() as filter_mock:
+            Vue.filter("my_filter", lambda val: "filtered({})".format(val))
+        assert "my_filter" == filter_mock._filter_name
+        assert "filtered(value)" == filter_mock._filter("value")

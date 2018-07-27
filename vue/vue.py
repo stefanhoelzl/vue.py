@@ -2,6 +2,7 @@ from browser import window
 from .factory import VueComponentFactory, Wrapper, VueDirectiveFactory
 from .bridge import Object
 from .decorators.directive import DirectiveHook
+from .decorators.filters import Filter
 
 
 class Vue:
@@ -17,6 +18,11 @@ class Vue:
             name_or_directive = FunctionDirective
 
         window.Vue.directive(*VueDirectiveFactory.get_item(name_or_directive))
+
+    @staticmethod
+    def filter(name, method):
+        flt = Filter(method, name)
+        window.Vue.filter(flt.__id__, flt.__value__)
 
 
 class VueComponent(Wrapper):

@@ -54,6 +54,10 @@ class window:
         def directive(cls, name, directive=None):
             ...
 
+        @classmethod
+        def filter(cls, name, method):
+            ...
+
 
 class timer:
     @staticmethod
