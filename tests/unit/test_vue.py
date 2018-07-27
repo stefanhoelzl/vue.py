@@ -40,6 +40,12 @@ class VueMock(mock.MagicMock):
         flt._filter_name = flt.call_args[0][0]
         flt._filter = flt.call_args[0][1]
 
+    @contextmanager
+    def mixin(self):
+        with mock.patch("vue.vue.window.Vue.mixin", new=self) as mixin:
+            yield self
+        mixin.init_dict = mixin.call_args[0][0]
+
 
 
 class TestVueComponent:
@@ -97,3 +103,12 @@ class TestVue:
             Vue.filter("my_filter", lambda val: "filtered({})".format(val))
         assert "my_filter" == filter_mock._filter_name
         assert "filtered(value)" == filter_mock._filter("value")
+
+    def test_register_mixin(self):
+        class Mixin(VueMixin):
+            def created(self):
+                return "created"
+
+        with VueMock().mixin() as mixin_mock:
+            Vue.mixin(Mixin)
+        assert "created" == mixin_mock.init_dict["created"]()

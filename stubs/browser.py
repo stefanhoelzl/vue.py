@@ -58,6 +58,10 @@ class window:
         def filter(cls, name, method):
             ...
 
+        @classmethod
+        def mixin(cls, mixin):
+            cls
+
 
 class timer:
     @staticmethod

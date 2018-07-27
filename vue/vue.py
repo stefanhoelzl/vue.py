@@ -1,5 +1,6 @@
 from browser import window
-from .factory import VueComponentFactory, Wrapper, VueDirectiveFactory
+from .factory import VueComponentFactory, Wrapper, \
+    VueDirectiveFactory
 from .bridge import Object
 from .decorators.directive import DirectiveHook
 from .decorators.filters import Filter
@@ -23,6 +24,10 @@ class Vue:
     def filter(name, method):
         flt = Filter(method, name)
         window.Vue.filter(flt.__id__, flt.__value__)
+
+    @staticmethod
+    def mixin(mixin):
+        window.Vue.mixin(VueComponentFactory.get_item(mixin))
 
 
 class VueComponent(Wrapper):
