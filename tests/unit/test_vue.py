@@ -46,6 +46,12 @@ class VueMock(mock.MagicMock):
             yield self
         mixin.init_dict = mixin.call_args[0][0]
 
+    @contextmanager
+    def use(self):
+        with mock.patch("vue.vue.window.Vue.use", new=self) as use:
+            yield self
+        use.plugin = use.call_args[0][0]
+
 
 
 class TestVueComponent:
@@ -79,7 +85,7 @@ class TestVueComponent:
 
 
 class TestVue:
-    def test_register_directive(self):
+    def test_directive(self):
         class Drctv(VueDirective):
             name = "drctv"
 
@@ -91,20 +97,20 @@ class TestVue:
         assert "drctv" == dirctv.directive_name
         assert "bind" in dirctv._directive
 
-    def test_register_function_directive(self):
+    def test_function_directive(self):
         def function_directive(a):
             return a
         with VueMock().directive() as dirctv:
             Vue.directive("my-directive", function_directive)
         assert "a" == dirctv._directive("a")
 
-    def test_register_filter(self):
+    def test_filter(self):
         with VueMock().filter() as filter_mock:
             Vue.filter("my_filter", lambda val: "filtered({})".format(val))
         assert "my_filter" == filter_mock._filter_name
         assert "filtered(value)" == filter_mock._filter("value")
 
-    def test_register_mixin(self):
+    def test_mixin(self):
         class Mixin(VueMixin):
             def created(self):
                 return "created"
@@ -112,3 +118,8 @@ class TestVue:
         with VueMock().mixin() as mixin_mock:
             Vue.mixin(Mixin)
         assert "created" == mixin_mock.init_dict["created"]()
+
+    def test_use(self):
+        with VueMock().use() as use:
+            Vue.use("Plugin")
+        assert "Plugin" == use.plugin

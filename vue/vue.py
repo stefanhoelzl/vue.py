@@ -29,6 +29,10 @@ class Vue:
     def mixin(mixin):
         window.Vue.mixin(VueComponentFactory.get_item(mixin))
 
+    @staticmethod
+    def use(plugin):
+        window.Vue.use(plugin)
+
 
 class VueComponent(Wrapper):
     @classmethod
@@ -53,3 +57,7 @@ class VueMixin(Wrapper):
 
 class VueDirective(Wrapper):
     name = None
+
+
+class VuePlugin:
+    pass

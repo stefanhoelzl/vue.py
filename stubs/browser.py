@@ -60,7 +60,7 @@ class window:
 
         @classmethod
         def mixin(cls, mixin):
-            cls
+            ...
 
 
 class timer:
