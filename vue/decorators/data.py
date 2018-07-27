@@ -5,7 +5,7 @@ class Data(VueDecorator):
     __key__ = "data"
 
     def __init__(self, name, value):
-        self.__name__ = name
+        self.__id__ = name
         self.__value__ = value
 
 

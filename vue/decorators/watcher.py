@@ -5,7 +5,7 @@ class Watcher(VueDecorator):
     __key__ = "watch"
 
     def __init__(self, name, fn, deep=False, immediate=False):
-        self.__name__ = name
+        self.__id__ = name
         self._fn = pyjs_bridge(fn, inject_vue_instance=True)
         self._deep = deep
         self._immediate = immediate

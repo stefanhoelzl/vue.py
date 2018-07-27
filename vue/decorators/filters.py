@@ -6,7 +6,7 @@ class Filter(VueDecorator):
 
     def __init__(self, fn, name):
         self.__value__ = pyjs_bridge(fn)
-        self.__name__ = name
+        self.__id__ = name
 
 
 def filters(fn):

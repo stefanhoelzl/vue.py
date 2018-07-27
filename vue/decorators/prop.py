@@ -18,7 +18,7 @@ class Prop(VueDecorator):
 
     def __init__(self, name, typ, mixin=None):
         mixin = mixin if mixin else {}
-        self.__name__ = name
+        self.__id__ = name
         self.__value__ = {
             "type": self.type_map[typ],
             **mixin
@@ -27,7 +27,7 @@ class Prop(VueDecorator):
 
 class Validator(VueDecorator):
     __parents__ = ('props',)
-    __name__ = "validator"
+    __id__ = "validator"
 
     def __init__(self, prop, fn):
         self.__key__ = prop

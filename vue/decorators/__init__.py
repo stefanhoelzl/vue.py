@@ -1,6 +1,6 @@
 from .computed import computed
 from .prop import validator
-from .directive import directive
+from .directive import directive, DirectiveHook
 from .filters import filters
 from .watcher import watch
 from .data import data

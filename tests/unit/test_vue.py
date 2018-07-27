@@ -9,6 +9,8 @@ class VueMock(mock.MagicMock):
         super().__init__(*args, **kwargs)
         self.init_dict = None
         self.register_name = None
+        self.directive_name = None
+        self._directive = None
 
     @contextmanager
     def new(self):
@@ -23,33 +25,61 @@ class VueMock(mock.MagicMock):
         self.init_dict = component.call_args[0][1]
         self.register_name = component.call_args[0][0]
 
-
-def test_el():
-    class Component(VueComponent):
-        pass
-
-    with VueMock().new() as new:
-        Component("app")
-    assert "app" == new.init_dict["el"]
-
-
-def test_props_data():
-    class Component(VueComponent):
-        prop: str
-
-    with VueMock().new() as new:
-        Component("app", prop="PROP")
-    assert {"prop": "PROP"} == new.init_dict["propsData"]
+    @contextmanager
+    def directive(self):
+        with mock.patch("vue.vue.window.Vue.directive", new=self) as component:
+            yield self
+        self.directive_name = component.call_args[0][0]
+        self._directive = component.call_args[0][1] \
+            if len(component.call_args[0]) > 1 else None
 
 
-def test_register():
-    class Component(VueComponent):
-        pass
+class TestVueComponent:
+    def test_el(self):
+        class Component(VueComponent):
+            pass
 
-    with VueMock().component() as component:
-        Component.register()
-    assert "Component" == component.register_name
+        with VueMock().new() as new:
+            Component("app")
+        assert "app" == new.init_dict["el"]
 
-    with VueMock().component() as component:
-        Component.register("new-name")
-    assert "new-name" == component.register_name
+    def test_props_data(self):
+        class Component(VueComponent):
+            prop: str
+
+        with VueMock().new() as new:
+            Component("app", prop="PROP")
+        assert {"prop": "PROP"} == new.init_dict["propsData"]
+
+    def test_register(self):
+        class Component(VueComponent):
+            pass
+
+        with VueMock().component() as component:
+            Component.register()
+        assert "Component" == component.register_name
+
+        with VueMock().component() as component:
+            Component.register("new-name")
+        assert "new-name" == component.register_name
+
+
+class TestVue:
+    def test_register_directive(self):
+        class Drctv(VueDirective):
+            name = "drctv"
+
+            def bind(self):
+                pass
+
+        with VueMock().directive() as dirctv:
+            Vue.directive(Drctv)
+        assert "drctv" == dirctv.directive_name
+        assert "bind" in dirctv._directive
+
+    def test_register_function_directive(self):
+        def function_directive(a):
+            return a
+        with VueMock().directive() as dirctv:
+            Vue.directive("my-directive", function_directive)
+        assert "a" == dirctv._directive("a")

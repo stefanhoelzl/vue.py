@@ -8,7 +8,7 @@ class Method(VueDecorator):
         if hasattr(fn, "__coroutinefunction__"):
             fn = coroutine(fn)
         self.__value__ = pyjs_bridge(fn, inject_vue_instance=True)
-        self.__name__ = fn.__name__
+        self.__id__ = fn.__name__
 
 
 def coroutine(_coroutine):

@@ -50,6 +50,10 @@ class window:
         def use(cls, plugin, *args):
             ...
 
+        @classmethod
+        def directive(cls, name, directive=None):
+            ...
+
 
 class timer:
     @staticmethod

@@ -5,7 +5,7 @@ class Computed(VueDecorator):
     __key__ = "computed"
 
     def __init__(self, fn):
-        self.__name__ = fn.__name__
+        self.__id__ = fn.__name__
         self._getter = pyjs_bridge(fn)
         self._setter = None
 

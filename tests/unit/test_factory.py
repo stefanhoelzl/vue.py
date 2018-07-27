@@ -241,7 +241,7 @@ def test_mixins():
 
 def test_vuepy_mixin():
     class Component(VueComponent):
-        mixins = [Mixin]
+        mixins = [VueMixin]
 
     assert [{}] in Component.init_dict()["mixins"]
 
