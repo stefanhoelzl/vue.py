@@ -30,8 +30,8 @@ class Vue:
         window.Vue.mixin(VueComponentFactory.get_item(mixin))
 
     @staticmethod
-    def use(plugin):
-        window.Vue.use(plugin)
+    def use(plugin, *args, **kwargs):
+        window.Vue.use(plugin, *args, kwargs)
 
 
 class VueComponent(Wrapper):
@@ -60,4 +60,5 @@ class VueDirective(Wrapper):
 
 
 class VuePlugin:
-    pass
+    def install(self, *args, **kwargs):
+        raise NotImplementedError()

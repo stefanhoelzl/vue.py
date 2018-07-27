@@ -47,7 +47,7 @@ class window:
             ...
 
         @classmethod
-        def use(cls, plugin, *args):
+        def use(cls, plugin, *args, **kwargs):
             ...
 
         @classmethod
