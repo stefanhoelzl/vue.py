@@ -27,11 +27,12 @@ class VueMock(mock.MagicMock):
 
     @contextmanager
     def directive(self):
-        with mock.patch("vue.vue.window.Vue.directive", new=self) as directive:
+        with mock.patch("vue.vue.window.Vue.directive", new=self) as drctv:
+            drctv.side_effect = lambda *args, **kwargs: self._directive
             yield self
-        self.directive_name = directive.call_args[0][0]
-        self._directive = directive.call_args[0][1] \
-            if len(directive.call_args[0]) > 1 else None
+        self.directive_name = drctv.call_args[0][0]
+        self._directive = drctv.call_args[0][1] if len(drctv.call_args[0]) > 1\
+            else None
 
     @contextmanager
     def filter(self):
@@ -51,7 +52,6 @@ class VueMock(mock.MagicMock):
         with mock.patch("vue.vue.window.Vue.use", new=self) as use:
             yield self
         use.plugin = use.call_args[0][0]
-
 
 
 class TestVueComponent:
@@ -87,8 +87,16 @@ class TestVueComponent:
 class TestVue:
     def test_directive(self):
         class Drctv(VueDirective):
-            name = "drctv"
+            def bind(self):
+                pass
 
+        with VueMock().directive() as dirctv:
+            Vue.directive("directive", Drctv)
+        assert "directive" == dirctv.directive_name
+        assert "bind" in dirctv._directive
+
+    def test_directive_with_implicit_name(self):
+        class Drctv(VueDirective):
             def bind(self):
                 pass
 
@@ -102,7 +110,22 @@ class TestVue:
             return a
         with VueMock().directive() as dirctv:
             Vue.directive("my-directive", function_directive)
+        assert "my-directive" == dirctv.directive_name
         assert "a" == dirctv._directive("a")
+
+    def test_function_directive_with_implicit_name(self):
+        def function_directive(a):
+            return a
+        with VueMock().directive() as dirctv:
+            Vue.directive(function_directive)
+        assert "function_directive" == dirctv.directive_name
+        assert "a" == dirctv._directive("a")
+
+    def test_directive_getter(self):
+        with VueMock().directive() as drctv:
+            drctv._directive = "DIRECTIVE"
+            drctv.directive_name = "my-directive"
+            assert "DIRECTIVE" == Vue.directive("my-durective")
 
     def test_filter(self):
         with VueMock().filter() as filter_mock:
@@ -110,7 +133,7 @@ class TestVue:
         assert "my_filter" == filter_mock._filter_name
         assert "filtered(value)" == filter_mock._filter("value")
 
-    def test_filter_useFunctionName(self):
+    def test_filter_use_function_name(self):
         def flt(v):
             return "filtered({})".format(v)
         with VueMock().filter() as filter_mock:

@@ -108,4 +108,4 @@ class VueDirectiveFactory(AttributeDictFactory):
     def get_item(cls, wrapper):
         default = {wrapper.name: {}}
         dct = super().get_item(wrapper)
-        return dct.get("directives", default).popitem()
+        return dct.get("directives", default).popitem()[1]

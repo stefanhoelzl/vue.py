@@ -8,17 +8,20 @@ from .decorators.filters import Filter
 
 class Vue:
     @staticmethod
-    def directive(name_or_directive, function_directive=None):
-        if isinstance(name_or_directive, str):
-            if function_directive is None:
-                return window.Vue.directive(name_or_directive)
+    def directive(name, directive=None):
+        if directive is None and isinstance(name, str):
+            return window.Vue.directive(name)
 
+        if directive is None:
+            directive = name
+            name = directive.__name__.lower()
+
+        if not isinstance(directive, type):
             class FunctionDirective(VueDirective):
-                name = name_or_directive
-                d = DirectiveHook(function_directive)
-            name_or_directive = FunctionDirective
+                d = DirectiveHook(directive)
+            directive = FunctionDirective
 
-        window.Vue.directive(*VueDirectiveFactory.get_item(name_or_directive))
+        window.Vue.directive(name, VueDirectiveFactory.get_item(directive))
 
     @staticmethod
     def filter(method_or_name, method=None):
