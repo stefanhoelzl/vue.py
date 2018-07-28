@@ -69,5 +69,6 @@ class VueDirective(Wrapper):
 
 
 class VuePlugin:
-    def install(self, *args, **kwargs):
+    @staticmethod
+    def install(*args, **kwargs):
         raise NotImplementedError()

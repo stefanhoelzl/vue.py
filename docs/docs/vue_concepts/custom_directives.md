@@ -1,6 +1,6 @@
 # Custom Directives
-Currently only locally registered directives are supported.
 
+## Local Registration
 For [function directives](https://vuejs.org/v2/guide/custom-directive.html#Function-Shorthand)
 is just a decorator necessary
 ```python
@@ -50,3 +50,42 @@ class CustomDirective(VueComponent):
 The `@staticmethod` decorator is only necessary to avoid IDE checker errors.
 
 Underscores in directive names get replaced by dashes, so `custom_focus` gets `v-custom-focus`.
+
+
+## Global Registration
+Global directives can be created by sub-classing `VueDirective`.
+```python
+from vue import Vue, VueDirective
+class MyDirective(VueDirective):
+    def bind(el, binding, vnode, old_vnode):
+        pass
+
+    def component_updated(el, binding, vnode, old_vnode):
+        pass
+
+Vue.directive("my-directive", MyDirective)
+```
+and for function directives just pass the function to `Vue.directive`
+```python
+from vue import Vue
+def my_directive(el, binding, vnode, old_vnode):
+    pass
+
+Vue.directive("my-directive", my_directive)
+```
+`vue.py` offeres a shorthand, if you like to take the **lower-cased** name
+of the function/directive-class as directive name.
+```python
+from vue import Vue
+def my_directive(el, binding, vnode, old_vnode):
+    pass
+
+Vue.directive(my_directive) # directive name is 'my_directive'
+```
+
+## Retrieve Global Directives
+Getter for global directives works similar to Vue.js
+```python
+from vue import Vue
+directive = Vue.directive('directive-name')
+```
