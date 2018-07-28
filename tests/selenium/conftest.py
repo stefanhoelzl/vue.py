@@ -155,6 +155,12 @@ class SeleniumSession:
             ec.text_to_be_present_in_element((By.ID, id_), text)
         )
 
+    def element_with_tag_name_has_text(self, tag_name, text,
+                                       timeout=DEFAULT_TIMEOUT):
+        return WebDriverWait(self.driver, timeout).until(
+            ec.text_to_be_present_in_element((By.TAG_NAME, tag_name), text)
+        )
+
     def element_present(self, id_, timeout=DEFAULT_TIMEOUT):
         return WebDriverWait(self.driver, timeout).until(
             ec.presence_of_element_located((By.ID, id_))

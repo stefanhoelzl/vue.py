@@ -1,18 +1,12 @@
-from vue import computed
 from .widget import Widget
 
 
 class Progress(Widget):
-    template = Widget.template.format("""
-    <el-progress type="circle" :percentage="loading"></el-progress>
-    """)
+    topic: str = ""
 
-    @computed
-    def loading(self):
-        try:
-            return int(self.value)
-        except ValueError:
-            return 0
+    template = Widget.template.format("""
+    <el-progress type="circle" :percentage="int_value"></el-progress>
+    """)
 
 
 Progress.register("dbw-progress")

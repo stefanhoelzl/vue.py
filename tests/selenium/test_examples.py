@@ -106,13 +106,12 @@ def test_todo_mvc(selenium):
         assert "new todo" == labels[0].text
         assert "completed" == labels[1].text
 
-import pytest
-@pytest.mark.skip
+
 def test_mqtt_dashboard(selenium):
     with selenium.example():
-        selenium.element_present("btn").click()
+        selenium.element_with_tag_name_present("button").click()
         time.sleep(0.1)
-        assert selenium.element_has_text("btn", "CLOSED")
+        assert selenium.element_with_tag_name_has_text("button", "CLOSED")
         selenium.allowed_errors.append("Unexpected response code: 307")
 
 
