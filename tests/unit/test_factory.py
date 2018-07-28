@@ -235,15 +235,13 @@ def test_mixins():
     class Component(VueComponent):
         mixins = [{"created": "fn"}]
 
-    init_dict = Component.init_dict()
-    assert [{"created": "fn"}] in init_dict["mixins"]
+    assert [{"created": "fn"}] == Component.init_dict()["mixins"]
 
 
 def test_vuepy_mixin():
     class Component(VueComponent):
         mixins = [VueMixin]
-
-    assert [{}] in Component.init_dict()["mixins"]
+    assert [{}] == Component.init_dict()["mixins"]
 
 
 def test_attributes_from_base_class():

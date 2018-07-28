@@ -67,7 +67,7 @@ class VueComponentFactory(AttributeDictFactory):
         elif obj_name == "template":
             obj = Template(obj)
         elif obj_name == "mixins":
-            obj = Mixins([VueComponentFactory.get_item(m) for m in obj])
+            obj = Mixins(*(VueComponentFactory.get_item(m) for m in obj))
         elif callable(obj):
             obj = Method(obj)
         elif obj_name in getattr(self.wrapper, "__annotations__", {}):

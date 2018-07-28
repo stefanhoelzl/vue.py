@@ -104,7 +104,11 @@ class SeleniumSession:
     @property
     def _app_output_path(self):
         sub_path = Path(self.request.node.nodeid.split("::", 1)[0])
-        output_path = HTML_OUTPUT_PATH / sub_path.relative_to("selenium")
+        try:
+            sub_path = sub_path.relative_to("selenium")
+        except ValueError:
+            pass  # WORKAROUND when running single tests from PyCharm
+        output_path = HTML_OUTPUT_PATH / sub_path
         output_path.mkdir(exist_ok=True, parents=True)
         return output_path
 
