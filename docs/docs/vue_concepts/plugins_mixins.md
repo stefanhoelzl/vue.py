@@ -76,4 +76,4 @@ from vue import Vue
 
 Vue.use(MyPlugin)
 ```
-`vue.py` supports alos using native Vue.js plugins.
+`vue.py` supports also using native Vue.js plugins.
