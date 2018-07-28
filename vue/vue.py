@@ -21,7 +21,13 @@ class Vue:
         window.Vue.directive(*VueDirectiveFactory.get_item(name_or_directive))
 
     @staticmethod
-    def filter(name, method):
+    def filter(method_or_name, method=None):
+        if not method:
+            method = method_or_name
+            name = method_or_name.__name__
+        else:
+            method = method
+            name = method_or_name
         flt = Filter(method, name)
         window.Vue.filter(flt.__id__, flt.__value__)
 

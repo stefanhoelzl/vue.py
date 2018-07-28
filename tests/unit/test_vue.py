@@ -110,6 +110,14 @@ class TestVue:
         assert "my_filter" == filter_mock._filter_name
         assert "filtered(value)" == filter_mock._filter("value")
 
+    def test_filter_useFunctionName(self):
+        def flt(v):
+            return "filtered({})".format(v)
+        with VueMock().filter() as filter_mock:
+            Vue.filter(flt)
+        assert "flt" == filter_mock._filter_name
+        assert "filtered(value)" == filter_mock._filter("value")
+
     def test_mixin(self):
         class Mixin(VueMixin):
             def created(self):
