@@ -1,11 +1,8 @@
 # Future Plans
 
 ## Features
-* plugins and mixins
 * local component registration
-* access to Vue object (global configuration etc.)
-* global filters
-* global directives
+* full access to Vue object (global configuration etc.)
 * ...
 
 ## Bugs and Issues
@@ -13,6 +10,7 @@
   * different hooks get different arguments??
 * solve issue with `import asyncio`
   * needs very long to load page
+* try dynamics example again with latest bridge changes
 
 ## Docs
 * embed examples in gallery
