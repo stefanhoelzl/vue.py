@@ -12,7 +12,10 @@ from .decorators.extends import Extends
 def merge_templates(base, sub):
     if getattr(sub, "template_merging", False):
         base_template = merge_templates(base.__bases__[0], base)
-        templates = getattr(sub, "template_slots", {})
+        base_slots = getattr(base, "template_slots", {})
+        sub_slots = getattr(sub, "template_slots", {})
+        templates = dict(tuple(base_slots.items())
+                         + tuple(sub_slots.items()))
         return base_template.format(sub.template, **templates)
     return getattr(sub, "template", "{}")
 
