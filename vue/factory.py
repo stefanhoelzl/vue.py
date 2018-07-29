@@ -9,6 +9,14 @@ from .decorators.directive import DirectiveHook
 from .decorators.extends import Extends
 
 
+def merge_templates(base, sub):
+    if getattr(sub, "template_merging", False):
+        base_template = merge_templates(base.__bases__[0], base)
+        templates = getattr(sub, "template_slots", {})
+        return base_template.format(sub.template, **templates)
+    return getattr(sub, "template", "{}")
+
+
 class Wrapper:
     pass
 
@@ -66,11 +74,6 @@ class VueComponentFactory(AttributeDictFactory):
         if obj_name in LifecycleHook.mapping:
             obj = LifecycleHook(obj_name, obj)
         elif obj_name == "template":
-            def merge_templates(base, sub):
-                if getattr(sub, "template_merging", False):
-                    base_template = merge_templates(base.__bases__[0], base)
-                    return base_template.format(sub.template)
-                return getattr(sub, "template", "{}")
             obj = Template(merge_templates(self.parent, self.wrapper))
         elif obj_name == "extends":
             obj = Extends(VueComponentFactory.get_item(self.parent))

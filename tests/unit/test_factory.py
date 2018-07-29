@@ -285,3 +285,20 @@ def test_template_merging():
         template = "SUB"
 
     assert "<p>BASE MIDDLE SUB</p>" == Sub.init_dict()["template"]
+
+
+def test_template_merging_with_slots():
+    class Base(VueComponent):
+        template_merging = True
+        template_slots = {"pre": "DEFAULT"}
+        template = "<p>{pre} {}</p>"
+
+    class WithSlots(Base):
+        template = "SUB"
+        template_slots = {"pre": "PRE"}
+
+    class WithDefault(Base):
+        template = "SUB"
+
+    assert "<p>PRE SUB</p>" == WithSlots.init_dict()["template"]
+    assert "<p>DEFAULT SUB</p>" == WithDefault.init_dict()["template"]
