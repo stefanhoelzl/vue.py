@@ -22,16 +22,16 @@ class AttributeDictFactory:
 
     @classmethod
     def get_wrapper_base(cls, wrapper):
-        if Wrapper in wrapper.__bases__:
-            return wrapper
-        for base in wrapper.__bases__:
-            sub = cls.get_wrapper_base(base)
-            if sub:
-                return sub
-        raise Exception("Cannot build {}".format(wrapper))
+        base = wrapper.__bases__[0]
+        if base.__bases__[0] is not Wrapper:
+            base = cls.get_wrapper_base(base)
+        if not base:
+            raise Exception("Cannot build {}".format(wrapper))
+        return base
 
     def __init__(self, wrapper):
         self.wrapper = wrapper
+        self.parent = self.wrapper.__bases__[0]
         self.base = self.get_wrapper_base(wrapper)
 
     def __attributes__(self):
@@ -66,10 +66,14 @@ class VueComponentFactory(AttributeDictFactory):
         if obj_name in LifecycleHook.mapping:
             obj = LifecycleHook(obj_name, obj)
         elif obj_name == "template":
-            obj = Template(obj)
+            def merge_templates(base, sub):
+                if getattr(sub, "template_merging", False):
+                    base_template = merge_templates(base.__bases__[0], base)
+                    return base_template.format(sub.template)
+                return getattr(sub, "template", "{}")
+            obj = Template(merge_templates(self.parent, self.wrapper))
         elif obj_name == "extends":
-            wrapper_base = self.wrapper.__bases__[0]
-            obj = Extends(VueComponentFactory.get_item(wrapper_base))
+            obj = Extends(VueComponentFactory.get_item(self.parent))
         elif obj_name == "mixins":
             obj = Mixins(*(VueComponentFactory.get_item(m) for m in obj))
         elif callable(obj):

@@ -4,6 +4,12 @@ import asyncio
 from vue import *
 
 
+def test_empty():
+    class Empty(VueComponent):
+        pass
+    assert {} == Empty.init_dict()
+
+
 def test_method():
     class Component(VueComponent):
         def do(self, event):
@@ -239,8 +245,11 @@ def test_mixins():
 
 
 def test_vuepy_mixin():
+    class MyMixin(VueMixin):
+        pass
+
     class Component(VueComponent):
-        mixins = [VueMixin]
+        mixins = [MyMixin]
     assert [{}] == Component.init_dict()["mixins"]
 
 
@@ -262,3 +271,17 @@ def test_extends():
         extends = True
 
     assert {"template": "TEMPLATE"} == SubComponent.init_dict()["extends"]
+
+
+def test_template_merging():
+    class Base(VueComponent):
+        template_merging = True
+        template = "<p>BASE {}</p>"
+
+    class Middle(Base):
+        template = "MIDDLE {}"
+
+    class Sub(Middle):
+        template = "SUB"
+
+    assert "<p>BASE MIDDLE SUB</p>" == Sub.init_dict()["template"]
