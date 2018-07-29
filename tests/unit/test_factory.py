@@ -252,3 +252,13 @@ def test_attributes_from_base_class():
         pass
 
     assert "TEMPLATE" == SubComponent.init_dict()["template"]
+
+
+def test_extends():
+    class Component(VueComponent):
+        template = "TEMPLATE"
+
+    class SubComponent(Component):
+        extends = True
+
+    assert {"template": "TEMPLATE"} == SubComponent.init_dict()["extends"]

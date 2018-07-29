@@ -6,6 +6,7 @@ from .decorators.method import Method
 from .decorators.mixins import Mixins
 from .decorators.template import Template
 from .decorators.directive import DirectiveHook
+from .decorators.extends import Extends
 
 
 class Wrapper:
@@ -66,6 +67,9 @@ class VueComponentFactory(AttributeDictFactory):
             obj = LifecycleHook(obj_name, obj)
         elif obj_name == "template":
             obj = Template(obj)
+        elif obj_name == "extends":
+            wrapper_base = self.wrapper.__bases__[0]
+            obj = Extends(VueComponentFactory.get_item(wrapper_base))
         elif obj_name == "mixins":
             obj = Mixins(*(VueComponentFactory.get_item(m) for m in obj))
         elif callable(obj):
