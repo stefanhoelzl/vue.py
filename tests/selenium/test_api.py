@@ -60,3 +60,21 @@ def test_extend(selenium):
         return Sub(el)
     with selenium.app(extended_component):
         assert selenium.element_has_text("comps", "BASE SUB")
+
+
+def test_extend_from_dict(selenium):
+    class Component(VueComponent):
+        template = "<div id='done'>{{ done }}</div>"
+        done = "NO"
+        extends = {
+            "created": lambda: print("CREATED BASE")
+        }
+
+        def created(self):
+            print("CREATED SUB")
+            self.done = "YES"
+
+    with selenium.app(Component):
+        assert selenium.element_has_text("done", "YES")
+    assert "CREATED BASE" in selenium.logs[-2]["message"]
+    assert "CREATED SUB" in selenium.logs[-1]["message"]

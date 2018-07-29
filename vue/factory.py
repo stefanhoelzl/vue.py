@@ -31,7 +31,7 @@ class AttributeDictFactory:
     @classmethod
     def get_wrapper_base(cls, wrapper):
         base = wrapper.__bases__[0]
-        if base.__bases__[0] is not Wrapper:
+        if len(base.__bases__) and base.__bases__[0] is not Wrapper:
             base = cls.get_wrapper_base(base)
         if not base:
             raise Exception("Cannot build {}".format(wrapper))
@@ -76,7 +76,9 @@ class VueComponentFactory(AttributeDictFactory):
         elif obj_name == "template":
             obj = Template(merge_templates(self.parent, self.wrapper))
         elif obj_name == "extends":
-            obj = Extends(VueComponentFactory.get_item(self.parent))
+            if obj:
+                extends = self.parent if isinstance(obj, bool) else obj
+                obj = Extends(VueComponentFactory.get_item(extends))
         elif obj_name == "mixins":
             obj = Mixins(*(VueComponentFactory.get_item(m) for m in obj))
         elif callable(obj):
