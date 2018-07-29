@@ -275,30 +275,27 @@ def test_extends():
 
 def test_template_merging():
     class Base(VueComponent):
-        template_merging = True
         template = "<p>BASE {}</p>"
 
     class Middle(Base):
-        template = "MIDDLE {}"
+        template_slots = "MIDDLE {}"
 
     class Sub(Middle):
-        template = "SUB"
+        template_slots = "SUB"
 
     assert "<p>BASE MIDDLE SUB</p>" == Sub.init_dict()["template"]
 
 
 def test_template_merging_with_slots():
     class Base(VueComponent):
-        template_merging = True
         template_slots = {"pre": "DEFAULT", "post": "DEFAULT"}
         template = "<p>{pre} {} {post}</p>"
 
     class WithSlots(Base):
-        template = "SUB"
-        template_slots = {"pre": "PRE"}
+        template_slots = {"pre": "PRE", "default": "SUB"}
 
     class WithDefault(Base):
-        template = "SUB"
+        template_slots = "SUB"
 
     assert "<p>PRE SUB DEFAULT</p>" == WithSlots.init_dict()["template"]
     assert "<p>DEFAULT SUB DEFAULT</p>" == WithDefault.init_dict()["template"]
