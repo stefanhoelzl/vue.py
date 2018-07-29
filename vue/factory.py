@@ -20,7 +20,28 @@ def merge_templates(base, sub):
     return getattr(sub, "template", "{}")
 
 
-class Wrapper:
+class BrythonObjectWorkarounds(type):
+    """
+    Fixes the following Brython bugs:
+    * https://github.com/brython-dev/brython/issues/905
+    * https://github.com/brython-dev/brython/issues/904
+    """
+    def __init__(cls, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        bases = cls.__bases__
+        cls.__bases__ = bases if bases else (object,)
+        if not hasattr(cls, "__annotations__"):
+            cls.__annotations__ = {}
+        cls.__annotations__.update(getattr(cls.__base__,
+                                           "__annotations__",
+                                           {}))
+
+    @property
+    def __base__(cls):
+        return cls.__bases__[0]
+
+
+class Wrapper(metaclass=BrythonObjectWorkarounds):
     pass
 
 
@@ -33,16 +54,14 @@ class AttributeDictFactory:
 
     @classmethod
     def get_wrapper_base(cls, wrapper):
-        base = wrapper.__bases__[0]
-        if len(base.__bases__) and base.__bases__[0] is not Wrapper:
-            base = cls.get_wrapper_base(base)
-        if not base:
-            raise Exception("Cannot build {}".format(wrapper))
-        return base
+        base = wrapper.__base__
+        if base is Wrapper:
+            return wrapper
+        return cls.get_wrapper_base(base)
 
     def __init__(self, wrapper):
         self.wrapper = wrapper
-        self.parent = self.wrapper.__bases__[0]
+        self.parent = self.wrapper.__base__
         self.base = self.get_wrapper_base(wrapper)
 
     def __attributes__(self):
