@@ -7,6 +7,7 @@ from .decorators.mixins import Mixins
 from .decorators.template import Template
 from .decorators.directive import DirectiveHook
 from .decorators.extends import Extends
+from .decorators.components import Components
 
 
 def merge_templates(sub):
@@ -112,6 +113,8 @@ class VueComponentFactory(AttributeDictFactory):
                 obj = Extends(VueComponentFactory.get_item(extends))
         elif obj_name == "mixins":
             obj = Mixins(*(VueComponentFactory.get_item(m) for m in obj))
+        elif obj_name == "components":
+            obj = Components(*(VueComponentFactory.get_item(m) for m in obj))
         elif callable(obj):
             obj = Method(obj)
         elif obj_name in getattr(self.wrapper, "__annotations__", {}):

@@ -299,3 +299,19 @@ def test_template_merging_with_slots():
 
     assert "<p>PRE SUB DEFAULT</p>" == WithSlots.init_dict()["template"]
     assert "<p>DEFAULT SUB DEFAULT</p>" == WithDefault.init_dict()["template"]
+
+
+def test_components():
+    class Component(VueComponent):
+        components = [{"created": "fn"}]
+
+    assert [{"created": "fn"}] == Component.init_dict()["components"]
+
+
+def test_vuepy_components():
+    class SubComponent(VueComponent):
+        pass
+
+    class Component(VueComponent):
+        components = [SubComponent]
+    assert [{}] == Component.init_dict()["components"]
