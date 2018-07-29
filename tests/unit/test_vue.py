@@ -154,3 +154,9 @@ class TestVue:
         with VueMock().use() as use:
             Vue.use("Plugin")
         assert "Plugin" == use.plugin
+
+    def test_component(self):
+        with VueMock().component() as component:
+            Vue.component("my-component", {"a": 0})
+        assert {"a": 0} == component.init_dict
+        assert "my-component" == component.register_name

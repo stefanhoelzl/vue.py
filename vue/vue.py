@@ -42,6 +42,10 @@ class Vue:
     def use(plugin, *args, **kwargs):
         window.Vue.use(plugin, *args, kwargs)
 
+    @staticmethod
+    def component(name, component):
+        window.Vue.component(name, component)
+
 
 class VueComponent(Wrapper):
     @classmethod
