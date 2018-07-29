@@ -58,9 +58,9 @@ class Wrapper(metaclass=BrythonObjectWorkarounds):
 class AttributeDictFactory:
     @classmethod
     def get_item(cls, wrapper):
-        if isinstance(wrapper, dict):
-            return wrapper
-        return cls(wrapper).generate_item()
+        if isinstance(wrapper, BrythonObjectWorkarounds):
+            return cls(wrapper).generate_item()
+        return wrapper
 
     @classmethod
     def get_wrapper_base(cls, wrapper):

@@ -42,20 +42,20 @@ def test_extend(selenium):
     def extended_component(el):
         class Base(VueComponent):
             template = "<div id='comps'>{{ components_string }}</div>"
-            components = []
+            comps = []
 
             def created(self):
-                self.components.append("BASE")
+                self.comps.append("BASE")
 
             @computed
             def components_string(self):
-                return " ".join(self.components)
+                return " ".join(self.comps)
 
         class Sub(Base):
             extends = True
 
             def created(self):
-                self.components.append("SUB")
+                self.comps.append("SUB")
 
         return Sub(el)
     with selenium.app(extended_component):

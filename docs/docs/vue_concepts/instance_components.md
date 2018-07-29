@@ -10,11 +10,30 @@ class MyComponent(VueComponent):
 
 ## Registration
 Every component has to be [registered](https://vuejs.org/v2/guide/components-registration.html) to be available in other components.
-Currently only global registration is available.
+### Local Registration
 ```python
-MyComponent.register()
+from vue import VueComponent
+
+class MyComponent(VueComponent):
+    components = [
+        MyVuePyComponent,
+        AnotherNativeVueJsComponent,
+    ]
 ```
-the `register()` methods accepts a argument to change the name under which the component is available later.
+The component to register can be either a `vue.py` component or a native
+Vue.js component loaded with `js_lib` or `js_import`
+### Global Registration
+```python
+from vue import Vue
+
+# For vue.py components or native Vue.js component loaded with js_lib or js_import
+Vue.component(MyComponent)
+Vue.component("my-custom-name", MyComponent)
+
+# Only for vue.py components
+MyComponent.register()
+MyComponent.register("my-custom-name")
+```
 
 ## Template
 The component html template can be defined with a class variable called `template`

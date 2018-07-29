@@ -1,7 +1,6 @@
 # Future Plans
 
 ## Features
-* local component registration
 * full access to Vue object (global configuration etc.)
 * ...
 

@@ -35,7 +35,7 @@ class window:
             ...
 
         @classmethod
-        def component(cls, name, opts):
+        def component(cls, name, opts=None):
             ...
 
         @classmethod

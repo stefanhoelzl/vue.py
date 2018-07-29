@@ -21,8 +21,11 @@ class VueMock(mock.MagicMock):
     @contextmanager
     def component(self):
         with mock.patch("vue.vue.window.Vue.component", new=self) as component:
+            component.side_effect = lambda *args, **kwargs: self.init_dict
             yield self
-        self.init_dict = component.call_args[0][1]
+        self.init_dict = component.call_args[0][1] \
+            if len(component.call_args[0]) > 1\
+            else component
         self.register_name = component.call_args[0][0]
 
     @contextmanager
@@ -160,3 +163,27 @@ class TestVue:
             Vue.component("my-component", {"a": 0})
         assert {"a": 0} == component.init_dict
         assert "my-component" == component.register_name
+
+    def test_vuepy_component(self):
+        class MyComponent(VueComponent):
+            pass
+
+        with VueMock().component() as component:
+            Vue.component("my-component", MyComponent)
+        assert {} == component.init_dict
+        assert "my-component" == component.register_name
+
+    def test_vuepy_component_implicit_naming(self):
+        class MyComponent(VueComponent):
+            pass
+
+        with VueMock().component() as component:
+            Vue.component(MyComponent)
+        assert {} == component.init_dict
+        assert "MyComponent" == component.register_name
+
+    def test_component_getter(self):
+        with VueMock().component() as comp:
+            comp.init_dict = {"a": 0}
+            component = Vue.component("my-component")
+        assert {"a": 0} == component

@@ -43,8 +43,15 @@ class Vue:
         window.Vue.use(plugin, *args, kwargs)
 
     @staticmethod
-    def component(name, component):
-        window.Vue.component(name, component)
+    def component(component_or_name, component=None):
+        if isinstance(component_or_name, str) and component is None:
+            return window.Vue.component(component_or_name)
+        if component is not None:
+            name = component_or_name
+        else:
+            component = component_or_name
+            name = component.__name__
+        window.Vue.component(name, VueComponentFactory.get_item(component))
 
 
 class VueComponent(Wrapper):
@@ -60,8 +67,10 @@ class VueComponent(Wrapper):
 
     @classmethod
     def register(cls, name=None):
-        name = name if name else cls.__name__
-        window.Vue.component(name, cls.init_dict())
+        if name:
+            Vue.component(name, cls)
+        else:
+            Vue.component(cls)
 
 
 class VueMixin(Wrapper):
