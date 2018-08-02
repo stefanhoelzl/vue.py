@@ -38,13 +38,6 @@ class BrythonObjectWorkarounds(type):
     """
     def __init__(cls, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        bases = cls.__bases__
-        cls.__bases__ = bases if bases else (object,)
-        if not hasattr(cls, "__annotations__"):
-            cls.__annotations__ = {}
-        cls.__annotations__.update(getattr(cls.__base__,
-                                           "__annotations__",
-                                           {}))
 
     @property
     def __base__(cls):

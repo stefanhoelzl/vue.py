@@ -5,7 +5,7 @@ env.brython:
 	mkdir -p js
 	rm -Rf js/brython
 	cd js; git clone https://github.com/brython-dev/brython.git
-	cd js/brython; git checkout 34d9698afe922e3b0c802c9dab6128e256a8346c
+	cd js/brython; git checkout 7e9a7d901acc6f2112ab8e570a0d560aafb616d2
 	cp js/brython/www/src/brython_dist.js js
 
 .PHONY: env.vuejs
