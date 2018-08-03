@@ -67,3 +67,15 @@ class timer:
     @staticmethod
     def set_interval(fn, interval):
         ...
+
+
+class ajax:
+    class ajax:
+        def open(self, method, url, async):
+            ...
+
+        def bind(self, ev, method):
+            ...
+
+        def send(self):
+            ...

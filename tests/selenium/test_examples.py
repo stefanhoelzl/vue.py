@@ -118,5 +118,5 @@ def test_mqtt_dashboard(selenium):
 def test_github_commits(selenium):
     with selenium.example(hash_="testing"):
         assert selenium.element_with_tag_name_present("ul")
-        time.sleep(60)
+        time.sleep(2)
         assert 10 == len(selenium.driver.find_elements_by_tag_name("li"))
