@@ -45,3 +45,10 @@ def test_getter_method():
             return state, getters, value
 
     assert (1, 2, 3) == Store.init_dict()["getters"]["getter"](1, 2)(3)
+
+
+def test_plugin_registration():
+    class Store(VueStore):
+        plugins = [1]
+
+    assert [1] == Store.init_dict()["plugins"]
