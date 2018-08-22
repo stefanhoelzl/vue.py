@@ -13,6 +13,7 @@
 
 ### VueStore
 * state acces in mutations must be via `state["key"]`
+* unknown third argument at actions
 
 ## Docs
 * embed examples in gallery

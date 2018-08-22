@@ -15,3 +15,13 @@ def test_mutation():
             return state, payload
 
     assert [1, 2] == Store.init_dict()["mutations"]["mutation"](1, 2)
+
+
+def test_action():
+    class Store(VueStore):
+        @staticmethod
+        @action
+        def action(context, payload):
+            return context, payload
+
+    assert [1, 2] == Store.init_dict()["actions"]["action"](1, 2, None)
