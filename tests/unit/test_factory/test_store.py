@@ -25,3 +25,13 @@ def test_action():
             return context, payload
 
     assert [1, 2] == Store.init_dict()["actions"]["action"](1, 2, None)
+
+
+def test_getter():
+    class Store(VueStore):
+        @staticmethod
+        @getter
+        def getter(state, getters):
+            return state, getters
+
+    assert [1, 2] == Store.init_dict()["getters"]["getter"](1, 2)

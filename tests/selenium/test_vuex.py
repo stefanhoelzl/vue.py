@@ -1,4 +1,4 @@
-from vue import VueComponent, VueStore, computed, mutation, action
+from vue import *
 
 
 def test_state(selenium):
@@ -66,6 +66,28 @@ def test_action(selenium):
 
             template = "<div id='content'>{{ message }}</div>"
         return ComponentUsingAction(el, store=Store())
+
+    with selenium.app(app):
+        assert selenium.element_has_text("content", "Message")
+
+
+def test_getter(selenium):
+    def app(el):
+        class Store(VueStore):
+            message = "Message"
+
+            @staticmethod
+            @getter
+            def msg(state, getters):
+                return state["message"]
+
+        class ComponentUsingGetter(VueComponent):
+            @computed
+            def message(self):
+                return self.store.getters.msg
+
+            template = "<div id='content'>{{ message }}</div>"
+        return ComponentUsingGetter(el, store=Store())
 
     with selenium.app(app):
         assert selenium.element_has_text("content", "Message")
