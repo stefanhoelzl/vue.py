@@ -16,6 +16,14 @@ env.vuejs:
 	cd js/vuejs; git checkout v2.5.16
 	cp js/vuejs/dist/vue.js js
 
+.PHONY: env.vuex
+env.vuex:
+	mkdir -p js
+	rm -Rf js/vuex
+	cd js; git clone https://github.com/vuejs/vuex.git vuex
+	cd js/vuex; git checkout v3.0.1
+	cp js/vuex/dist/vuex.js js
+
 .PHONY: env.pip
 env.pip:
 	pip install -r requirements.txt
@@ -25,7 +33,7 @@ env.chrome:
 	python -c "import chromedriver_install as cdi;cdi.install(file_directory='tests/selenium', overwrite=True)"
 
 .PHONY: env.up
-env.up: env.pip env.brython env.vuejs env.chrome
+env.up: env.pip env.brython env.vuejs env.vuex env.chrome
 
 .PHONY: env.clean
 env.clean:
