@@ -154,5 +154,6 @@ class VueDirectiveFactory(AttributeDictFactory):
 
 class VueStoreFactory(AttributeDictFactory):
     def auto_decorate(self, obj_name, obj):
-        obj = State(obj_name, obj)
+        if not isinstance(obj, VueDecorator):
+            obj = State(obj_name, obj)
         return super().auto_decorate(obj_name, obj)

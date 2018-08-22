@@ -1,6 +1,5 @@
 from browser import window
-from .factory import VueComponentFactory, Wrapper, \
-    VueDirectiveFactory, VueStoreFactory
+from .factory import VueComponentFactory, Wrapper, VueDirectiveFactory
 from .bridge import Object
 from .decorators.directive import DirectiveHook
 from .decorators.filters import Filter
@@ -87,12 +86,3 @@ class VuePlugin:
     @staticmethod
     def install(*args, **kwargs):
         raise NotImplementedError()
-
-
-class VueStore(Wrapper):
-    @classmethod
-    def init_dict(cls):
-        return VueStoreFactory.get_item(cls)
-
-    def __new__(cls):
-        return Object.from_js(window.Vuex.Store.new(cls.init_dict()))

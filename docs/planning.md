@@ -11,6 +11,9 @@
   * needs very long to load page
 * try dynamics example again with latest bridge changes
 
+### VueStore
+* state acces in mutations must be via `state["key"]`
+
 ## Docs
 * embed examples in gallery
 
