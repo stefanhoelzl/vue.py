@@ -29,6 +29,12 @@ class window:
         def isArray(cls, obj):
             ...
 
+    class Vuex:
+        class Store:
+            @classmethod
+            def new(cls, *args, **kwargs):
+                ...
+
     class Vue:
         @classmethod
         def new(cls, *args, **kwargs):
