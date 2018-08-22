@@ -8,4 +8,4 @@ from .model import Model
 from .custom import custom
 from .mutation import mutation
 from .action import action
-from .getter import getter
+from .getter import getter, getter_method

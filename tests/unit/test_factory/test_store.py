@@ -35,3 +35,13 @@ def test_getter():
             return state, getters
 
     assert [1, 2] == Store.init_dict()["getters"]["getter"](1, 2)
+
+
+def test_getter_method():
+    class Store(VueStore):
+        @staticmethod
+        @getter_method
+        def getter(state, getters, value):
+            return state, getters, value
+
+    assert (1, 2, 3) == Store.init_dict()["getters"]["getter"](1, 2)(3)

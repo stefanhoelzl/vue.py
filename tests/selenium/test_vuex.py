@@ -91,3 +91,25 @@ def test_getter(selenium):
 
     with selenium.app(app):
         assert selenium.element_has_text("content", "Message")
+
+
+def test_getter_method(selenium):
+    def app(el):
+        class Store(VueStore):
+            message = "Message"
+
+            @staticmethod
+            @getter_method
+            def msg(state, getters, prefix):
+                return prefix + state["message"]
+
+        class ComponentUsingGetter(VueComponent):
+            @computed
+            def message(self):
+                return self.store.getters.msg("pre")
+
+            template = "<div id='content'>{{ message }}</div>"
+        return ComponentUsingGetter(el, store=Store())
+
+    with selenium.app(app):
+        assert selenium.element_has_text("content", "preMessage")
