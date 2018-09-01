@@ -1,10 +1,19 @@
 from .object import Object
+from .vuex_instance import VuexInstance
 
 
 class VueInstance(Object):
     @staticmethod
     def __can_wrap__(obj):
         return hasattr(obj, "_isVue") and obj._isVue
+
+    @property
+    def store(self):
+        store = self.__getattr__("store")
+        return VuexInstance(state=store.state,
+                            getters=store.getters,
+                            commit=store.commit,
+                            dispatch=store.dispatch)
 
     def __getattr__(self, item):
         try:
