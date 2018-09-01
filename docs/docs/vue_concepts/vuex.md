@@ -94,3 +94,32 @@ class App(VueComponent):
 
 App("#app", store=Store())
 ```
+
+## Plugins
+```python
+class Plugin(VueStorePlugin):
+    def initialize(self, store):
+        store.message = "Message"
+
+    def subscribe(self, mut, *args, **kwargs):
+        print(mut, args, kwargs)
+
+class Store(VueStore):
+    plugins = [Plugin().install] # list can also contain native vuex plugins
+
+    message = ""
+
+    @mutation
+    def msg(self, prefix, postfix=""):
+        pass
+
+class ComponentUsingGetter(VueComponent):
+    @computed
+    def message(self):
+        return self.store.message
+
+    def created(self):
+        self.store.commit("msg", "Hallo", postfix="!")
+
+    template = "<div id='content'>{{ message }}</div>"
+```
