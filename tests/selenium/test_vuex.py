@@ -9,10 +9,32 @@ def test_state(selenium):
         class ComponentUsingStore(VueComponent):
             @computed
             def message(self):
-                return self.store.state.message
+                return self.store.message
 
             template = "<div id='content'>{{ message }}</div>"
         return ComponentUsingStore(el, store=Store())
+
+    with selenium.app(app):
+        assert selenium.element_has_text("content", "Message")
+
+
+def test_mutation_noargs(selenium):
+    def app(el):
+        class Store(VueStore):
+            message = ""
+
+            @mutation
+            def mutate_message(self):
+                self.message = "Message"
+
+        class ComponentUsingMutation(VueComponent):
+            @computed
+            def message(self):
+                self.store.commit("mutate_message")
+                return self.store.message
+
+            template = "<div id='content'>{{ message }}</div>"
+        return ComponentUsingMutation(el, store=Store())
 
     with selenium.app(app):
         assert selenium.element_has_text("content", "Message")
@@ -23,16 +45,15 @@ def test_mutation(selenium):
         class Store(VueStore):
             message = ""
 
-            @staticmethod
             @mutation
-            def mutate_message(state, new_message):
-                state["message"] = new_message
+            def mutate_message(self, new_message):
+                self.message = new_message
 
         class ComponentUsingMutation(VueComponent):
             @computed
             def message(self):
                 self.store.commit("mutate_message", "Message")
-                return self.store.state.message
+                return self.store.message
 
             template = "<div id='content'>{{ message }}</div>"
         return ComponentUsingMutation(el, store=Store())
@@ -41,20 +62,40 @@ def test_mutation(selenium):
         assert selenium.element_has_text("content", "Message")
 
 
+def test_mutation_kwargs(selenium):
+    def app(el):
+        class Store(VueStore):
+            message = ""
+
+            @mutation
+            def mutate_message(self, new_message, postfix=""):
+                self.message = new_message + postfix
+
+        class ComponentUsingMutation(VueComponent):
+            @computed
+            def message(self):
+                self.store.commit("mutate_message", "Message", postfix="!")
+                return self.store.message
+
+            template = "<div id='content'>{{ message }}</div>"
+        return ComponentUsingMutation(el, store=Store())
+
+    with selenium.app(app):
+        assert selenium.element_has_text("content", "Message!")
+
+
 def test_action(selenium):
     def app(el):
         class Store(VueStore):
             message = ""
 
-            @staticmethod
             @mutation
-            def mutate_message(state, new_message):
-                state["message"] = new_message
+            def mutate_message(self, new_message):
+                self.message = new_message
 
-            @staticmethod
             @action
-            def change_message(context, new_message):
-                context.commit("mutate_message", new_message)
+            def change_message(self, new_message):
+                self.commit("mutate_message", new_message)
 
         class ComponentUsingAction(VueComponent):
             def created(self):
@@ -62,7 +103,7 @@ def test_action(selenium):
 
             @computed
             def message(self):
-                return self.store.state.message
+                return self.store.message
 
             template = "<div id='content'>{{ message }}</div>"
         return ComponentUsingAction(el, store=Store())
@@ -71,20 +112,76 @@ def test_action(selenium):
         assert selenium.element_has_text("content", "Message")
 
 
-def test_getter(selenium):
+
+def test_action_noargs(selenium):
+    def app(el):
+        class Store(VueStore):
+            message = ""
+
+            @mutation
+            def mutate_message(self, new_message):
+                self.message = new_message
+
+            @action
+            def change_message(self):
+                self.commit("mutate_message", "Message")
+
+        class ComponentUsingAction(VueComponent):
+            def created(self):
+                self.store.dispatch("change_message")
+
+            @computed
+            def message(self):
+                return self.store.message
+
+            template = "<div id='content'>{{ message }}</div>"
+        return ComponentUsingAction(el, store=Store())
+
+    with selenium.app(app):
+        assert selenium.element_has_text("content", "Message")
+
+
+def test_action_kwargs(selenium):
+    def app(el):
+        class Store(VueStore):
+            message = ""
+
+            @mutation
+            def mutate_message(self, new_message):
+                self.message = new_message
+
+            @action
+            def change_message(self, new_message, postfix=""):
+                self.commit("mutate_message", new_message + postfix)
+
+        class ComponentUsingAction(VueComponent):
+            def created(self):
+                self.store.dispatch("change_message", "Message", postfix="!")
+
+            @computed
+            def message(self):
+                return self.store.message
+
+            template = "<div id='content'>{{ message }}</div>"
+        return ComponentUsingAction(el, store=Store())
+
+    with selenium.app(app):
+        assert selenium.element_has_text("content", "Message!")
+
+
+def test_getter_noargs(selenium):
     def app(el):
         class Store(VueStore):
             message = "Message"
 
-            @staticmethod
             @getter
-            def msg(state, getters):
-                return state["message"]
+            def msg(self):
+                return self.message
 
         class ComponentUsingGetter(VueComponent):
             @computed
             def message(self):
-                return self.store.getters.msg
+                return self.store.msg
 
             template = "<div id='content'>{{ message }}</div>"
         return ComponentUsingGetter(el, store=Store())
@@ -98,18 +195,38 @@ def test_getter_method(selenium):
         class Store(VueStore):
             message = "Message"
 
-            @staticmethod
-            @getter_method
-            def msg(state, getters, prefix):
-                return prefix + state["message"]
+            @getter
+            def msg(self, prefix):
+                return prefix + self.message
 
         class ComponentUsingGetter(VueComponent):
             @computed
             def message(self):
-                return self.store.getters.msg("pre")
+                return self.store.msg("pre")
 
             template = "<div id='content'>{{ message }}</div>"
         return ComponentUsingGetter(el, store=Store())
 
     with selenium.app(app):
         assert selenium.element_has_text("content", "preMessage")
+
+
+def test_getter_kwargs(selenium):
+    def app(el):
+        class Store(VueStore):
+            message = "Message"
+
+            @getter
+            def msg(self, prefix, postfix):
+                return prefix + self.message + postfix
+
+        class ComponentUsingGetter(VueComponent):
+            @computed
+            def message(self):
+                return self.store.msg("pre", "!")
+
+            template = "<div id='content'>{{ message }}</div>"
+        return ComponentUsingGetter(el, store=Store())
+
+    with selenium.app(app):
+        assert selenium.element_has_text("content", "preMessage!")

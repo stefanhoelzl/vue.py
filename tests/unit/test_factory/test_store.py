@@ -1,4 +1,5 @@
 from vue import *
+from vue.bridge import VuexInstance
 
 
 def test_state():
@@ -9,42 +10,57 @@ def test_state():
 
 def test_mutation():
     class Store(VueStore):
-        @staticmethod
         @mutation
-        def mutation(state, payload):
-            return state, payload
+        def mutation(self, payload):
+            return self, payload
 
-    assert [1, 2] == Store.init_dict()["mutations"]["mutation"](1, 2)
+    store, arg = Store.init_dict()["mutations"]["mutation"]({}, {"args": (2,)})
+    assert 2 == arg
+    assert isinstance(store, VuexInstance)
 
 
 def test_action():
-    class Store(VueStore):
-        @staticmethod
-        @action
-        def action(context, payload):
-            return context, payload
+    class Context:
+        def __init__(self):
+            self.state = {}
+            self.getters = {}
+            self.rootState = {}
+            self.rootGetters = {}
+            self.commit = None
+            self.dispatch = None
 
-    assert [1, 2] == Store.init_dict()["actions"]["action"](1, 2, None)
+    class Store(VueStore):
+        @action
+        def action(self, payload):
+            return self, payload
+
+    store, arg = Store.init_dict()["actions"]["action"](Context(),
+                                                        {"args": (2,)})
+    assert 2 == arg
+    assert isinstance(store, VuexInstance)
 
 
 def test_getter():
     class Store(VueStore):
         @staticmethod
         @getter
-        def getter(state, getters):
-            return state, getters
+        def getter(self):
+            return self
 
-    assert [1, 2] == Store.init_dict()["getters"]["getter"](1, 2)
+    vuex = Store.init_dict()["getters"]["getter"]({}, {})
+    assert isinstance(vuex, VuexInstance)
 
 
 def test_getter_method():
     class Store(VueStore):
         @staticmethod
-        @getter_method
-        def getter(state, getters, value):
-            return state, getters, value
+        @getter
+        def getter(self, value):
+            return self, value
 
-    assert (1, 2, 3) == Store.init_dict()["getters"]["getter"](1, 2)(3)
+    vuex, value = Store.init_dict()["getters"]["getter"]({}, {})(3)
+    assert isinstance(vuex, VuexInstance)
+    assert 3 == value
 
 
 def test_plugin_registration():

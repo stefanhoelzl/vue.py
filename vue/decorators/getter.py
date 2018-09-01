@@ -1,4 +1,5 @@
 from .base import pyjs_bridge, VueDecorator
+from vue.bridge import VuexInstance
 
 
 class Getter(VueDecorator):
@@ -10,14 +11,13 @@ class Getter(VueDecorator):
 
 
 def getter(fn):
-    def fn_(*args):
-        return fn(args[0], args[1])
-    return Getter(fn.__name__, pyjs_bridge(fn_))
-
-
-def getter_method(fn):
-    def fn_(arg0, arg1, *args):
-        def fn__(*args):
-            return fn(arg0, arg1, *args)
-        return fn__
-    return Getter(fn.__name__, pyjs_bridge(fn_))
+    def wrapper(state, getters, *args):
+        if fn.__code__.co_argcount == 1:
+            return fn(VuexInstance(state=state, getters=getters))
+        else:
+            def getter_method(*args_, **kwargs):
+                return fn(VuexInstance(state=state, getters=getters),
+                          *args_,
+                          **kwargs)
+            return getter_method
+    return Getter(fn.__name__, pyjs_bridge(wrapper))

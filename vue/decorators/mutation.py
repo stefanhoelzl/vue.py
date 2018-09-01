@@ -1,3 +1,4 @@
+from vue.bridge import VuexInstance
 from .base import pyjs_bridge, VueDecorator
 
 
@@ -10,4 +11,8 @@ class Mutation(VueDecorator):
 
 
 def mutation(fn):
-    return Mutation(fn.__name__, pyjs_bridge(fn))
+    def wrapper(state, payload):
+        return fn(VuexInstance(state=state),
+                  *payload.get("args", ()),
+                  **payload.get("kwargs", {}))
+    return Mutation(fn.__name__, pyjs_bridge(wrapper))
