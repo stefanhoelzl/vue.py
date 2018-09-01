@@ -230,3 +230,37 @@ def test_getter_kwargs(selenium):
 
     with selenium.app(app):
         assert selenium.element_has_text("content", "preMessage!")
+
+
+def test_plugin(selenium):
+    def app(el):
+        class Plugin(VueStorePlugin):
+            def initialize(self, store):
+                store.message = "Message"
+
+            def subscribe(self, mut, *args, **kwargs):
+                print(mut, args, kwargs)
+
+        class Store(VueStore):
+            plugins = [Plugin().install]
+            message = ""
+
+            @mutation
+            def msg(self, prefix, postfix=""):
+                pass
+
+        class ComponentUsingGetter(VueComponent):
+            @computed
+            def message(self):
+                return self.store.message
+
+            def created(self):
+                self.store.commit("msg", "Hallo", postfix="!")
+
+            template = "<div id='content'>{{ message }}</div>"
+        return ComponentUsingGetter(el, store=Store())
+
+    with selenium.app(app):
+        assert selenium.element_has_text("content", "Message")
+        last_log_message = selenium.get_logs()[-1]["message"]
+        assert "msg ('Hallo',) {'postfix': '!'}" in last_log_message
