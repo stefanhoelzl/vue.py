@@ -65,6 +65,7 @@ Now goto [http://localhost:8000/app/app.html](http://localhost:8000/app/app.html
 * [Custom Directives](vue_concepts/custom_directives.md)
 * [Plugins and Mixins](vue_concepts/plugins_mixins.md)
 * [Extend](vue_concepts/extend.md)
+* [Vuex](vue_concepts/vuex.md)
 
 ## Python/Javascript Bridge
 [here](pyjs_bridge.md)
