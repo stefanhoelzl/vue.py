@@ -17,11 +17,12 @@ class VueStorePlugin:
     def initialize(self, store):
         raise NotImplementedError()
 
-    def subscribe(self, mutation, *args, **kwargs):
+    def subscribe(self, state, mutation, *args, **kwargs):
         raise NotImplementedError()
 
     def __subscribe__(self, muation_info, state):
         self.subscribe(
+            VuexInstance(state=state),
             muation_info["type"],
             *muation_info["payload"]["args"],
             **muation_info["payload"]["kwargs"],

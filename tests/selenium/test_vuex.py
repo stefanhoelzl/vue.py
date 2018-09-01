@@ -238,8 +238,8 @@ def test_plugin(selenium):
             def initialize(self, store):
                 store.message = "Message"
 
-            def subscribe(self, mut, *args, **kwargs):
-                print(mut, args, kwargs)
+            def subscribe(self, state, mut, *args, **kwargs):
+                print(state.message, mut, args, kwargs)
 
         class Store(VueStore):
             plugins = [Plugin().install]
@@ -263,4 +263,5 @@ def test_plugin(selenium):
     with selenium.app(app):
         assert selenium.element_has_text("content", "Message")
         last_log_message = selenium.get_logs()[-1]["message"]
-        assert "msg ('Hallo',) {'postfix': '!'}" in last_log_message
+        expected_msg = "Message msg ('Hallo',) {'postfix': '!'}"
+        assert expected_msg in last_log_message
