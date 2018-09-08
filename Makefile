@@ -85,4 +85,4 @@ ci.docs:
 	cp dist/*.whl gh-pages-build/vuepy.whl
 
 .PHONY: ci
-ci: tests ci.docs release.build
+ci: tests release.build ci.docs
