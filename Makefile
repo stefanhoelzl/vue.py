@@ -82,5 +82,7 @@ ci.docs:
 	mkdir gh-pages-build/tests
 	cp -R tests/selenium/_html/* gh-pages-build/tests
 
+	cp dist/*.whl gh-pages-build/vuepy.whl
+
 .PHONY: ci
 ci: tests ci.docs release.build
