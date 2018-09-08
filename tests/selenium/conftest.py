@@ -21,7 +21,7 @@ HTML_OUTPUT_PATH = TEST_PATH / "_html"
 TEMPLATE_PATH = TEST_PATH / "template.html"
 APP_URL = "http://localhost:8000/{}/{}.html"
 EXAMPLE_URL = "http://localhost:8000/examples_static/{}"
-EXAMPLE_SCREENSHOT_PATH = "examples/{}/screenshot.png"
+EXAMPLE_SCREENSHOT_PATH = "examples_static/{}/screenshot.png"
 DEFAULT_TIMEOUT = 5
 
 
