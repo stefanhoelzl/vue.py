@@ -107,14 +107,6 @@ def test_todo_mvc(selenium):
         assert "completed" == labels[1].text
 
 
-def test_mqtt_dashboard(selenium):
-    with selenium.example():
-        selenium.element_with_tag_name_present("button").click()
-        time.sleep(0.1)
-        assert selenium.element_with_tag_name_has_text("button", "CLOSED")
-        selenium.allowed_errors.append("Unexpected response code: 307")
-
-
 def test_github_commits(selenium):
     with selenium.example(hash_="testing"):
         assert selenium.element_with_tag_name_present("ul")
