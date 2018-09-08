@@ -3,6 +3,7 @@ title: vue.py
 description: Pythonic Vue.js
 include:
   - __init__.py
+  - _js
 navigation:
   - title: Start
     link: /

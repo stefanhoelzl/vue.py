@@ -74,6 +74,7 @@ ci.docs:
 
 	cp -Rf docs/* README.md vue gh-pages-build
 	cp -Rf examples_static gh-pages-build/examples
+	cp examples/index.md gh-pages/examples
 
 	mkdir gh-pages-build/js
 	cp vuecli/js/vue.js gh-pages-build/js
