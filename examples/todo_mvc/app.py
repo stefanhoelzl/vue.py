@@ -48,6 +48,7 @@ class VisibilityFilters:
 
 
 class App(VueComponent):
+    template = "#app-template"
     todos = ToDoStorage.fetch()
     new_todo = ''
     edited_todo = None
@@ -119,7 +120,7 @@ class App(VueComponent):
             el.focus()
 
 
-app = App('.todoapp')
+app = App('#app')
 
 
 def on_hash_change(ev):

@@ -1,0 +1,5 @@
+templates:
+  tree-template: tree-template.html
+  app-template: app-template.html
+stylesheets:
+  - style.css

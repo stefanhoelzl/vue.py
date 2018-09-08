@@ -9,6 +9,7 @@ Modal.register()
 
 
 class App(VueComponent):
+    template = "#main"
     show_modal = False
 
 

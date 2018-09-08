@@ -5,7 +5,9 @@ marked = js_lib("marked")
 
 
 class App(VueComponent):
-    input = "# hello"
+    template = "#editor-template"
+
+    input = "# Editor"
 
     @computed
     def compiled_markdown(self):
@@ -15,4 +17,4 @@ class App(VueComponent):
         self.input = event.target.value
 
 
-App("#editor")
+App("#app")

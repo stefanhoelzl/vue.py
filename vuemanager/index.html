@@ -1,0 +1,25 @@
+<html>
+<head>
+  <script src="_js/vue.js"></script>
+  <script src="_js/vuex.js"></script>
+  <script src="_js/brython_dist.js"></script>
+
+  {% for stylesheet in stylesheets %}
+  <link rel="stylesheet" media="screen" href="{{ stylesheet }}">
+  {% endfor %}
+
+  {% for script in scripts %}
+    <script src="{{ script }}"></script>
+  {% endfor %}
+</head>
+<body onload="brython({{ debug_level }});">
+  {% for id, content in templates.items() %}
+    <script type="x-template" id="{{ id }}">
+      {{ content }}
+    </script>
+  {% endfor %}
+
+  <div id="app"></div>
+  <script type="text/python" src="app.py"></script>
+</body>
+</html>

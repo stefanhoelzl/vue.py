@@ -1,0 +1,10 @@
+<div>
+  <form id="search">
+    Search <input id="query" name="query" v-model="search_query">
+  </form>
+  <demo-grid
+    :content="grid_data"
+    :columns="grid_columns"
+    :filter_key="search_query">
+  </demo-grid>
+</div>

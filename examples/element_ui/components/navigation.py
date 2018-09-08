@@ -51,9 +51,6 @@ class NavigationItem(VueComponent):
         return "children" in self.item
 
 
-NavigationItem.register()
-
-
 class NavigationMenu(VueComponent):
     content: list
     template = """
@@ -72,4 +69,6 @@ class NavigationMenu(VueComponent):
     """
 
 
-NavigationMenu.register()
+def register():
+    NavigationItem.register()
+    NavigationMenu.register()

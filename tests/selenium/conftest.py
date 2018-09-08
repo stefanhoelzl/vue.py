@@ -3,8 +3,9 @@ import os
 import inspect
 from pathlib import Path
 from contextlib import contextmanager
-
 import pytest
+
+from vuemanager.provider import Static
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -19,7 +20,7 @@ CHROME_DRIVER_PATH = TEST_PATH / "chromedriver"
 HTML_OUTPUT_PATH = TEST_PATH / "_html"
 TEMPLATE_PATH = TEST_PATH / "template.html"
 APP_URL = "http://localhost:8000/{}/{}.html"
-EXAMPLE_URL = "http://localhost:8000/examples/{}"
+EXAMPLE_URL = "http://localhost:8000/examples_static/{}"
 EXAMPLE_SCREENSHOT_PATH = "examples/{}/screenshot.png"
 DEFAULT_TIMEOUT = 5
 
@@ -127,6 +128,11 @@ class SeleniumSession:
         name = test_name[5:]
         img_file = Path(EXAMPLE_SCREENSHOT_PATH.format(name))
         url = EXAMPLE_URL.format(name)
+
+        provider = Static("examples/{}".format(name))
+        provider.setup()
+        provider.deploy("examples_static/{}".format(name))
+
         if hash_:
             url = "{}#{}".format(url, hash_)
         with self.url(url):

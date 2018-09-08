@@ -1,15 +1,12 @@
 from vue import VueComponent
+from .components import navigation
+
+
+navigation.register()
 
 
 class App(VueComponent):
-    template = """
-    <div>
-        <navigation-menu 
-            @click="clicked"
-            :content="navigation_menu">
-        </navigation-menu>
-    </div>
-    """
+    template = "#navigation"
 
     navigation_menu = [
         {"id": "one", "title": "Navigation One", "icon": "el-icon-location",

@@ -2,7 +2,7 @@ from vue import VueComponent, data, computed, filters
 
 
 class GridComponent(VueComponent):
-    template = "#grid-template"
+    template = "#grid"
 
     content: list
     columns: list
@@ -39,6 +39,8 @@ GridComponent.register("demo-grid")
 
 
 class App(VueComponent):
+    template = "#form"
+
     search_query = ""
     grid_columns = ["name", "power"]
     grid_data = [
@@ -49,4 +51,4 @@ class App(VueComponent):
     ]
 
 
-App("#demo")
+App("#app")

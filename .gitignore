@@ -1,7 +1,9 @@
 venv
 .idea
-js
 .pytest_cache
-debug
 gh-pages-build
+
+debug
 examples/*/screenshot.png
+vuemanager/js
+examples_static

@@ -11,6 +11,8 @@ if window.location.hash == "#testing":
 
 
 class App(VueComponent):
+    template = "#commits"
+
     branches = ['master', '2948e6b']
     current_branch = "master"
     commits = []
@@ -44,4 +46,4 @@ class App(VueComponent):
         self.commits = json.loads(ev.text)
 
 
-App("#commits")
+App("#app")

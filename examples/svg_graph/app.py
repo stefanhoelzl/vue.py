@@ -25,7 +25,7 @@ def value_to_point(value, index, total):
 
 
 class AxisLabel(VueComponent):
-    template = '#axis-label-template'
+    template = '<text :x="point[0]" :y="point[1]">{{stat.label}}</text>'
 
     stat: dict
     index: int
@@ -63,6 +63,7 @@ Polygraph.register()
 
 
 class App(VueComponent):
+    template = "#app-template"
     new_label = ''
     stats = stats
 
@@ -80,4 +81,4 @@ class App(VueComponent):
         del self.stats[self.stats.index(stat)]
 
 
-App("#demo")
+App("#app")

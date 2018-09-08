@@ -31,7 +31,7 @@ demo_data = {
 
 
 class Tree(VueComponent):
-    template = '#tree-template'
+    template = "#tree-template"
     model: dict
     open = False
 
@@ -57,7 +57,8 @@ Tree.register()
 
 
 class App(VueComponent):
+    template = "#app-template"
     tree_data = demo_data
 
 
-App("#demo")
+App("#app")
