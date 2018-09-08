@@ -4,12 +4,16 @@ Usage:
     vue-cli deploy live [<app-path>]
     vue-cli deploy static <destination> [<app-path>]
 
+    vue-cli (-h | --help)
+    vue-cli --version
+
 Options:
     <app-path>              Path of the application to deplay (default: current path)
     <destination>           Path where the application should be deployed to
 """
 from docopt import docopt
-from vuemanager.provider import Static, Flask
+from vuecli.provider import Static, Flask
+from vue import __version__
 
 
 def deploy(arguments):
@@ -26,7 +30,7 @@ def deploy(arguments):
 
 
 def main():
-    arguments = docopt(__doc__)
+    arguments = docopt(__doc__, version="vuepy {}".format(__version__))
     if arguments.pop("deploy"):
         deploy(arguments)
 

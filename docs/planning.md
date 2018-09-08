@@ -11,16 +11,10 @@
   * needs very long to load page
 * try dynamics example again with latest bridge changes
 
-### VueStore
-* state acces in mutations must be via `state["key"]`
-* unknown third argument at actions
-
 ## Docs
 * embed examples in gallery
 
 ## Tools
-* cmd line tool to init vue.py project
-* pre-transpile to javascript
 * make available on pip
 
 ## Internals

@@ -2,30 +2,30 @@ PYTHONPATH=.:stubs
 
 .PHONY: env.brython
 env.brython:
-	mkdir -p vuemanager/js
-	rm -Rf vuemanager/js/brython
-	cd vuemanager/js; git clone https://github.com/brython-dev/brython.git brython
-	cd vuemanager/js/brython; git checkout 7e9a7d901acc6f2112ab8e570a0d560aafb616d2
-	cp vuemanager/js/brython/www/src/brython_dist.js vuemanager/js
-	cp vuemanager/js/brython/LICENCE.txt vuemanager/js/LICENSE_BRYTHON
+	mkdir -p vuecli/js
+	rm -Rf vuecli/js/brython
+	cd vuecli/js; git clone https://github.com/brython-dev/brython.git brython
+	cd vuecli/js/brython; git checkout 7e9a7d901acc6f2112ab8e570a0d560aafb616d2
+	cp vuecli/js/brython/www/src/brython_dist.js vuecli/js
+	cp vuecli/js/brython/LICENCE.txt vuecli/js/LICENSE_BRYTHON
 
 .PHONY: env.vuejs
 env.vuejs:
-	mkdir -p vuemanager/js
-	rm -Rf vuemanager/js/vuejs
-	cd vuemanager/js; git clone https://github.com/vuejs/vue.git vuejs
-	cd vuemanager/js/vuejs; git checkout v2.5.16
-	cp vuemanager/js/vuejs/dist/vue.js vuemanager/js
-	cp vuemanager/js/vuejs/LICENSE vuemanager/js/LICENSE_VUEJS
+	mkdir -p vuecli/js
+	rm -Rf vuecli/js/vuejs
+	cd vuecli/js; git clone https://github.com/vuejs/vue.git vuejs
+	cd vuecli/js/vuejs; git checkout v2.5.16
+	cp vuecli/js/vuejs/dist/vue.js vuecli/js
+	cp vuecli/js/vuejs/LICENSE vuecli/js/LICENSE_VUEJS
 
 .PHONY: env.vuex
 env.vuex:
-	mkdir -p vuemanager/js
-	rm -Rf vuemanager/js/vuex
-	cd vuemanager/js; git clone https://github.com/vuejs/vuex.git vuex
-	cd vuemanager/js/vuex; git checkout v3.0.1
-	cp vuemanager/js/vuex/dist/vuex.js vuemanager/js
-	cp vuemanager/js/vuex/LICENSE vuemanager/js/LICENSE_VUEX
+	mkdir -p vuecli/js
+	rm -Rf vuecli/js/vuex
+	cd vuecli/js; git clone https://github.com/vuejs/vuex.git vuex
+	cd vuecli/js/vuex; git checkout v3.0.1
+	cp vuecli/js/vuex/dist/vuex.js vuecli/js
+	cp vuecli/js/vuex/LICENSE vuecli/js/LICENSE_VUEX
 
 .PHONY: env.pip
 env.pip:
@@ -40,7 +40,7 @@ env.up: env.pip env.brython env.vuejs env.vuex env.chrome
 
 .PHONY: env.clean
 env.clean:
-	git clean -xdf --exclude .idea --exclude venv --exclude vuemanager/js
+	git clean -xdf --exclude .idea --exclude venv --exclude vuecli/js
 
 .PHONY: env.down
 env.down:
@@ -76,8 +76,8 @@ ci.docs:
 	cp -Rf examples_static gh-pages-build/examples
 
 	mkdir gh-pages-build/js
-	cp vuemanager/js/vue.js gh-pages-build/js
-	cp vuemanager/js/brython_dist.js gh-pages-build/js
+	cp vuecli/js/vue.js gh-pages-build/js
+	cp vuecli/js/brython_dist.js gh-pages-build/js
 
 	mkdir gh-pages-build/tests
 	cp -R tests/selenium/_html/* gh-pages-build/tests

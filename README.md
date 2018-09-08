@@ -26,8 +26,6 @@ HelloVuePy("#app")
 
 
 ## Development Status
-`vue.py` is currently a Proof-of-Concept.
-
 The goal is to provide a solution to write fully-featured Vue applications in pure Python.
 
 To get an overview what currently is supported, have a look at the [Documentation](https://stefanhoelzl.github.io/vue.py/docs/).
@@ -45,10 +43,8 @@ These are vue.py versions of the [Vue.js examples](https://vuejs.org/v2/examples
 
 ## Installation
 ```bash
-$ git clone https://github.com/stefanhoelzl/vue.py.git
-$ cd vue.py
+$ pip install git+https://github.com/stefanhoelzl/vuepy.git
 ```
-_Tested under macOS (should work under Linux)_
 
 ## Development
 Get the code
@@ -82,7 +78,7 @@ $ make env.clean
 Reset your development environment
 _(clean up, reinstall packages and redownload needed files)_
 ```bash
-$ make env.reset
+$ make env.down
 ```
 
 ## License

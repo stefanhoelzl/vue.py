@@ -5,7 +5,7 @@ gh-pages-build
 
 debug
 examples/*/screenshot.png
-vuemanager/js
+vuecli/js
 examples_static
 
 vuepy.egg-info

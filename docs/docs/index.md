@@ -3,45 +3,18 @@
 If you are not familiar with [Vue.js](https://vuejs.org/) read the [Vue.js Guide](https://vuejs.org/v2/guide/)
 and then get back here to learn how to use [Vue.js](https://vuejs.org/) with pure Python.
 
-## Getting Started
+## Installation
 
-First clone the repository
+Install `vue.py` via `pip`
 ```bash
-$ git clone https://github.com/stefanhoelzl/vue.py.git
-$ cd vue.py
+$ pip install git+https://github.com/stefanhoelzl/vuepy.git
 ```
-
-set up the environment
-```bash
-$ make env.up
-```
-
-and start a http server
-```bash
-$ make serve
-```
-
-Now you are ready to build your first `vue.py` application.
 
 ## First Application
 Create a folder for your app
 ```bash
-mkdir app
-cd app
-```
-
-add a `app.html` file where your app lives
-```html
-<html>
-<head>
-  <script src="/js/vue.js"></script>
-  <script src="/js/brython_dist.js"></script>
-</head>
-<body onload="brython({debug: 1, pythonpath: '/'})">
-  <div id="app"></div>
-  <script type="text/python" src="app.py"></script>
-</body>
-</html>
+$ mkdir app
+$ cd app
 ```
 
 and as last step create a `app.py` where you create your Vue Component
@@ -52,7 +25,12 @@ class App(VueComponent):
     template = "<div>Hello vue.py</div>"
 App("#app")
 ```
-Now goto [http://localhost:8000/app/app.html](http://localhost:8000/app/app.html) and see your first vue.py app.
+
+deploy your app
+```bash
+$ vue-cli deploy live
+```
+Now goto [http://localhost:5000](http://localhost:5000) and see your first vue.py app.
 
 ## How to use Vue.js concepts
 * [Instance and Components](vue_concepts/instance_components.md)
@@ -66,6 +44,10 @@ Now goto [http://localhost:8000/app/app.html](http://localhost:8000/app/app.html
 * [Plugins and Mixins](vue_concepts/plugins_mixins.md)
 * [Extend](vue_concepts/extend.md)
 * [Vuex](vue_concepts/vuex.md)
+
+## Management
+* [Configuration](management/configuration.md)
+* [vue-cli](management/cli.md)
 
 ## Python/Javascript Bridge
 [here](pyjs_bridge.md)

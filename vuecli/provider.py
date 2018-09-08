@@ -8,9 +8,9 @@ import yaml
 from jinja2 import Template
 from flask import Flask as FlaskApp, send_file, abort
 
-INDEX_CONTENT = pkg_resources.resource_string("vuemanager", "index.html")
+INDEX_CONTENT = pkg_resources.resource_string("vuecli", "index.html")
 VUE_PATH = pkg_resources.resource_filename("vue", None)
-JS_PATH = pkg_resources.resource_filename("vuemanager", "js")
+JS_PATH = pkg_resources.resource_filename("vuecli", "js")
 
 
 def copytree(src, dst, deep=True):

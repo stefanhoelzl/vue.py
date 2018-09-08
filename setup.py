@@ -33,7 +33,7 @@ setup(
     author_email='stefan.hoelzl@posteo.de',
     license='MIT',
     packages=[
-        'vuemanager',
+        'vuecli',
         'vue',
         'vue.bridge',
         'vue.decorators'
@@ -45,10 +45,10 @@ setup(
         'docopt==0.6.2',
     ],
     package_data={
-        'vuemanager': ['js/*.js', 'js/LICENSE_*', "index.html"]
+        'vuecli': ['js/*.js', 'js/LICENSE_*', "index.html"]
     },
     entry_points={
-        'console_scripts': ['vue-cli=vuemanager.cli:main'],
+        'console_scripts': ['vue-cli=vuecli.cli:main'],
     },
     zip_safe=False
 )
