@@ -63,6 +63,10 @@ tests.unit:
 tests:
 	PYTHONPATH=$(PYTHONPATH) pytest tests
 
+.PHONY: release.build
+release.build:
+	python setup.py sdist bdist_wheel
+
 .PHONY: ci.docs
 ci.docs:
 	rm -Rf gh-pages-build
@@ -79,4 +83,4 @@ ci.docs:
 	cp -R tests/selenium/_html/* gh-pages-build/tests
 
 .PHONY: ci
-ci: tests ci.docs
+ci: tests ci.docs release.build
