@@ -9,6 +9,7 @@ from jinja2 import Template
 from flask import Flask as FlaskApp, send_file, abort
 
 INDEX_CONTENT = pkg_resources.resource_string("vuecli", "index.html")
+LOADING_CONTENT = pkg_resources.resource_string("vuecli", "loading.gif")
 VUE_PATH = pkg_resources.resource_filename("vue", None)
 JS_PATH = pkg_resources.resource_filename("vuecli", "js")
 
@@ -58,6 +59,7 @@ class Provider:
     def setup(self):
         self.content("index", "/",
                      self.render_template(INDEX_CONTENT.decode("utf-8")))
+        self.content("loading", "/loading.gif", LOADING_CONTENT)
         self.directory("application", "/", Path(self.path), deep=True)
         self.directory("js", "/_js", JS_PATH)
         self.directory("vuepy", "/vue", VUE_PATH, deep=True)

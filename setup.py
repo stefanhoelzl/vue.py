@@ -45,7 +45,7 @@ setup(
         'docopt==0.6.2',
     ],
     package_data={
-        'vuecli': ['js/*.js', 'js/LICENSE_*', "index.html"]
+        'vuecli': ['js/*.js', 'js/LICENSE_*', "index.html", "loading.gif"]
     },
     entry_points={
         'console_scripts': ['vue-cli=vuecli.cli:main'],
