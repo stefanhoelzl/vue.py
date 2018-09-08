@@ -11,3 +11,5 @@ navigation:
     link: docs
   - title: Gallery
     link: examples
+  - title: Demo
+    link: https://stefanhoelzl.github.io/mqtt-dashboard/
