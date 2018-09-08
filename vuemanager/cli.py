@@ -1,8 +1,8 @@
-"""vuemanager
+"""vue-cli
 
 Usage:
-    vuemanager deploy live [<app-path>]
-    vuemanager deploy static <destination> [<app-path>]
+    vue-cli deploy live [<app-path>]
+    vue-cli deploy static <destination> [<app-path>]
 
 Options:
     <app-path>              Path of the application to deplay (default: current path)

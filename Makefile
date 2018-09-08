@@ -16,7 +16,7 @@ env.vuejs:
 	cd vuemanager/js; git clone https://github.com/vuejs/vue.git vuejs
 	cd vuemanager/js/vuejs; git checkout v2.5.16
 	cp vuemanager/js/vuejs/dist/vue.js vuemanager/js
-	cp vuemanager/js/vuejs/LICENSE vuemanager/js/VUEJS_LICENSE
+	cp vuemanager/js/vuejs/LICENSE vuemanager/js/LICENSE_VUEJS
 
 .PHONY: env.vuex
 env.vuex:
@@ -25,7 +25,7 @@ env.vuex:
 	cd vuemanager/js; git clone https://github.com/vuejs/vuex.git vuex
 	cd vuemanager/js/vuex; git checkout v3.0.1
 	cp vuemanager/js/vuex/dist/vuex.js vuemanager/js
-	cp vuemanager/js/vuex/LICENSE vuemanager/js/VUEX_LICENSE
+	cp vuemanager/js/vuex/LICENSE vuemanager/js/LICENSE_VUEX
 
 .PHONY: env.pip
 env.pip:

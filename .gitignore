@@ -7,3 +7,6 @@ debug
 examples/*/screenshot.png
 vuemanager/js
 examples_static
+
+vuepy.egg-info
+dist

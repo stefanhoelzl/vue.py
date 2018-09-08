@@ -1,3 +1,5 @@
+__version__ = "0.1.0"
+
 try:
     from .vue import VueComponent, VueMixin, Vue, VueDirective, VuePlugin
     from .store import VueStore, VueStorePlugin

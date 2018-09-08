@@ -1,8 +1,13 @@
-# testing
-pytest==3.6.2
-selenium==3.8.0
-chromedriver-install==0.3.0
 Flask==1.0.2
 Jinja2==2.10
 pyyaml==3.13
 docopt==0.6.2
+
+# packaging
+twine==1.11.0
+wheel
+
+# testing
+pytest==3.6.2
+selenium==3.8.0
+chromedriver-install==0.3.0
