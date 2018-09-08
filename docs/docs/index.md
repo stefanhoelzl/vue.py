@@ -7,7 +7,7 @@ and then get back here to learn how to use [Vue.js](https://vuejs.org/) with pur
 
 Install `vue.py` via `pip`
 ```bash
-$ pip install git+https://github.com/stefanhoelzl/vuepy.git
+$ pip install git+https://github.com/stefanhoelzl/vue.py.git
 ```
 
 ## First Application

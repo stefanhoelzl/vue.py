@@ -43,7 +43,7 @@ These are vue.py versions of the [Vue.js examples](https://vuejs.org/v2/examples
 
 ## Installation
 ```bash
-$ pip install git+https://github.com/stefanhoelzl/vuepy.git
+$ pip install git+https://github.com/stefanhoelzl/vue.py.git
 ```
 
 ## Development
