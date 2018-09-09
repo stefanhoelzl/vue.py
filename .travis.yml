@@ -23,6 +23,7 @@ deploy:
     on:
       branch: master
   - provider: pypi
+    skip-cleanup: true
     user: stefanhoelzl
     password:
       secure: o5mx3ytR0CouVmdY//Sl84VFjpJhOSFfn0BailczV60iCyjlmgwSUtIs6Ec6J08HVvDhqBuoggWWKZpiTtRsM/BCXIrAxkaYDI6DI9UgmlCMjOOZ1r5Dff5pegoLXWyyrVIedrGeS7w3TyoLV+QKacqTK3FaGOtAxN77EHgH0wzzypaQyoNWAaLp+XtieQMbVsdWCEYb+qaGnEwQPK9OYS3Lpxm487fJHEnepTbF9cxOkThprCetYeY3k+M5sTnigU9AITavbd89grxubOddPGr4RSG4f8APqlLu59qL3VtwoUL5k65qbMNph4KVKVaBXCx5gQjFTFrhCsmypg/qviiqzxBWipKkKqP4//L/GmnhYWLmmOlz21QEWNgjZfnXFeTm6KlG7T5S18PsCxapu3XHi5/ms8LrNQ7TiiCdVKA6S2w1QwpeMX/pZKh1ii+9WhUeGPxtS6axQrRD6hRR+ubb0rn4xbadMCTE+e9vZre81nr1wr9k63hqNpzupqnesEib/BspvqiSS+YYuySvvqrFc/KXcxoTip8OlIA5w7fwHbCnpu1cYdE5saBCi9BvEln9+S8bhZwJSRbz2HQbiOjmNiyjeG8UBC1G+jD2D3RV/X3S0xxE2JqA/jhUHMOfwcOYyDF5bvU/IGskjFtoeLIgMCvrzZVx3V/hBJ/+gPw=
