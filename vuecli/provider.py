@@ -99,7 +99,9 @@ class Static(Provider):
         path = self.temppath / Path(route).relative_to("/")
         if path.is_dir():
             path = path / "index.html"
-        with open(path, "w+") as dest_file:
+
+        mode = "w+" if isinstance(content, str) else "wb+"
+        with open(path, mode) as dest_file:
             dest_file.write(content)
 
     def directory(self, endpoint, route, path, deep=False):
