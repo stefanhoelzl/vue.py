@@ -1,5 +1,7 @@
 # vue.py
 [![Build Status](https://travis-ci.org/stefanhoelzl/vue.py.svg?branch=master)](https://travis-ci.org/stefanhoelzl/vue.py)
+[![PyPI](https://img.shields.io/pypi/v/vuepy.svg)](https://pypi.org/project/vuepy/)
+[![License](https://img.shields.io/pypi/l/vuepy.svg)](LICENSE)
 
 use [Vue.js](https://www.vuejs.org) with pure Python
 
