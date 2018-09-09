@@ -22,7 +22,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Operating System :: MacOS :: MacOS X',
         'Operating System :: POSIX :: Linux',
-        'Operating System :: Microsoft :: Windws',
+        'Operating System :: Microsoft :: Windows',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Software Development',
         'Topic :: Software Development :: Libraries :: Application Frameworks',

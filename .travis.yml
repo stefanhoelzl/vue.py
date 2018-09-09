@@ -15,10 +15,19 @@ script:
 after_script:
   - pkill "make serve"
 deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $GH_TOKEN
-  keep-history: true
-  local-dir: gh-pages-build
-  on:
-    branch: master
+  - provider: pages
+    skip-cleanup: true
+    github-token: $GH_TOKEN
+    keep-history: true
+    local-dir: gh-pages-build
+    on:
+      branch: master
+  - provider: pypi
+    user: stefanhoelzl
+    password:
+      secure: A+rS+gMnUuXLVDUpfFA2XlAorxdgd/uVfiBeKktQVfqsnuOS6MSMwdSJCLQ2JCM5oPqGWHpvJjlW4nm9BTv6pmzsLiLbEFOX8d2zIsXfZWMLIb/3biLqb5euhnmu14i/WhewHQ54a1FxVt5pATdDyT6JAoYlCm1xXRmMROQSTy5GMZr6HG1OIqWivojp03tEtW78P3xBtZGYw4/1O/iAt7VGGgruvEEH3RMQ6c4bTwC9RQiSbsj3bqu+JcKn7zKiMrtXE8tJckKtqaRcXRXmX7AHZtOws6VvfIszk5+E1iZcbkpfaSTdXVjjWObmEAVsJFYfcRN4o9UwKpRuIzMK6OlzWPqzEzSAXXIRxG3Jv6Q/hU/kiYNx9e4huCqonQuvavWUiNBCXKneLyQankf4bFe+TSUrrRp7TncgfOtGiqb/MBMICZVlwPoFLue/D8MWf+5f4pzv/yLHjrc2+oQnvwGX1FX3ihVVI6M6ynKjy6eGsRr4fUfU+sMO0qshTM3e4dO+Mp4o03Ywr+9dSw75pUyCASerG8RGrXb8qe0+T/p6aaQVQXOIcNiWYvaR76wJqWYbaLHVxI+w7lsqotWI4UHrzxcFCfnftD7mCvBo3ObTSwJPyAG+c6DOCt7PNtwxohwhjzWZgi5xSA1NUQs7i9pTbi5xQ3x0OfNdljY0Aqc=
+    distributions: "sdist bdist_wheel"
+    on:
+      python: 3.6
+      tags: true
+      if: tag =~ /v\d+.\d+.\d+/
