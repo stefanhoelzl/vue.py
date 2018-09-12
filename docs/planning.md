@@ -15,7 +15,7 @@
 * embed examples in gallery
 
 ## Tools
-* make available on pip
+* Docker deployment
 
 ## Internals
 * write tests for decorators
