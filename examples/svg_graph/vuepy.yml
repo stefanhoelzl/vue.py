@@ -2,4 +2,4 @@ templates:
   app-template: app-template.html
   polygraph-template: polygraph-template.html
 stylesheets:
-  style.css
+  - style.css
