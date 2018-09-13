@@ -35,12 +35,8 @@ def merge_templates(sub):
 class BrythonObjectWorkarounds(type):
     """
     Fixes the following Brython bugs:
-    * https://github.com/brython-dev/brython/issues/905
     * https://github.com/brython-dev/brython/issues/904
     """
-    def __init__(cls, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
     @property
     def __base__(cls):
         return cls.__bases__[0]
