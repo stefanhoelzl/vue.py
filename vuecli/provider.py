@@ -38,7 +38,9 @@ class Provider:
         config_file = Path(self.path, "vuepy.yml")
         if config_file.exists():
             with open(config_file, "r") as fh:
-                self.config = yaml.load(fh.read())
+                config = yaml.load(fh.read())
+            if config:
+                self.config = config
 
     def content(self, endpoint, route, content):
         raise NotImplementedError()
