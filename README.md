@@ -42,6 +42,13 @@ Documentation is available [here](https://stefanhoelzl.github.io/vue.py/docs/).
 Examples can be found [here](https://stefanhoelzl.github.io/vue.py/examples).
 These are vue.py versions of the [Vue.js examples](https://vuejs.org/v2/examples/)
 
+## Performance
+Initial loading times of `vue.py` apps can be very long.
+Especially when loading a lot of python files.
+Still figuring out how to solve this.
+
+Have not done any peformance tests, but havent noticed any issues with performance
+as soon as the app was fully loaded.
 
 ## Installation
 ```bash
