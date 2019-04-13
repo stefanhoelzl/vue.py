@@ -38,7 +38,7 @@ class Provider:
         config_file = Path(self.path, "vuepy.yml")
         if config_file.exists():
             with open(config_file, "r") as fh:
-                config = yaml.load(fh.read())
+                config = yaml.safe_load(fh.read())
             if config:
                 self.config = config
 

@@ -40,8 +40,8 @@ setup(
     ],
     install_requires=[
         'Flask==1.0.2',
-        'Jinja2==2.10',
-        'pyyaml==3.13',
+        'Jinja2==2.10.1',
+        'pyyaml==5.1',
         'docopt==0.6.2',
     ],
     package_data={
