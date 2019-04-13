@@ -5,7 +5,7 @@ env.brython:
 	mkdir -p vuecli/js
 	rm -Rf vuecli/js/brython
 	cd vuecli/js; git clone https://github.com/brython-dev/brython.git brython
-	cd vuecli/js/brython; git checkout e67795cda1e7ee28cf303feab6a2da91fbe2f048
+	cd vuecli/js/brython; git checkout f0e01c7b12535ec74b57d3a1955d245b7e8fff7c
 	cp vuecli/js/brython/www/src/brython_dist.js vuecli/js
 	cp vuecli/js/brython/LICENCE.txt vuecli/js/LICENSE_BRYTHON
 
