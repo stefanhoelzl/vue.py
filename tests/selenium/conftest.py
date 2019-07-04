@@ -5,7 +5,7 @@ from pathlib import Path
 from contextlib import contextmanager
 import pytest
 
-from vuecli.provider import Static
+from vuecli.provider.static import Static
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
