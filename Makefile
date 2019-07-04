@@ -23,7 +23,7 @@ env.vuex:
 	mkdir -p vuecli/js
 	rm -Rf vuecli/js/vuex
 	cd vuecli/js; git clone https://github.com/vuejs/vuex.git vuex
-	cd vuecli/js/vuex; git checkout v3.0.1
+	cd vuecli/js/vuex; git checkout v3.1.1
 	cp vuecli/js/vuex/dist/vuex.js vuecli/js
 	cp vuecli/js/vuex/LICENSE vuecli/js/LICENSE_VUEX
 
