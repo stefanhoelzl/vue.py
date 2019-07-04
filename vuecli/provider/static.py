@@ -21,6 +21,10 @@ def copytree(src, dst, deep=True):
 
 
 class Static(Provider):
+    Arguments = {
+        "destination": "Path where the application should be deployed to",
+    }
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.temppath = Path(tempfile.mkdtemp())

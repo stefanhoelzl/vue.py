@@ -34,16 +34,18 @@ setup(
     license='MIT',
     packages=[
         'vuecli',
+        'vuecli.provider',
         'vue',
         'vue.bridge',
         'vue.decorators'
     ],
     install_requires=[
-        'Flask==1.0.2',
         'Jinja2==2.10.1',
         'pyyaml==5.1',
-        'docopt==0.6.2',
     ],
+    extra_requires={
+        "flask": 'Flask==1.0.2',
+    },
     package_data={
         'vuecli': ['js/*.js', 'js/LICENSE_*', "index.html", "loading.gif"]
     },

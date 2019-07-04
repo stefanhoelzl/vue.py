@@ -3,13 +3,25 @@
 `vue.py` provides a command line tool `vue-cli` to deploy your application.
 
 ## Deployment
-### Live
-With a live deployment your application is accessible on
+A `vue.py` application can be deployed via several provider.
+
+Get help about the available provider and their arguments
+```bash
+$ vue-cli deploy -h
+```
+
+This installs all the required packages for e.g. the flask provider
+```bash
+pip install vuepy[flask]
+```
+
+### Flask
+With a flask live deployment your application is accessible on
 [http://localhost:5000](http://localhost:5000).
 ```bash
-$ vue-cli deploy live
+$ vue-cli deploy flask
 ```
-This is the best deployment method for development and debugging.
+This is the best deployment method when debugging.
 
 ### Static
 With a static deployment everything your application needs,
@@ -19,11 +31,3 @@ which can be served by your favorite web server.
 $ vue-cli deploy static <destination>
 ```
 `destination` specifies the path where your application should be deployed to.
-
-Optionally you can specifiy which applicaton you would like to deploy
-```bash
-$ vue-cli deploy static <destination> <app-path>
-```
-By default the application in your current directory gets deployed.
-
-This is the best deployment method for production.

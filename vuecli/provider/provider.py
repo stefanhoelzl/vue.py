@@ -11,6 +11,8 @@ JS_PATH = pkg_resources.resource_filename("vuecli", "js")
 
 
 class Provider:
+    Arguments = {}
+
     def __init__(self, path=None):
         self.path = Path(path if path else ".")
         self.config = {}
