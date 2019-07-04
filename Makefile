@@ -14,7 +14,7 @@ env.vuejs:
 	mkdir -p vuecli/js
 	rm -Rf vuecli/js/vuejs
 	cd vuecli/js; git clone https://github.com/vuejs/vue.git vuejs
-	cd vuecli/js/vuejs; git checkout v2.5.16
+	cd vuecli/js/vuejs; git checkout v2.6.10
 	cp vuecli/js/vuejs/dist/vue.js vuecli/js
 	cp vuecli/js/vuejs/LICENSE vuecli/js/LICENSE_VUEJS
 
