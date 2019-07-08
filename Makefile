@@ -33,7 +33,7 @@ env.pip:
 
 .PHONY: env.chrome
 env.chrome:
-	python -c "import chromedriver_install as cdi;cdi.install(file_directory='tests/selenium', overwrite=True)"
+	python -c "import chromedriver_install as cdi;cdi.install(file_directory='tests/selenium', overwrite=True, version='2.46')"
 
 .PHONY: env.up
 env.up: env.pip env.brython env.vuejs env.vuex env.chrome

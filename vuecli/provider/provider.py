@@ -6,7 +6,7 @@ from jinja2 import Template
 
 INDEX_CONTENT = pkg_resources.resource_string("vuecli", "index.html")
 LOADING_CONTENT = pkg_resources.resource_string("vuecli", "loading.gif")
-VUE_PATH = pkg_resources.resource_filename("vue", None)
+VUE_PATH = pkg_resources.resource_filename("vue", "")
 JS_PATH = pkg_resources.resource_filename("vuecli", "js")
 
 
