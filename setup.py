@@ -51,6 +51,10 @@ setup(
     },
     entry_points={
         'console_scripts': ['vue-cli=vuecli.cli:main'],
+        'vuecli.provider': [
+            "static=vuecli.provider.static:Static",
+            "flask=vuecli.provider.flask:Flask",
+        ]
     },
     zip_safe=False
 )

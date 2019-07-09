@@ -1,17 +1,17 @@
-import importlib
+from pkg_resources import iter_entry_points
+
 
 from .provider import Provider
 
 
-
-def _import(cls, mod):
+def _load(ep):
     try:
-        return getattr(importlib.import_module(mod, __name__), cls)
+        return ep.load()
     except ModuleNotFoundError:
         return None
 
 
 ProviderMap = {
-    "static": _import("Static", ".static"),
-    "flask": _import("Flask", ".flask"),
+    entry_point.name: _load(entry_point)
+    for entry_point in iter_entry_points("vuecli.provider")
 }
