@@ -84,7 +84,7 @@ Therefore a helper is provided to convert a wrapped Javascript object into a nat
 ```python
 import json
 from vue import VueComponent, computed
-from vue.wrapper import Object
+from vue.bridge import Object
 
 
 class MyComponent(VueComponent):
@@ -110,7 +110,7 @@ Brython can convert native Python types like lists and dicts to their javascript
 Since the wrapper types are not real lists/dicts Brython cannot convert them.
 ```python
 from vue import VueComponent, computed
-from vue.wrapper import Object
+from vue.bridge import Object
 from vue.utils import js_lib
 
 js_json = js_lib("JSON")
