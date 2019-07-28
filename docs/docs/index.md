@@ -7,7 +7,7 @@ and then get back here to learn how to use [Vue.js](https://vuejs.org/) with pur
 
 Install `vue.py` via `pip`
 ```bash
-$ pip install vuepy
+$ pip install vuepy[flask]
 ```
 
 ## First Application
@@ -28,7 +28,7 @@ App("#app")
 
 deploy your app
 ```bash
-$ vue-cli deploy live
+$ vue-cli deploy flask
 ```
 Now goto [http://localhost:5000](http://localhost:5000) and see your first vue.py app.
 
