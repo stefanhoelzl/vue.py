@@ -43,7 +43,7 @@ $ git clone https://github.com/stefanhoelzl/vue.py.git
 $ cd vue.py
 $ make env.up
 $ cd examples/<example-name>
-$ python vuecli/cli.py deploy live
+$ python vuecli/cli.py deploy flask
 ```
 Goto [http://localhost:5000](http://localhost:5000)
 
