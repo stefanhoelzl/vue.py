@@ -35,6 +35,7 @@ class Provider:
     def render_template(self, template):
         templates = self.config.get("templates", {})
         return Template(template).render(
+            entry_point=self.config.get("entry_point", "app.py"),
             stylesheets=self.config.get("stylesheets", []),
             scripts=self.config.get("scripts", []),
             templates={id_: Path(self.path, template).read_text("utf-8")

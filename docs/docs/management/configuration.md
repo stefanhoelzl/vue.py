@@ -18,3 +18,10 @@ scripts:
   - <path of the script relative to your application folder>
   - <URL of the script>
 ```
+
+## EntryPoint
+By default the `app.py` in your project directory is the entry point for your app.
+If you want to point to a custom entry point, add this section:
+```yaml
+entry_point: custom.py
+```
