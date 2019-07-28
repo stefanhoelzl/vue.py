@@ -32,6 +32,14 @@ $ vue-cli deploy flask
 ```
 Now goto [http://localhost:5000](http://localhost:5000) and see your first vue.py app.
 
+## Demo App
+Checkout the [MQTT-Dashboard](https://github.com/stefanhoelzl/mqtt-dashboard/blob/master/app/app.py).
+It's a little test project to demonstrate some `vue.py` features:
+* uses the Browsers local storage to implement a vue-plugin in python
+* uses a vue.js plugin
+* uses some vue.js components
+* uses a vuex store
+
 ## How to use Vue.js concepts
 * [Instance and Components](vue_concepts/instance_components.md)
 * [Data and Methods](vue_concepts/data_methods.md)
