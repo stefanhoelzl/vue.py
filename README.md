@@ -56,6 +56,7 @@ $ pip install vuepy
 ```
 
 ## Development
+### Getting Started
 Get the code
 ```bash
 $ git clone https://github.com/stefanhoelzl/vue.py.git
@@ -88,7 +89,19 @@ Reset your development environment
 _(clean up, reinstall packages and redownload needed files)_
 ```bash
 $ make env.down
+$ make env.up
 ```
+
+### Workflow
+The [master branch](https://github.com/stefanhoelzl/vue.py) should always be even 
+with the latest release. 
+So that the [documentation](https://stefanhoelzl.github.io/vue.py/docs/)
+is valid for the latest release. 
+Therefor fixes to the documentation can be made on the master branch.
+
+Development happens on the [dev branch](https://github.com/stefanhoelzl/vue.py/tree/dev).
+This also means the latest documentation for the dev branch can be found 
+[here](https://github.com/stefanhoelzl/vue.py/blob/master/docs/docs/index.md).
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/stefanhoelzl/fancy-dict/blob/master/LICENSE) file for details
