@@ -19,6 +19,16 @@ scripts:
   - <URL of the script>
 ```
 
+## Extensions
+`vue.py` comes with some vue.js extensions builtin:
+* [vuex](https://vuex.vuejs.org)
+The extensions can be activated as followed:
+```yaml
+extensions:
+  - vuex
+```
+By default all extensions are deactivated to avoid loading unnecessary files.
+
 ## EntryPoint
 By default the `app.py` in your project directory is the entry point for your app.
 If you want to point to a custom entry point, add this section:
