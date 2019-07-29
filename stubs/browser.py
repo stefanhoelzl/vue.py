@@ -35,6 +35,11 @@ class window:
             def new(cls, *args, **kwargs):
                 ...
 
+    class VueRouter:
+        @classmethod
+        def new(cls, *args, **kwargs):
+            ...
+
     class Vue:
         @classmethod
         def new(cls, *args, **kwargs):

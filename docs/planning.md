@@ -10,7 +10,6 @@
 * store synchronization
   * with local/session storage
   * over WebSockets with python backend
-* python bindings for vue-router
 * desktop toolkit
   * based on [pywebview](https://github.com/r0x0r/pywebview) ??
 

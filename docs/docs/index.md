@@ -52,6 +52,7 @@ It's a little test project to demonstrate some `vue.py` features:
 * [Plugins and Mixins](vue_concepts/plugins_mixins.md)
 * [Extend](vue_concepts/extend.md)
 * [Vuex](vue_concepts/vuex.md)
+* [Vue Router](vue_concepts/vue-router.md)
 
 ## Management
 * [Configuration](management/configuration.md)

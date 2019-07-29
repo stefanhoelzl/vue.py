@@ -26,6 +26,7 @@ The extensions can be activated as followed:
 ```yaml
 extensions:
   - vuex
+  - vue-router
 ```
 By default all extensions are deactivated to avoid loading unnecessary files.
 

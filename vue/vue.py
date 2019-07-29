@@ -58,12 +58,14 @@ class VueComponent(Wrapper):
     def init_dict(cls):
         return VueComponentFactory.get_item(cls)
 
-    def __new__(cls, el, store=None, **data):
+    def __new__(cls, el, store=None, router=None, **data):
         init_dict = cls.init_dict()
         init_dict.update(el=el)
         init_dict.update(propsData=data)
         if store:
             init_dict.update(store=store)
+        if router:
+            init_dict.update(router=router)
         return Object.from_js(window.Vue.new(init_dict))
 
     @classmethod

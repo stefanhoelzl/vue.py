@@ -6,6 +6,9 @@
   {% if 'vuex' in extensions %}
     <script src="_js/vuex.js"></script>
   {% endif %}
+  {% if 'vue-router' in extensions %}
+    <script src="_js/vue-router.js"></script>
+  {% endif %}
 
   {% for stylesheet in stylesheets %}
   <link rel="stylesheet" media="screen" href="{{ stylesheet }}">

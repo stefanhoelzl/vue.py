@@ -10,6 +10,7 @@ from .decorators.extends import Extends
 from .decorators.components import Components
 from .decorators.state import State
 from .decorators.plugin import Plugin
+from .decorators.routes import Routes
 
 
 def merge_templates(sub):
@@ -155,4 +156,11 @@ class VueStoreFactory(AttributeDictFactory):
             obj = Plugin(obj)
         elif not isinstance(obj, VueDecorator):
             obj = State(obj_name, obj)
+        return super().auto_decorate(obj_name, obj)
+
+
+class VueRouterFactory(AttributeDictFactory):
+    def auto_decorate(self, obj_name, obj):
+        if obj_name == "routes":
+            obj = Routes(obj)
         return super().auto_decorate(obj_name, obj)

@@ -27,6 +27,15 @@ env.vuex:
 	cp vuecli/js/vuex/dist/vuex.js vuecli/js
 	cp vuecli/js/vuex/LICENSE vuecli/js/LICENSE_VUEX
 
+.PHONY: env.vue-router
+env.vue-router:
+	mkdir -p vuecli/js
+	rm -Rf vuecli/js/vue-router
+	cd vuecli/js; git clone https://github.com/vuejs/vue-router.git vue-router
+	cd vuecli/js/vue-router; git checkout v3.0.7
+	cp vuecli/js/vue-router/dist/vue-router.js vuecli/js
+	cp vuecli/js/vue-router/LICENSE vuecli/js/LICENSE_VUE_ROUTER
+
 .PHONY: env.pip
 env.pip:
 	pip install -r requirements.txt
@@ -36,7 +45,7 @@ env.chrome:
 	python -c "import chromedriver_install as cdi;cdi.install(file_directory='tests/selenium', overwrite=True, version='2.46')"
 
 .PHONY: env.up
-env.up: env.pip env.brython env.vuejs env.vuex env.chrome
+env.up: env.pip env.brython env.vuejs env.vuex env.vue-router env.chrome
 
 .PHONY: env.clean
 env.clean:
