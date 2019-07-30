@@ -101,7 +101,7 @@ Therefor fixes to the documentation can be made on the master branch.
 
 Development happens on the [dev branch](https://github.com/stefanhoelzl/vue.py/tree/dev).
 This also means the latest documentation for the dev branch can be found 
-[here](https://github.com/stefanhoelzl/vue.py/blob/master/docs/docs/index.md).
+[here](https://github.com/stefanhoelzl/vue.py/blob/dev/docs/docs/index.md).
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/stefanhoelzl/fancy-dict/blob/master/LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/stefanhoelzl/vue.py/blob/master/LICENSE) file for details
