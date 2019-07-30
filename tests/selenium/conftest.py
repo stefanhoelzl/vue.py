@@ -64,11 +64,13 @@ class SeleniumSession:
             options.add_argument("no-sandbox")
 
         desired = DesiredCapabilities.CHROME
-        desired['loggingPrefs'] = {"browser": "ALL"}
+        desired['goog:loggingPrefs'] = {"browser": "ALL"}
 
-        self.driver = webdriver.Chrome(CHROME_DRIVER_PATH,
-                                       chrome_options=options,
-                                       desired_capabilities=desired)
+        self.driver = webdriver.Chrome(
+            CHROME_DRIVER_PATH,
+            chrome_options=options,
+            desired_capabilities=desired
+        )
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
