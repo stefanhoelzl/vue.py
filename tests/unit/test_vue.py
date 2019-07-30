@@ -71,7 +71,7 @@ class TestVueComponent:
             prop: str
 
         with VueMock().new() as new:
-            Component("app", prop="PROP")
+            Component("app", props_data={"prop": "PROP"})
         assert {"prop": "PROP"} == new.init_dict["propsData"]
 
     def test_register(self):

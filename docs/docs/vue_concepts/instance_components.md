@@ -70,9 +70,9 @@ App("#app")
 ```
 
 ## Prop Data
-Keyword-arguments can be used to pass [propsData](https://vuejs.org/v2/api/#propsData) to the instance
+[propsData](https://vuejs.org/v2/api/#propsData) can be passed in as a dictionary.
 ```python
-App("#app", prop="value")
+App("#app", props_data={"prop": "value"})
 ```
 
 

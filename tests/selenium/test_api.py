@@ -8,7 +8,7 @@ def test_app_with_props_and_data(selenium):
             template = """
             <div id="el">{{ text }}</div>
             """
-        return App(el, text="TEXT")
+        return App(el, props_data={"text": "TEXT"})
     with selenium.app(app_with_props_data):
         assert selenium.element_has_text("el", "TEXT")
 
