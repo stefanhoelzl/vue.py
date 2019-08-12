@@ -40,11 +40,11 @@ setup(
         'vue.decorators'
     ],
     install_requires=[
-        'Jinja2==2.10.1',
-        'pyyaml==5.1',
+        'Jinja2~=2.10',
+        'pyyaml~=5.1',
     ],
     extra_requires={
-        "flask": 'Flask==1.0.2',
+        "flask": 'Flask~=1.0',
     },
     package_data={
         'vuecli': ['js/*.js', 'js/LICENSE_*', "index.html", "loading.gif"]
