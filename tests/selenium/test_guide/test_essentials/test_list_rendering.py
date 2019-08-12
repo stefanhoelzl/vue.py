@@ -5,6 +5,8 @@ def test_mutation_methods(selenium):
     class MutationMethods(VueComponent):
         array = [1, 2, 3]
 
+        template = "<div id='done' />"
+
         def created(self):
             print(self.array)                  # 1,2,3
             print(self.array.pop())            # 3
@@ -25,6 +27,8 @@ def test_mutation_methods(selenium):
             print(self.array)                  # 4,4,6,8
 
     with selenium.app(MutationMethods):
+        selenium.element_present("done")
+
         logs = [l['message'].split(" ", 2)[-1][:-3][1:]
                 for l in selenium.get_logs()[-11:]]
         assert logs == ["[1, 2, 3]",

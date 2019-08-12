@@ -1,3 +1,5 @@
+VueRouterConfig = {"scripts": {"vue-router": True}}
+
 def test_routes(selenium):
     def app(el):
         from vue import VueComponent, VueRouter, VueRoute
@@ -26,7 +28,7 @@ def test_routes(selenium):
             """
         return ComponentUsingRouter(el, router=Router())
 
-    with selenium.app(app):
+    with selenium.app(app, config=VueRouterConfig):
         assert selenium.element_present("foo")
         selenium.find_element_by_id("foo").click()
         assert selenium.element_has_text("content", "foo")
@@ -59,7 +61,7 @@ def test_dynamic_route_matching(selenium):
             """
         return ComponentUsingRouter(el, router=Router())
 
-    with selenium.app(app):
+    with selenium.app(app, config=VueRouterConfig):
         assert selenium.element_present("link")
         selenium.find_element_by_id("link").click()
         assert selenium.element_has_text("user", "123")

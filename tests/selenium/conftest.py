@@ -3,6 +3,9 @@ import os
 import inspect
 from pathlib import Path
 from contextlib import contextmanager
+from textwrap import dedent
+
+import yaml
 import pytest
 
 from vuecli.provider.static import Static
@@ -18,8 +21,7 @@ from selenium.common.exceptions import *
 TEST_PATH = Path(__file__).parent
 CHROME_DRIVER_PATH = TEST_PATH / "chromedriver"
 HTML_OUTPUT_PATH = TEST_PATH / "_html"
-TEMPLATE_PATH = TEST_PATH / "template.html"
-APP_URL = "http://localhost:8000/{}/{}.html"
+APP_URL = "http://localhost:8000/{}/{}/deploy"
 EXAMPLE_URL = "http://localhost:8000/examples_static/{}"
 EXAMPLE_SCREENSHOT_PATH = "examples_static/{}/screenshot.png"
 DEFAULT_TIMEOUT = 5
@@ -96,9 +98,9 @@ class SeleniumSession:
             self.analyze_logs()
 
     @contextmanager
-    def app(self, app):
+    def app(self, app, config=None):
         test_name = self.request.function.__name__
-        self._create_app_html(test_name, app)
+        self._create_app_html(test_name, app, config or {})
         url_base = str(self._app_output_path.relative_to(Path(".").absolute()))
         url = APP_URL.format(url_base, test_name)
         with self.url(url):
@@ -115,14 +117,20 @@ class SeleniumSession:
         output_path.mkdir(exist_ok=True, parents=True)
         return output_path
 
-    def _create_app_html(self, file_name, app):
-        code = inspect.getsource(app)
-        code = "\n".join(l[4:] for l in code.split("\n"))
-        code += "  app = {}('#app')".format(app.__name__)
-        template = Path(TEMPLATE_PATH).read_text()
-        template = template.replace("CODE", code)
-        Path(self._app_output_path, "{}.html".format(file_name))\
-            .write_text(template)
+    def _create_app_html(self, test_name, app, config):
+        path = self._app_output_path / test_name
+        path.mkdir(exist_ok=True, parents=True)
+
+        code = "from vue import *\n"
+        code += dedent("\n".join(inspect.getsource(app).split("\n")))
+        code += "app = {}('#app')".format(app.__name__)
+
+        (path / "app.py").write_text(code)
+        (path / "vuepy.yml").write_text(yaml.dump(config))
+
+        provider = Static(path)
+        provider.setup()
+        provider.deploy(path / "deploy")
 
     @contextmanager
     def example(self, hash_=None):

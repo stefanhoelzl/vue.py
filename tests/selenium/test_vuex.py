@@ -1,5 +1,7 @@
 from vue import *
 
+VuexConfig = {"scripts": {"vuex": True}}
+
 
 def test_state(selenium):
     def app(el):
@@ -14,7 +16,7 @@ def test_state(selenium):
             template = "<div id='content'>{{ message }}</div>"
         return ComponentUsingStore(el, store=Store())
 
-    with selenium.app(app):
+    with selenium.app(app, config=VuexConfig):
         assert selenium.element_has_text("content", "Message")
 
 
@@ -36,7 +38,7 @@ def test_mutation_noargs(selenium):
             template = "<div id='content'>{{ message }}</div>"
         return ComponentUsingMutation(el, store=Store())
 
-    with selenium.app(app):
+    with selenium.app(app, config=VuexConfig):
         assert selenium.element_has_text("content", "Message")
 
 
@@ -58,7 +60,7 @@ def test_mutation(selenium):
             template = "<div id='content'>{{ message }}</div>"
         return ComponentUsingMutation(el, store=Store())
 
-    with selenium.app(app):
+    with selenium.app(app, config=VuexConfig):
         assert selenium.element_has_text("content", "Message")
 
 
@@ -80,7 +82,7 @@ def test_mutation_kwargs(selenium):
             template = "<div id='content'>{{ message }}</div>"
         return ComponentUsingMutation(el, store=Store())
 
-    with selenium.app(app):
+    with selenium.app(app, config=VuexConfig):
         assert selenium.element_has_text("content", "Message!")
 
 
@@ -108,7 +110,7 @@ def test_action(selenium):
             template = "<div id='content'>{{ message }}</div>"
         return ComponentUsingAction(el, store=Store())
 
-    with selenium.app(app):
+    with selenium.app(app, config=VuexConfig):
         assert selenium.element_has_text("content", "Message")
 
 
@@ -137,7 +139,7 @@ def test_action_noargs(selenium):
             template = "<div id='content'>{{ message }}</div>"
         return ComponentUsingAction(el, store=Store())
 
-    with selenium.app(app):
+    with selenium.app(app, config=VuexConfig):
         assert selenium.element_has_text("content", "Message")
 
 
@@ -165,7 +167,7 @@ def test_action_kwargs(selenium):
             template = "<div id='content'>{{ message }}</div>"
         return ComponentUsingAction(el, store=Store())
 
-    with selenium.app(app):
+    with selenium.app(app, config=VuexConfig):
         assert selenium.element_has_text("content", "Message!")
 
 
@@ -186,7 +188,7 @@ def test_getter_noargs(selenium):
             template = "<div id='content'>{{ message }}</div>"
         return ComponentUsingGetter(el, store=Store())
 
-    with selenium.app(app):
+    with selenium.app(app, config=VuexConfig):
         assert selenium.element_has_text("content", "Message")
 
 
@@ -207,7 +209,7 @@ def test_getter_method(selenium):
             template = "<div id='content'>{{ message }}</div>"
         return ComponentUsingGetter(el, store=Store())
 
-    with selenium.app(app):
+    with selenium.app(app, config=VuexConfig):
         assert selenium.element_has_text("content", "preMessage")
 
 
@@ -228,7 +230,7 @@ def test_getter_kwargs(selenium):
             template = "<div id='content'>{{ message }}</div>"
         return ComponentUsingGetter(el, store=Store())
 
-    with selenium.app(app):
+    with selenium.app(app, config=VuexConfig):
         assert selenium.element_has_text("content", "preMessage!")
 
 
@@ -260,7 +262,7 @@ def test_plugin(selenium):
             template = "<div id='content'>{{ message }}</div>"
         return ComponentUsingGetter(el, store=Store())
 
-    with selenium.app(app):
+    with selenium.app(app, config=VuexConfig):
         assert selenium.element_has_text("content", "Message")
         last_log_message = selenium.get_logs()[-1]["message"]
         expected_msg = "Message msg ('Hallo',) {'postfix': '!'}"

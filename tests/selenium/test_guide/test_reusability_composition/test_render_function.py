@@ -19,7 +19,7 @@ def test_slots(selenium):
     def app(el):
         class WithSlots(VueComponent):
             def render(self, create_element):
-                return create_element(f"div", self.slots.get("default"))
+                return create_element(f"p", self.slots.get("default"))
         WithSlots.register()
 
         class Component(VueComponent):
@@ -28,7 +28,7 @@ def test_slots(selenium):
         return Component(el)
 
     with selenium.app(app):
-        div = selenium.element_with_tag_name_present("div")
+        div = selenium.element_with_tag_name_present("p")
         assert len(div.find_elements_by_tag_name("p")) == 2
 
 
