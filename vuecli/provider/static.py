@@ -27,7 +27,11 @@ class Static(Provider):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.temppath = Path(tempfile.mkdtemp())
+        self._tempdir = tempfile.TemporaryDirectory()
+
+    @property
+    def temppath(self):
+        return self._tempdir.name
 
     def content(self, endpoint, route, content):
         path = self.temppath / Path(route).relative_to("/")
@@ -45,3 +49,4 @@ class Static(Provider):
     def deploy(self, destination):
         shutil.rmtree(destination, ignore_errors=True)
         shutil.copytree(self.temppath, Path(destination))
+        self._tempdir.cleanup()
