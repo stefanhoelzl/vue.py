@@ -34,11 +34,27 @@ class Provider:
 
     def render_template(self, template):
         templates = self.config.get("templates", {})
+
+        default_scripts = {
+            "brython": "_js/brython_dist.js",
+            "vue": "_js/vue.js",
+            "vuex": "_js/vuex.js",
+            "vue-router": "_js/vue-router.js",
+        }
+        scripts = {"vue": True, "brython": True}
+        custom_scripts = self.config.get("scripts", {})
+        if isinstance(custom_scripts, list):
+            custom_scripts = {k: k for k in custom_scripts}
+        scripts.update(custom_scripts)
+        scripts = {
+            k: default_scripts[k] if v is True else v
+            for k, v in scripts.items() if v
+        }
+
         return Template(template).render(
             entry_point=self.config.get("entry_point", "app.py"),
-            extensions=self.config.get("extensions", []),
             stylesheets=self.config.get("stylesheets", []),
-            scripts=self.config.get("scripts", []),
+            scripts=scripts,
             templates={id_: Path(self.path, template).read_text("utf-8")
                        for id_, template in templates.items()},
             debug_level=self.config.get("debug-level", 0)
