@@ -51,6 +51,7 @@ It's a little test project to demonstrate some `vue.py` features:
 * [Custom Directives](vue_concepts/custom_directives.md)
 * [Plugins and Mixins](vue_concepts/plugins_mixins.md)
 * [Extend](vue_concepts/extend.md)
+* [Render Function](vue_concepts/render_function.md)
 * [Vuex](vue_concepts/vuex.md)
 * [Vue Router](vue_concepts/vue-router.md)
 

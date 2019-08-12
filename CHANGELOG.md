@@ -3,6 +3,7 @@
   * Entry point for app can be changed to custom file.
   * Basic VueRouter support
   * Vuex and VueRouter can be enable seperately
+  * Basic support for render functions
 
 * Api Changes:
   * 'live' Provider change to 'flask' and is optional

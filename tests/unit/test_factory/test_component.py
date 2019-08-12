@@ -253,6 +253,13 @@ def test_vuepy_mixin():
     assert [{}] == Component.init_dict()["mixins"]
 
 
+def test_render_function():
+    class Component(VueComponent):
+        def render(self, create_element):
+            pass
+    assert "render" in Component.init_dict()
+
+
 def test_attributes_from_base_class():
     class Component(VueComponent):
         template = "TEMPLATE"
