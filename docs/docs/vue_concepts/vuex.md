@@ -16,8 +16,8 @@ App("#app", store=Store())
 
 enable the vuex extension in the `vuepy.yml` [config file](../management/configuration.md):
 ```yaml
-extensions:
-  - vuex
+scripts:
+  vuex: true
 ```
 
 ## State Variables

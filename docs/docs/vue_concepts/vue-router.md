@@ -34,6 +34,6 @@ App("#app", router=Router())
 
 enable the vue-router extension in the `vuepy.yml` [config file](../management/configuration.md):
 ```yaml
-extensions:
-  - vue-router
+scripts:
+  vue-router: true
 ```
