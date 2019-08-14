@@ -56,3 +56,19 @@ If you want to point to a custom entry point, add this section:
 ```yaml
 entry_point: custom.py
 ```
+
+## Templates
+Since writing HTML in python strings can be tedious 
+you can write your templates in .html files 
+and link them as your template string.
+```yaml
+templates:
+    myhtml: my.html
+```
+
+```python
+from vue import VueComponent
+
+class MyComponent(VueComponent):
+    template = "#myhtml"
+```
