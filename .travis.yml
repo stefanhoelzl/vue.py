@@ -7,13 +7,8 @@ python:
   - "3.6"
 install:
   - make env.up
-before_script:
-  - make serve 2> http.log &
-  - sleep 5
 script:
   - make ci
-after_script:
-  - pkill "make serve"
 deploy:
   - provider: pages
     skip-cleanup: true

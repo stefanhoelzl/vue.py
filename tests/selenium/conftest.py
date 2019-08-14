@@ -4,6 +4,9 @@ import inspect
 from pathlib import Path
 from contextlib import contextmanager
 from textwrap import dedent
+from threading import Thread
+from http.server import HTTPServer, SimpleHTTPRequestHandler
+from http.client import HTTPConnection
 
 import yaml
 import pytest
@@ -15,22 +18,50 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.common.exceptions import *
+from selenium.common.exceptions import NoSuchElementException
 
+Address = "localhost"
+Port = 8001
+BaseUrl = f"http://{Address}:{Port}"
 
 TEST_PATH = Path(__file__).parent
 CHROME_DRIVER_PATH = TEST_PATH / "chromedriver"
 HTML_OUTPUT_PATH = TEST_PATH / "_html"
-APP_URL = "http://localhost:8000/{}/{}/deploy"
-EXAMPLE_URL = "http://localhost:8000/examples_static/{}"
+APP_URL = BaseUrl + "/{}/{}/deploy"
+EXAMPLE_URL = BaseUrl + "/examples_static/{}"
 EXAMPLE_SCREENSHOT_PATH = "examples_static/{}/screenshot.png"
 DEFAULT_TIMEOUT = 5
 
 
 @pytest.fixture(scope="session")
-def selenium_session():
-    with SeleniumSession() as selenium_session_:
-        yield selenium_session_
+def http_server():
+    timeout = 10
+
+    class RequestHandler(SimpleHTTPRequestHandler):
+        protocol_version = "HTTP/1.0"
+
+        def log_message(self, *args):
+            pass
+
+    with HTTPServer((Address, Port), RequestHandler) as httpd:
+        thread = Thread(target=httpd.serve_forever, daemon=True)
+        thread.start()
+
+        c = HTTPConnection(Address, Port, timeout=timeout)
+        c.request("GET", "/", "")
+        assert c.getresponse().status == 200
+
+        try:
+            yield httpd
+        finally:
+            httpd.shutdown()
+            thread.join(timeout=timeout)
+
+
+@pytest.fixture(scope="session")
+def selenium_session(http_server):
+    with SeleniumSession() as session:
+        yield session
 
 
 @pytest.fixture()
@@ -154,9 +185,15 @@ class SeleniumSession:
     def analyze_logs(self):
         errors = []
         exceptions = [
-            r"[^ ]+ \d+ Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
+            r"[^ ]+ \d+"
+            r" Synchronous XMLHttpRequest on the main thread is deprecated"
+            r" because of its detrimental effects to the end user's experience."
+            r" For more help, check https://xhr.spec.whatwg.org/.",
+
             r"[^ ]+ (\d+|-) {}".format(re.escape(
-                "Failed to load resource: the server responded with a status of 404 (File not found)")),
+                "Failed to load resource:"
+                " the server responded with a status of 404 (File not found)"
+            )),
         ]
         self.get_logs()
         for log in self.logs:

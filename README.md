@@ -68,15 +68,10 @@ Install required python packages, the chromedriver for selenium and brython
 $ make env.up
 ```
 
-Start server (needed for tests)
-```bash
-$ make serve
-```
-
 Run tests
 ```bash
-$ make tests          # runs all tets
-$ make tests.unit     # runs unit tests
+$ make tests           # runs all tets
+$ make tests.unit      # runs unit tests
 $ make tests.selenium  # runs selenium tests
 ```
 
