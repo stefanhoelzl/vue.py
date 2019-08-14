@@ -87,5 +87,6 @@ def test_emit_event(selenium):
         return App(el)
 
     with selenium.app(app):
+        assert selenium.element_present("component")
         selenium.find_element_by_id("component").click()
         assert selenium.element_has_text("content", "value")
