@@ -7,7 +7,17 @@ and then get back here to learn how to use [Vue.js](https://vuejs.org/) with pur
 
 Install `vue.py` via `pip`
 ```bash
+$ pip install vuepy
+```
+
+or with flask include to deploy apps
+```bash
 $ pip install vuepy[flask]
+```
+
+or from current master branch
+```bash
+$ pip install git+https://github.com/stefanhoelzl/vue.py@master
 ```
 
 ## First Application

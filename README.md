@@ -26,6 +26,11 @@ class HelloVuePy(VueComponent):
 HelloVuePy("#app")
 ```
 
+## Installation
+```bash
+$ pip install vuepy
+```
+
 
 ## Development Status
 The goal is to provide a solution to write fully-featured Vue applications in pure Python.
@@ -49,11 +54,6 @@ Still figuring out how to solve this.
 
 Have not done any peformance tests, but havent noticed any issues with performance
 as soon as the app was fully loaded.
-
-## Installation
-```bash
-$ pip install vuepy
-```
 
 ## Development
 ### Getting Started
