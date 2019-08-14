@@ -84,6 +84,7 @@ class SeleniumSession:
 
         self.allowed_errors = []
         self.logs = []
+        self._screenshot_file = None
 
     def __getattr__(self, item):
         return getattr(self.driver, item)
@@ -170,7 +171,7 @@ class SeleniumSession:
     def example(self, hash_=None):
         test_name = self.request.function.__name__
         name = test_name[5:]
-        img_file = Path(EXAMPLE_SCREENSHOT_PATH.format(name))
+        self._screenshot_file = Path(EXAMPLE_SCREENSHOT_PATH.format(name))
         url = EXAMPLE_URL.format(name)
 
         provider = Static("examples/{}".format(name))
@@ -183,7 +184,12 @@ class SeleniumSession:
             try:
                 yield
             finally:
-                self.driver.save_screenshot(str(img_file))
+                self.screenshot()
+
+    def screenshot(self):
+        if self._screenshot_file:
+            self.driver.save_screenshot(str(self._screenshot_file))
+        self._screenshot_file = None
 
     def analyze_logs(self):
         errors = []
