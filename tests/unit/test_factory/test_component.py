@@ -88,18 +88,25 @@ def test_lifecycle_hooks():
     class Component(VueComponent):
         def before_create(self):
             return self
+
         def created(self):
             return self
+
         def before_mount(self):
             return self
+
         def mounted(self):
             return self
+
         def before_update(self):
             return self
+
         def updated(self):
             return self
+
         def before_destroy(self):
             return self
+
         def destroyed(self):
             return self
 
@@ -173,8 +180,9 @@ def test_function_directive():
 
     init_dict = Component.init_dict()
     res = ["el", "binding", "vnode", "old_vnode"]
-    assert res == init_dict["directives"]["focus"]("el", "binding",
-                                                   "vnode", "old_vnode")
+    assert res == init_dict["directives"]["focus"](
+        "el", "binding", "vnode", "old_vnode"
+    )
 
 
 def test_full_directive_different_hooks():
