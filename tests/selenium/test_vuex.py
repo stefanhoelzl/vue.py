@@ -267,3 +267,27 @@ def test_plugin(selenium):
         last_log_message = selenium.get_logs()[-1]["message"]
         expected_msg = "Message msg ('Hallo',) {'postfix': '!'}"
         assert expected_msg in last_log_message
+
+
+def test_using_state_within_native_vue_component(selenium):
+    def app(el):
+        class Store(VueStore):
+            message = "Message"
+
+        class ComponentUsingNativeComponent(VueComponent):
+            template = "<native />"
+        return ComponentUsingNativeComponent(el, store=Store())
+
+    config = {"scripts": {"vuex": True, "my": "my.js"}}
+    myjs = """
+        Vue.component('native', {
+          template: '<div id="content">{{ message }}</div>',
+          computed: {
+            message () {
+              return this.$store.state.message
+            }
+          }
+        });
+    """
+    with selenium.app(app, config=config, files={"my.js": myjs}):
+        assert selenium.element_has_text("content", "Message")
