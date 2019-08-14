@@ -77,7 +77,7 @@ Run tests
 ```bash
 $ make tests          # runs all tets
 $ make tests.unit     # runs unit tests
-$ make test.selenium  # runs selenium tests
+$ make tests.selenium  # runs selenium tests
 ```
 
 Clean up your working directory.
