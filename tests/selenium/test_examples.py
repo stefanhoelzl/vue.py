@@ -112,3 +112,26 @@ def test_github_commits(selenium):
         assert selenium.element_with_tag_name_present("ul")
         time.sleep(2)
         assert 10 == len(selenium.driver.find_elements_by_tag_name("li"))
+
+
+def test_elastic_header(selenium):
+    with selenium.example():
+        assert selenium.element_present("header")
+        header = selenium.find_element_by_id("header")
+        content = selenium.find_element_by_id("content")
+
+        assert content.get_attribute("style") == "transform:" \
+                                                 " translate3d(0px, 0px, 0px);"
+
+        ActionChains(selenium.driver)\
+            .click_and_hold(header)\
+            .move_by_offset(xoffset=0, yoffset=100)\
+            .perform()
+        selenium.screenshot()
+        assert content.get_attribute("style") == "transform:" \
+                                                 " translate3d(0px, 33px, 0px);"
+
+        ActionChains(selenium.driver).release().perform()
+        time.sleep(1)
+        assert content.get_attribute("style") == "transform:" \
+                                                 " translate3d(0px, 0px, 0px);"

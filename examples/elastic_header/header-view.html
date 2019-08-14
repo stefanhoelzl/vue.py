@@ -1,0 +1,14 @@
+<div class="draggable-header-view"
+  @mousedown="start_drag" @touchstart="start_drag"
+  @mousemove="on_drag" @touchmove="on_drag"
+  @mouseup="stop_drag" @touchend="stop_drag" @mouseleave="stop_drag">
+  <svg class="bg" width="320" height="560">
+    <path :d="header_path" fill="#3F51B5"></path>
+  </svg>
+  <div class="header" id="header">
+    <slot name="header"></slot>
+  </div>
+  <div class="content" :style="content_position" id="content">
+    <slot name="content"></slot>
+  </div>
+</div>

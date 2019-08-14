@@ -36,6 +36,12 @@
 
 ![Modal Component Screenshot](https://raw.githubusercontent.com/stefanhoelzl/vue.py/gh-pages/examples/modal_component/screenshot.png)
 
+## Elastic Header
+[Demo](https://stefanhoelzl.github.io/vue.py/examples/elastic_header) / [Source](https://github.com/stefanhoelzl/vue.py/tree/master/examples/elastic_header)
+
+![Elastic Header Screenshot](https://raw.githubusercontent.com/stefanhoelzl/vue.py/gh-pages/examples/elastic_header/screenshot.png)
+
+
 ## Run Examples Local
 
 ```bash
