@@ -88,15 +88,16 @@ $ make env.up
 ```
 
 ### Workflow
-The [master branch](https://github.com/stefanhoelzl/vue.py) should always be even 
-with the latest release. 
-So that the [documentation](https://stefanhoelzl.github.io/vue.py/docs/)
-is valid for the latest release. 
-Therefor fixes to the documentation can be made on the master branch.
+Development happens on the [master branch](https://github.com/stefanhoelzl/vue.py).
+This also means the latest documentation can be found 
+[here](https://github.com/stefanhoelzl/vue.py/blob/master/docs/docs/index.md).
 
-Development happens on the [dev branch](https://github.com/stefanhoelzl/vue.py/tree/dev).
-This also means the latest documentation for the dev branch can be found 
-[here](https://github.com/stefanhoelzl/vue.py/blob/dev/docs/docs/index.md).
+The [release branch](https://github.com/stefanhoelzl/vue.py/tree/release) 
+should always be even with the latest release.
+Changes to this branch also trigger a update of gh-pages.
+Therefor fixes to the documentation can be made on the release branch.
+So that the [documentation](https://stefanhoelzl.github.io/vue.py/docs/)
+is always valid for the latest release. 
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/stefanhoelzl/vue.py/blob/master/LICENSE) file for details

@@ -16,7 +16,7 @@ deploy:
     keep-history: true
     local-dir: gh-pages-build
     on:
-      branch: master
+      branch: release
   - provider: pypi
     skip-cleanup: true
     user: stefanhoelzl
