@@ -129,9 +129,9 @@ class SeleniumSession:
             self.analyze_logs()
 
     @contextmanager
-    def app(self, app, config=None):
+    def app(self, app, config=None, files=None):
         test_name = self.request.function.__name__
-        self._create_app_html(test_name, app, config or {})
+        self._create_app_content(test_name, app, config or {}, files or {})
         url_base = str(self._app_output_path.relative_to(Path(".").absolute()))
         url = APP_URL.format(url_base, test_name)
         with self.url(url):
@@ -148,16 +148,19 @@ class SeleniumSession:
         output_path.mkdir(exist_ok=True, parents=True)
         return output_path
 
-    def _create_app_html(self, test_name, app, config):
+    def _create_app_content(self, test_name, app, config, files):
         path = self._app_output_path / test_name
         path.mkdir(exist_ok=True, parents=True)
 
         code = "from vue import *\n"
         code += dedent("\n".join(inspect.getsource(app).split("\n")))
         code += "app = {}('#app')".format(app.__name__)
-
         (path / "app.py").write_text(code)
+
         (path / "vuepy.yml").write_text(yaml.dump(config))
+
+        for filename, content in files.items():
+            (path / filename).write_text(content)
 
         provider = Static(path)
         provider.setup()
