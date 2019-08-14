@@ -15,16 +15,15 @@ class Provider:
 
     def __init__(self, path=None):
         self.path = Path(path if path else ".")
-        self.config = {}
-        self._load_config()
 
-    def _load_config(self):
+    def load_config(self):
         config_file = Path(self.path, "vuepy.yml")
         if config_file.exists():
             with open(config_file, "r") as fh:
                 config = yaml.safe_load(fh.read())
             if config:
-                self.config = config
+                return config
+        return {}
 
     def content(self, endpoint, route, content):
         raise NotImplementedError()
@@ -33,7 +32,9 @@ class Provider:
         raise NotImplementedError()
 
     def render_template(self, template):
-        templates = self.config.get("templates", {})
+        config = self.load_config()
+
+        templates = config.get("templates", {})
 
         default_scripts = {
             "brython": "_js/brython_dist.js",
@@ -42,7 +43,7 @@ class Provider:
             "vue-router": "_js/vue-router.js",
         }
         scripts = {"vue": True, "brython": True}
-        custom_scripts = self.config.get("scripts", {})
+        custom_scripts = config.get("scripts", {})
         if isinstance(custom_scripts, list):
             custom_scripts = {k: k for k in custom_scripts}
         scripts.update(custom_scripts)
@@ -52,18 +53,20 @@ class Provider:
         }
 
         return Template(template).render(
-            entry_point=self.config.get("entry_point", "app.py"),
-            stylesheets=self.config.get("stylesheets", []),
+            entry_point=config.get("entry_point", "app.py"),
+            stylesheets=config.get("stylesheets", []),
             scripts=scripts,
             templates={id_: Path(self.path, template).read_text("utf-8")
                        for id_, template in templates.items()},
-            debug_level=self.config.get("debug-level", 0)
+            debug_level=config.get("debug-level", 0)
         )
 
     def setup(self):
-        self.content("index", "/",
-                     self.render_template(INDEX_CONTENT.decode("utf-8")))
-        self.content("loading", "/loading.gif", LOADING_CONTENT)
+        self.content(
+            "index", "/",
+            lambda: self.render_template(INDEX_CONTENT.decode("utf-8"))
+        )
+        self.content("loading", "/loading.gif", lambda: LOADING_CONTENT)
         self.directory("application", "/", Path(self.path), deep=True)
         self.directory("js", "/_js", JS_PATH)
         self.directory("vuepy", "/vue", VUE_PATH, deep=True)

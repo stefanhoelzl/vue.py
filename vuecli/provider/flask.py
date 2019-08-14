@@ -12,7 +12,7 @@ class Flask(Provider):
         self.app = FlaskApp(__name__)
 
     def content(self, endpoint, route, content):
-        self.app.add_url_rule(route, endpoint, lambda: content)
+        self.app.add_url_rule(route, endpoint, content)
 
     def directory(self, endpoint, route, path, deep=False):
         def view_func(filename):

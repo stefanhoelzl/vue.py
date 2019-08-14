@@ -38,6 +38,7 @@ class Static(Provider):
         if path.is_dir():
             path = path / "index.html"
 
+        content = content()
         mode = "w+" if isinstance(content, str) else "wb+"
         with open(path, mode) as dest_file:
             dest_file.write(content)
