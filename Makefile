@@ -39,6 +39,7 @@ env.vue-router:
 .PHONY: env.pip
 env.pip:
 	pip install -r requirements.txt
+	pip install -e .
 
 .PHONY: env.chrome
 env.chrome:
@@ -67,6 +68,10 @@ tests.selenium:
 .PHONY: tests.unit
 tests.unit:
 	PYTHONPATH=$(PYTHONPATH) pytest tests/unit
+
+.PHONY: tests.cli
+tests.cli:
+	PYTHONPATH=$(PYTHONPATH) pytest tests/cli
 
 .PHONY: tests
 tests:

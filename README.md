@@ -73,6 +73,7 @@ Run tests
 $ make tests           # runs all tets
 $ make tests.unit      # runs unit tests
 $ make tests.selenium  # runs selenium tests
+$ make tests.cli       # runs cli tests
 ```
 
 Clean up your working directory.

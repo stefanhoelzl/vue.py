@@ -5,10 +5,10 @@
   {% endfor %}
 
   {% for stylesheet in stylesheets %}
-  <link rel="stylesheet" media="screen" href="{{ stylesheet }}">
+    <link rel="stylesheet" media="screen" href="{{ stylesheet }}" />
   {% endfor %}
 </head>
-<body onload="brython({{ debug_level }});">
+<body onload="brython({{ brython_args }});">
   {% for id, content in templates.items() %}
     <script type="x-template" id="{{ id }}">
       {{ content }}
@@ -16,9 +16,7 @@
   {% endfor %}
 
   <div id="app">
-    <img style="display: block; margin: auto;"
-         src="loading.gif"
-         height="50%">
+    <img style="display: block; margin: auto;" src="loading.gif" height="50%" />
   </div>
   <script type="text/python" src="{{ entry_point }}"></script>
 </body>
