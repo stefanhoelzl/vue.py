@@ -9,6 +9,6 @@ twine==1.11.0
 wheel
 
 # testing
-pytest==3.6.2
+pytest==5.0.1
 selenium==3.8.0
 chromedriver-install==0.3.0

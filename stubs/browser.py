@@ -82,7 +82,7 @@ class timer:
 
 class ajax:
     class ajax:
-        def open(self, method, url, async):
+        def open(self, method, url, asnc):
             ...
 
         def bind(self, ev, method):
