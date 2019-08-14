@@ -9,6 +9,9 @@ class VueMock:
 
 
 class ObjectMock:
+    def __new__(cls, arg):
+        return arg
+
     @staticmethod
     def assign(target, *sources):
         for source in sources:

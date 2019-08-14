@@ -1,7 +1,16 @@
 from contextlib import contextmanager
 from unittest import mock
 
-from vue import *
+import pytest
+
+from vue import Vue, VueComponent, VueDirective, VueMixin
+from vue.bridge.dict import window
+
+
+@pytest.fixture(autouse=True)
+def window_object():
+    with mock.patch.object(window, "Object", new=dict):
+        yield
 
 
 class VueMock(mock.MagicMock):

@@ -26,7 +26,7 @@ class List(Object):
     def __mul__(self, other):
         return [i for i in self]*other
 
-    def index(self, obj, start=0, stop=-1):
+    def index(self, obj, start=0, _stop=-1):
         index = self._js.indexOf(Object.to_js(obj), start)
         if index == -1:
             raise ValueError("{} not in list".format(obj))
@@ -123,7 +123,7 @@ class List(Object):
 
     def __js__(self):
         if isinstance(self, (list, tuple)):
-            return [Object.to_js(item) for item in self]
+            return window.Array(*[Object.to_js(item) for item in self])
         return self._js
 
 

@@ -120,7 +120,9 @@ class Dict(Object):
 
     def __js__(self):
         if isinstance(self, dict):
-            return {Object.to_js(k): Object.to_js(v) for k, v in self.items()}
+            return window.Object(
+                {Object.to_js(k): Object.to_js(v) for k, v in self.items()}
+            )
         return self._js
 
 
