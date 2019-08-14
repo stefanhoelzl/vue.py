@@ -1,7 +1,7 @@
 import sys
 import argparse
 
-from vuecli.provider import ProviderMap
+from vuecli.provider import RegisteredProvider
 from vue import __version__
 
 
@@ -35,7 +35,7 @@ def main():
 
     provider_cmd = deploy_cmd.add_subparsers(help='Provider')
 
-    for name, provider in ProviderMap.items():
+    for name, provider in RegisteredProvider.items():
         sp = provider_cmd.add_parser(name)
         sp.set_defaults(deploy=name)
         if provider is not None:
@@ -49,7 +49,7 @@ def main():
 
     args = cli.parse_args()
     if args.cmd == "deploy":
-        deploy(ProviderMap[args.deploy], args)
+        deploy(RegisteredProvider[args.deploy], args)
 
 
 if __name__ == "__main__":

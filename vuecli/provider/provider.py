@@ -31,10 +31,8 @@ class Provider:
     def directory(self, endpoint, route, path, deep=False):
         raise NotImplementedError()
 
-    def render_template(self, template):
+    def render_index(self):
         config = self.load_config()
-
-        templates = config.get("templates", {})
 
         default_scripts = {
             "brython": "_js/brython_dist.js",
@@ -42,7 +40,7 @@ class Provider:
             "vuex": "_js/vuex.js",
             "vue-router": "_js/vue-router.js",
         }
-        scripts = {"vue": True, "brython": True}
+        scripts = {"brython": True, "vue": True}
         custom_scripts = config.get("scripts", {})
         if isinstance(custom_scripts, list):
             custom_scripts = {k: k for k in custom_scripts}
@@ -52,20 +50,26 @@ class Provider:
             for k, v in scripts.items() if v
         }
 
-        return Template(template).render(
+        brython_args = config.get("brython_args", {})
+        if brython_args:
+            joined = ", ".join(f"{k}: {v}" for k, v in brython_args.items())
+            brython_args = f"{{ {joined} }}"
+        else:
+            brython_args = ""
+
+        return Template(INDEX_CONTENT.decode("utf-8")).render(
             entry_point=config.get("entry_point", "app.py"),
             stylesheets=config.get("stylesheets", []),
             scripts=scripts,
-            templates={id_: Path(self.path, template).read_text("utf-8")
-                       for id_, template in templates.items()},
-            debug_level=config.get("debug-level", 0)
+            templates={
+                id_: Path(self.path, template).read_text("utf-8")
+                for id_, template in config.get("templates", {}).items()
+            },
+            brython_args=brython_args
         )
 
     def setup(self):
-        self.content(
-            "index", "/",
-            lambda: self.render_template(INDEX_CONTENT.decode("utf-8"))
-        )
+        self.content("index", "/", self.render_index)
         self.content("loading", "/loading.gif", lambda: LOADING_CONTENT)
         self.directory("application", "/", Path(self.path), deep=True)
         self.directory("js", "/_js", JS_PATH)
