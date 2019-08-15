@@ -14,7 +14,8 @@ def deploy(provider_class, arguments):
         sys.exit(1)
 
     deploy_arguments = {
-        name: getattr(arguments, name) for name in provider_class.Arguments
+        name.strip("-"): getattr(arguments, name.strip("-"), False)
+        for name in provider_class.Arguments
     }
 
     provider = provider_class(arguments.src)
@@ -39,8 +40,10 @@ def main():
         sp = provider_cmd.add_parser(name)
         sp.set_defaults(deploy=name)
         if provider is not None:
-            for arg_name, arg_help in provider.Arguments.items():
-                sp.add_argument(arg_name, help=arg_help)
+            for arg_name, config in provider.Arguments.items():
+                if isinstance(config, str):
+                    config = {"help": config}
+                sp.add_argument(arg_name, **config)
 
     deploy_cmd.add_argument(
         "--src", default=".", nargs="?",
