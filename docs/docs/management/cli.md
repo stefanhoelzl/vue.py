@@ -28,6 +28,7 @@ With a static deployment everything your application needs,
 gets packaged into a single folder,
 which can be served by your favorite web server.
 ```bash
-$ vue-cli deploy static <destination>
+$ vue-cli deploy static <destination> --modules
 ```
-`destination` specifies the path where your application should be deployed to.
+* `destination` specifies the path where your application should be deployed to.
+* `--modules` (optional) creates one single file containing all python code.

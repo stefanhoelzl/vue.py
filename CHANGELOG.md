@@ -5,6 +5,7 @@
   * Vuex and VueRouter can be enable seperately
   * Basic support for render functions
   * Vue(X/Router) and Brython versions can be customized
+  * Creation of brython_modules.js supported
 
 * Api Changes:
   * 'live' Provider change to 'flask' and is optional
