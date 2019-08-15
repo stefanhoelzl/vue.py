@@ -101,7 +101,7 @@ class SeleniumSession:
 
         self.driver = webdriver.Chrome(
             CHROME_DRIVER_PATH,
-            chrome_options=options,
+            options=options,
             desired_capabilities=desired
         )
         return self
