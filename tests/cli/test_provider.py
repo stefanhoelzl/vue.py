@@ -10,7 +10,9 @@ from vuecli.provider.provider import Provider
 def render_index(tmp_path):
     def render(config=None):
         tmp_path.joinpath("vuepy.yml").write_text(yaml.dump(config or {}))
-        return Provider(tmp_path).render_index()
+        provider = Provider(tmp_path)
+        config = provider.load_config()
+        return provider.render_index(config)
     return render
 
 
@@ -35,7 +37,7 @@ class TestRenderIndex:
         assert parse_index(index) == {
             "entry_point": "app.py",
             "stylesheets": [],
-            "scripts": ["_js/brython_dist.js", "_js/vue.js"],
+            "scripts": ["brython.js", "brython_stdlib.js", "vue.js"],
             "templates": {},
             "brython": "brython();"
         }
@@ -51,7 +53,7 @@ class TestRenderIndex:
         assert parse_index(index)["stylesheets"] == ["first.css", "second.css"]
 
     @pytest.mark.parametrize("ext, js", [
-        ("vuex", "_js/vuex.js"), ("vue-router", "_js/vue-router.js")
+        ("vuex", "vuex.js"), ("vue-router", "vue-router.js")
     ])
     def test_enable_builtin_script(self, render_index, ext, js):
         index = render_index({"scripts": {ext: True}})

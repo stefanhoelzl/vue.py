@@ -1,40 +1,22 @@
 PYTHONPATH=.:stubs
 
-.PHONY: env.brython
-env.brython:
-	mkdir -p vuecli/js
-	rm -Rf vuecli/js/brython
-	cd vuecli/js; git clone https://github.com/brython-dev/brython.git brython
-	cd vuecli/js/brython; git checkout f0e01c7b12535ec74b57d3a1955d245b7e8fff7c
-	cp vuecli/js/brython/www/src/brython_dist.js vuecli/js
-	cp vuecli/js/brython/LICENCE.txt vuecli/js/LICENSE_BRYTHON
-
 .PHONY: env.vuejs
 env.vuejs:
 	mkdir -p vuecli/js
-	rm -Rf vuecli/js/vuejs
-	cd vuecli/js; git clone https://github.com/vuejs/vue.git vuejs
-	cd vuecli/js/vuejs; git checkout v2.6.10
-	cp vuecli/js/vuejs/dist/vue.js vuecli/js
-	cp vuecli/js/vuejs/LICENSE vuecli/js/LICENSE_VUEJS
+	curl https://unpkg.com/vue@2.6.1/dist/vue.js > vuecli/js/vue.js
+	curl https://raw.githubusercontent.com/vuejs/vue/dev/LICENSE > vuecli/js/LICENSE_VUE
 
 .PHONY: env.vuex
 env.vuex:
 	mkdir -p vuecli/js
-	rm -Rf vuecli/js/vuex
-	cd vuecli/js; git clone https://github.com/vuejs/vuex.git vuex
-	cd vuecli/js/vuex; git checkout v3.1.1
-	cp vuecli/js/vuex/dist/vuex.js vuecli/js
-	cp vuecli/js/vuex/LICENSE vuecli/js/LICENSE_VUEX
+	curl https://unpkg.com/vuex@3.1.1/dist/vuex.js > vuecli/js/vuex.js
+	curl https://raw.githubusercontent.com/vuejs/vuex/master/LICENSE > vuecli/js/LICENSE_VUEX
 
 .PHONY: env.vue-router
 env.vue-router:
 	mkdir -p vuecli/js
-	rm -Rf vuecli/js/vue-router
-	cd vuecli/js; git clone https://github.com/vuejs/vue-router.git vue-router
-	cd vuecli/js/vue-router; git checkout v3.0.7
-	cp vuecli/js/vue-router/dist/vue-router.js vuecli/js
-	cp vuecli/js/vue-router/LICENSE vuecli/js/LICENSE_VUE_ROUTER
+	curl https://unpkg.com/vue-router@3.0.7/dist/vue-router.js > vuecli/js/vue-router.js
+	curl https://raw.githubusercontent.com/vuejs/vue-router/dev/LICENSE > vuecli/js/LICENSE_VUE_ROUTER
 
 .PHONY: env.pip
 env.pip:
@@ -46,7 +28,7 @@ env.chrome:
 	python -c "import chromedriver_install as cdi;cdi.install(file_directory='tests/selenium', overwrite=True, version='76.0.3809.68')"
 
 .PHONY: env.up
-env.up: env.pip env.brython env.vuejs env.vuex env.vue-router env.chrome
+env.up: env.pip env.vuejs env.vuex env.vue-router env.chrome
 
 .PHONY: env.clean
 env.clean:
@@ -89,10 +71,6 @@ ci.docs:
 	cp -Rf docs/* README.md vue gh-pages-build
 	cp -Rf examples_static gh-pages-build/examples
 	cp examples/index.md gh-pages-build/examples
-
-	mkdir gh-pages-build/js
-	cp vuecli/js/vue.js gh-pages-build/js
-	cp vuecli/js/brython_dist.js gh-pages-build/js
 
 	mkdir gh-pages-build/tests
 	cp -R tests/selenium/_html/* gh-pages-build/tests

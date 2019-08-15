@@ -1,13 +1,22 @@
-import pkg_resources
+from pkg_resources import resource_filename, resource_string
 from pathlib import Path
 
 import yaml
 from jinja2 import Template
 
-INDEX_CONTENT = pkg_resources.resource_string("vuecli", "index.html")
-LOADING_CONTENT = pkg_resources.resource_string("vuecli", "loading.gif")
-VUE_PATH = pkg_resources.resource_filename("vue", "")
-JS_PATH = pkg_resources.resource_filename("vuecli", "js")
+
+VuePath = resource_filename("vue", "")
+IndexTemplate = resource_string("vuecli", "index.html")
+StaticContents = {
+    "/loading.gif": resource_string("vuecli", "loading.gif"),
+
+    "/brython.js": resource_string("data", "brython.js"),
+    "/brython_stdlib.js": resource_string("data", "brython_stdlib.js"),
+
+    "/vue.js": resource_string("vuecli", "js/vue.js"),
+    "/vuex.js": resource_string("vuecli", "js/vuex.js"),
+    "/vue-router.js": resource_string("vuecli", "js/vue-router.js"),
+}
 
 
 class Provider:
@@ -16,14 +25,33 @@ class Provider:
     def __init__(self, path=None):
         self.path = Path(path if path else ".")
 
+    @staticmethod
+    def _normalize_config(config):
+        default_scripts = {
+            "brython": "brython.js",
+            "stdlib": "brython_stdlib.js",
+            "vue": "vue.js",
+            "vuex": "vuex.js",
+            "vue-router": "vue-router.js",
+        }
+        scripts = {"brython": True, "stdlib": True, "vue": True}
+        custom_scripts = config.get("scripts", {})
+        if isinstance(custom_scripts, list):
+            custom_scripts = {k: k for k in custom_scripts}
+        scripts.update(custom_scripts)
+        config["scripts"] = {
+            k: default_scripts[k] if v is True else v
+            for k, v in scripts.items() if v
+        }
+
     def load_config(self):
         config_file = Path(self.path, "vuepy.yml")
+        config = {}
         if config_file.exists():
             with open(config_file, "r") as fh:
                 config = yaml.safe_load(fh.read())
-            if config:
-                return config
-        return {}
+        self._normalize_config(config)
+        return config
 
     def content(self, endpoint, route, content):
         raise NotImplementedError()
@@ -31,25 +59,7 @@ class Provider:
     def directory(self, endpoint, route, path, deep=False):
         raise NotImplementedError()
 
-    def render_index(self):
-        config = self.load_config()
-
-        default_scripts = {
-            "brython": "_js/brython_dist.js",
-            "vue": "_js/vue.js",
-            "vuex": "_js/vuex.js",
-            "vue-router": "_js/vue-router.js",
-        }
-        scripts = {"brython": True, "vue": True}
-        custom_scripts = config.get("scripts", {})
-        if isinstance(custom_scripts, list):
-            custom_scripts = {k: k for k in custom_scripts}
-        scripts.update(custom_scripts)
-        scripts = {
-            k: default_scripts[k] if v is True else v
-            for k, v in scripts.items() if v
-        }
-
+    def render_index(self, config):
         brython_args = config.get("brython_args", {})
         if brython_args:
             joined = ", ".join(f"{k}: {v}" for k, v in brython_args.items())
@@ -57,10 +67,10 @@ class Provider:
         else:
             brython_args = ""
 
-        return Template(INDEX_CONTENT.decode("utf-8")).render(
+        return Template(IndexTemplate.decode("utf-8")).render(
             entry_point=config.get("entry_point", "app.py"),
             stylesheets=config.get("stylesheets", []),
-            scripts=scripts,
+            scripts=config.get("scripts", {}),
             templates={
                 id_: Path(self.path, template).read_text("utf-8")
                 for id_, template in config.get("templates", {}).items()
@@ -69,11 +79,13 @@ class Provider:
         )
 
     def setup(self):
-        self.content("index", "/", self.render_index)
-        self.content("loading", "/loading.gif", lambda: LOADING_CONTENT)
+        config = config = self.load_config()
         self.directory("application", "/", Path(self.path), deep=True)
-        self.directory("js", "/_js", JS_PATH)
-        self.directory("vuepy", "/vue", VUE_PATH, deep=True)
+        self.directory("vuepy", "/vue", VuePath, deep=True)
+
+        self.content("index", "/", lambda: self.render_index(config))
+        for route, content in StaticContents.items():
+            self.content(route, route, lambda: content)
 
     def deploy(self, **kwargs):
         raise NotImplementedError()
