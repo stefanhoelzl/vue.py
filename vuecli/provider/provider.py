@@ -1,4 +1,5 @@
 from pkg_resources import resource_filename, resource_string
+from functools import partial
 from pathlib import Path
 
 import yaml
@@ -68,7 +69,6 @@ class Provider:
             brython_args = ""
 
         return Template(IndexTemplate.decode("utf-8")).render(
-            entry_point=config.get("entry_point", "app.py"),
             stylesheets=config.get("stylesheets", []),
             scripts=config.get("scripts", {}),
             templates={
@@ -83,9 +83,14 @@ class Provider:
         self.directory("application", "/", Path(self.path), deep=True)
         self.directory("vuepy", "/vue", VuePath, deep=True)
 
+        entry_point = config.get("entry_point", "app")
+        self.content(
+            "entry_point", "/__entry_point__.py",
+            lambda: f"import {entry_point}"
+        )
         self.content("index", "/", lambda: self.render_index(config))
-        for route, content in StaticContents.items():
-            self.content(route, route, lambda: content)
+        for route in StaticContents:
+            self.content(route, route, partial(StaticContents.get, route))
 
     def deploy(self, **kwargs):
         raise NotImplementedError()

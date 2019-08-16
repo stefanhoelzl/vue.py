@@ -19,8 +19,6 @@ def render_index(tmp_path):
 def parse_index(index):
     et = ElementTree.fromstring(index)
     return {
-        "entry_point":
-            et.find("body/script[@type='text/python']").attrib["src"],
         "stylesheets": [e.attrib["href"] for e in et.findall("head/link")],
         "scripts": [e.attrib["src"] for e in et.findall("head/script")],
         "templates": {
@@ -35,18 +33,11 @@ class TestRenderIndex:
     def test_defaults(self, render_index):
         index = render_index()
         assert parse_index(index) == {
-            "entry_point": "app.py",
             "stylesheets": [],
             "scripts": ["brython.js", "brython_stdlib.js", "vue.js"],
             "templates": {},
             "brython": "brython();"
         }
-
-    def test_custom_entry_point(self, render_index):
-        index = render_index({
-            "entry_point": "custom.py"
-        })
-        assert parse_index(index)["entry_point"] == "custom.py"
 
     def test_custom_stylesheets(self, render_index):
         index = render_index({"stylesheets": ["first.css", "second.css"]})

@@ -52,9 +52,9 @@ scripts:
 
 ## EntryPoint
 By default the `app.py` in your project directory is the entry point for your app.
-If you want to point to a custom entry point, add this section:
+If you want to point to a custom entry point `custom.py`, add this section:
 ```yaml
-entry_point: custom.py
+entry_point: custom
 ```
 
 ## Templates
