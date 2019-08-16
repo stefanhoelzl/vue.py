@@ -29,13 +29,10 @@ def main():
         '--version', action='version', version=f"vue.py {__version__}"
     )
 
-    command = cli.add_subparsers()
+    command = cli.add_subparsers(title="commands", dest="cmd")
 
     deploy_cmd = command.add_parser("deploy", help="deploy application")
-    cli.set_defaults(cmd="deploy")
-
     provider_cmd = deploy_cmd.add_subparsers(help='Provider')
-
     for name, provider in RegisteredProvider.items():
         sp = provider_cmd.add_parser(name)
         sp.set_defaults(deploy=name)
@@ -44,7 +41,6 @@ def main():
                 if isinstance(config, str):
                     config = {"help": config}
                 sp.add_argument(arg_name, **config)
-
     deploy_cmd.add_argument(
         "--src", default=".", nargs="?",
         help="Path of the application to deploy (default: '.')"
@@ -53,6 +49,8 @@ def main():
     args = cli.parse_args()
     if args.cmd == "deploy":
         deploy(RegisteredProvider[args.deploy], args)
+    else:
+        cli.print_help()
 
 
 if __name__ == "__main__":
