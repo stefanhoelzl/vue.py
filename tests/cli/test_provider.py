@@ -34,7 +34,7 @@ class TestRenderIndex:
         index = render_index()
         assert parse_index(index) == {
             "stylesheets": [],
-            "scripts": ["brython.js", "brython_stdlib.js", "vue.js"],
+            "scripts": ["vuepy.js", "vue.js"],
             "templates": {},
             "brython": "brython();"
         }

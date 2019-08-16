@@ -1,7 +1,10 @@
 import sys
 import argparse
+from tempfile import TemporaryDirectory as TempDir
+from pathlib import Path
 
 from vuecli.provider import RegisteredProvider
+from vuecli.provider.static import Static as StaticProvider
 from vue import __version__
 
 
@@ -21,6 +24,20 @@ def deploy(provider_class, arguments):
     provider = provider_class(arguments.src)
     provider.setup()
     provider.deploy(**deploy_arguments)
+
+
+def package(destination, app):
+    with TempDir() as apptemp, TempDir() as deploytemp:
+        appdir = Path(app if app else apptemp)
+        deploydir = Path(deploytemp)
+
+        provider = StaticProvider(appdir)
+        provider.setup()
+        provider.deploy(deploydir, package=True)
+
+        Path(destination, "vuepy.js").write_text(
+            (deploydir / "vuepy.js").read_text(encoding="utf-8")
+        )
 
 
 def main():
@@ -46,9 +63,21 @@ def main():
         help="Path of the application to deploy (default: '.')"
     )
 
+    package_cmd = command.add_parser("package", help="create vuepy.js")
+    package_cmd.add_argument(
+        "destination", default=".", nargs="?",
+        help="(default: current directory)"
+    )
+    package_cmd.add_argument(
+        "--app", nargs="?", default=False,
+        help="include application in package"
+    )
+
     args = cli.parse_args()
     if args.cmd == "deploy":
         deploy(RegisteredProvider[args.deploy], args)
+    elif args.cmd == "package":
+        package(args.destination, "." if args.app is None else args.app)
     else:
         cli.print_help()
 

@@ -1,4 +1,4 @@
-from pkg_resources import iter_entry_points
+import pkg_resources as _pkgres
 
 
 def _load(ep):
@@ -10,5 +10,5 @@ def _load(ep):
 
 RegisteredProvider = {
     entry_point.name: _load(entry_point)
-    for entry_point in iter_entry_points("vuecli.provider")
+    for entry_point in _pkgres.iter_entry_points("vuecli.provider")
 }

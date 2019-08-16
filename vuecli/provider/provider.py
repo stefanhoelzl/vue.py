@@ -14,6 +14,11 @@ StaticContents = {
     "/brython.js": resource_string("data", "brython.js"),
     "/brython_stdlib.js": resource_string("data", "brython_stdlib.js"),
 
+    "/vuepy.js": b"\n".join([
+        resource_string("data", "brython.js"),
+        resource_string("data", "brython_stdlib.js"),
+    ]),
+
     "/vue.js": resource_string("vuecli", "js/vue.js"),
     "/vuex.js": resource_string("vuecli", "js/vuex.js"),
     "/vue-router.js": resource_string("vuecli", "js/vue-router.js"),
@@ -29,13 +34,12 @@ class Provider:
     @staticmethod
     def _normalize_config(config):
         default_scripts = {
-            "brython": "brython.js",
-            "stdlib": "brython_stdlib.js",
+            "vuepy": "vuepy.js",
             "vue": "vue.js",
             "vuex": "vuex.js",
             "vue-router": "vue-router.js",
         }
-        scripts = {"brython": True, "stdlib": True, "vue": True}
+        scripts = {"vuepy": True, "vue": True}
         custom_scripts = config.get("scripts", {})
         if isinstance(custom_scripts, list):
             custom_scripts = {k: k for k in custom_scripts}

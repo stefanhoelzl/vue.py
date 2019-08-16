@@ -75,5 +75,8 @@ ci.docs:
 	mkdir gh-pages-build/tests
 	cp -R tests/selenium/_html/* gh-pages-build/tests
 
+	mkdir gh-pages-build/js
+	vue-cli package gh-pages-build/js
+
 .PHONY: ci
 ci: tests release.build ci.docs

@@ -1,7 +1,7 @@
 import os
 import sys
 import shutil
-import tempfile
+from tempfile import TemporaryDirectory as TempDir
 import subprocess
 from pathlib import Path
 
@@ -25,16 +25,14 @@ def copytree(src, dst, deep=True):
 class Static(Provider):
     Arguments = {
         "destination": "Path where the application should be deployed to",
-        "--modules": {
-            "help": "Create brython_stdlib.js"
-                    " with all the modules used by the application",
-            "action": "store_true",
-        },
+        "--package": {
+            "action": "store_true",  "help": "adds application to vuepy.js"
+        }
     }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._tempdir = tempfile.TemporaryDirectory()
+        self._tempdir = TempDir()
 
     @property
     def temppath(self):
@@ -54,7 +52,7 @@ class Static(Provider):
         dest = self.temppath / Path(route).relative_to("/")
         copytree(Path(path), dest, deep=deep)
 
-    def deploy(self, destination, modules=False):
+    def deploy(self, destination, package=False):
         try:
             rel_depolypath = Path(destination).absolute().relative_to(
                 Path(self.path).absolute()
@@ -66,19 +64,26 @@ class Static(Provider):
                 str(Path(self.temppath) / rel_depolypath),
                 ignore_errors=True
             )
-        if modules:
-            self._make_modules()
+
+        if package:
+            self._create_package()
+
         shutil.rmtree(destination, ignore_errors=True)
         shutil.copytree(self.temppath, Path(destination))
         self._tempdir.cleanup()
 
-    def _make_modules(self):
+    def _create_package(self):
         completed_process = subprocess.run(
-            [sys.executable, "-m", "brython", "--modules"], cwd=self.temppath
+            [sys.executable, "-m", "brython", "--modules"],
+            cwd=str(self.temppath), stdout=subprocess.PIPE
         )
         if completed_process.returncode:
             raise RuntimeError(completed_process.returncode)
-        shutil.move(
-            str(Path(self.temppath, "brython_modules.js")),
-            str(Path(self.temppath, "brython_stdlib.js"))
+
+        Path(self.temppath, "vuepy.js").write_text(
+            Path(self.temppath, "brython.js").read_text(encoding="utf-8")
+            + "\n"
+            + Path(self.temppath, "brython_modules.js").read_text(
+                encoding="utf-8"
+            )
         )
