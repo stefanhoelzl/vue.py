@@ -40,7 +40,7 @@ setup(
         'vue.decorators'
     ],
     install_requires=[
-        'brython==3.7.1',
+        'brython==3.8.9',
         'Jinja2~=2.10',
         'pyyaml~=5.1',
     ],

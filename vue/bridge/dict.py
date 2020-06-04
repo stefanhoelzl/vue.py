@@ -82,14 +82,11 @@ class Dict(Object):
         return tuple((key, self[key]) for key in self)
 
     def keys(self):
-        if str(type(self._js)) == "<undefined>":  # Workaround
-            return window.Object.keys(self._js)
-        return [Object.from_js(key) for key in self._js]
+        return tuple(Object.from_js(key) for key in window.Object.keys(self._js))
 
     def __str__(self):
-        if hasattr(self, "toString"):
-            if callable(self.toString):
-                return self.toString()
+        if hasattr(self, "toString") and callable(self.toString):
+            return self.toString()
         return repr(self)
 
     def __repr__(self):

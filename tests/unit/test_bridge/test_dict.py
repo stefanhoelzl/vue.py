@@ -50,7 +50,7 @@ class TestDict:
         assert {"a": 0, "b": 1} == make_dict({"a": 0, "b": 1})
 
     def test_keys(self):
-        assert ["a", "b"] == make_dict({"a": 0, "b": 1}).keys()
+        assert ("a", "b") == make_dict({"a": 0, "b": 1}).keys()
 
     def test_iter(self):
         assert ["a", "b"] == list(iter(make_dict({"a": 0, "b": 1})))

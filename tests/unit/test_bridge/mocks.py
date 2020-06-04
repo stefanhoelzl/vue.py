@@ -17,6 +17,10 @@ class ObjectMock:
         for source in sources:
             target.attributes.update(source)
         return target
+    
+    @staticmethod
+    def keys(obj):
+        return [k for k in obj]
 
 
 class ArrayMock:
