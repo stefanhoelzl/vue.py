@@ -14,8 +14,8 @@ class Bar(VueComponent):
 
 class Router(VueRouter):
     routes = [
-        {"path": "/foo", "component": Foo},
-        {"path": "/bar", "component": Bar},
+        VueRoute("/foo", Foo),
+        VueRoute("/bar", Bar),
     ]
 
 class App(VueComponent):
