@@ -25,7 +25,7 @@ env.pip:
 
 .PHONY: env.chrome
 env.chrome:
-	python -c "import chromedriver_install as cdi;cdi.install(file_directory='tests/selenium', overwrite=True, version='76.0.3809.68')"
+	python -c "import chromedriver_install as cdi;cdi.install(file_directory='tests/selenium', overwrite=True, version='83.0.4103.39')"
 
 .PHONY: env.up
 env.up: env.pip env.vuejs env.vuex env.vue-router env.chrome
