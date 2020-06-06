@@ -1,4 +1,4 @@
-__version__ = "0.2.0"
+from .__version__ import __version__
 
 try:
     from .vue import VueComponent, VueMixin, Vue, VueDirective, VuePlugin

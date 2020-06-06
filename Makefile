@@ -59,8 +59,8 @@ tests.cli:
 tests:
 	PYTHONPATH=$(PYTHONPATH) pytest tests
 
-.PHONY: release.build
-release.build:
+.PHONY: build
+build:
 	python setup.py sdist bdist_wheel
 
 .PHONY: ci.docs
@@ -79,4 +79,37 @@ ci.docs:
 	vue-cli package gh-pages-build/js
 
 .PHONY: ci
-ci: tests release.build ci.docs
+ci: tests build ci.docs
+
+.PHONY: release.check
+release.check: ci
+	git diff --exit-code
+
+NEXT_VERSION=`python next_version.py`
+CHANGELOG=`cat CHANGELOG.md`
+COMMIT_MSG_FILE=/tmp/vue-release-commit-message
+CHANGELOG_FILE=CHANGELOG.md
+VERSION_FILE=vue/__version__.py
+
+.PHONY: release.commit.prepare
+release.commit.prepare:
+	git pull
+	echo "[release] v${NEXT_VERSION}\n\n${CHANGELOG}" > ${COMMIT_MSG_FILE}
+
+.PHONY: release.commit
+release.commit: release.commit.prepare
+	cat ${COMMIT_MSG_FILE}
+	read -p "Press enter for release commit!"
+	> ${CHANGELOG_FILE}
+	echo "__version__ = '${NEXT_VERSION}'\n" > ${VERSION_FILE}
+	git add ${CHANGELOG_FILE} ${VERSION_FILE}
+	git commit --file=${COMMIT_MSG_FILE}
+	git tag v`python -c "import vue; print(vue.__version__)"`
+
+.PHONY: release
+release: release.check release.commit
+	git push --tags
+	git checkout release
+	git merge master
+	git push
+	git checkout master
