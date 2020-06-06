@@ -73,17 +73,19 @@ class Static(Provider):
         self._tempdir.cleanup()
 
     def _create_package(self):
+        self._brython("--make_package", "app")
+        Path(self.temppath, "vuepy.js").write_text(
+            Path(self.temppath, "vuepy.js").read_text(encoding="utf-8")
+            + "\n"
+            + Path(self.temppath, "app.brython.js").read_text(
+                encoding="utf-8"
+            )
+        )
+    
+    def _brython(self, *args):
         completed_process = subprocess.run(
-            [sys.executable, "-m", "brython", "--modules"],
+            [sys.executable, "-m", "brython", *args],
             cwd=str(self.temppath), stdout=subprocess.PIPE
         )
         if completed_process.returncode:
             raise RuntimeError(completed_process.returncode)
-
-        Path(self.temppath, "vuepy.js").write_text(
-            Path(self.temppath, "brython.js").read_text(encoding="utf-8")
-            + "\n"
-            + Path(self.temppath, "brython_modules.js").read_text(
-                encoding="utf-8"
-            )
-        )

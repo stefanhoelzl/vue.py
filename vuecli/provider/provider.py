@@ -11,9 +11,6 @@ IndexTemplate = resource_string("vuecli", "index.html")
 StaticContents = {
     "/loading.gif": resource_string("vuecli", "loading.gif"),
 
-    "/brython.js": resource_string("brython", "data/brython.js"),
-    "/brython_stdlib.js": resource_string("brython", "data/brython_stdlib.js"),
-
     "/vuepy.js": b"\n".join([
         resource_string("brython", "data/brython.js"),
         resource_string("brython", "data/brython_stdlib.js"),

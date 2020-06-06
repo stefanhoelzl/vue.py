@@ -31,4 +31,4 @@ which can be served by your favorite web server.
 $ vue-cli deploy static <destination> --package
 ```
 * `destination` specifies the path where your application should be deployed to.
-* `--package` (optional) creates one single .js file containing all python code.
+* `--package` (optional) packages the python code into the vuepy.js file.

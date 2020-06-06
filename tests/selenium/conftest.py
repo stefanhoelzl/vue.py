@@ -176,7 +176,7 @@ class SeleniumSession:
 
         provider = Static("examples/{}".format(name))
         provider.setup()
-        provider.deploy("examples_static/{}".format(name))
+        provider.deploy("examples_static/{}".format(name), package=True)
 
         if hash_:
             url = "{}#{}".format(url, hash_)
