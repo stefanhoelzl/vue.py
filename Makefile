@@ -93,6 +93,7 @@ VERSION_FILE=vue/__version__.py
 
 .PHONY: release.commit.prepare
 release.commit.prepare:
+	git checkout master
 	git pull
 	echo "[release] v${NEXT_VERSION}\n\n${CHANGELOG}" > ${COMMIT_MSG_FILE}
 
