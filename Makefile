@@ -59,12 +59,16 @@ tests.cli:
 tests:
 	PYTHONPATH=$(PYTHONPATH) pytest tests
 
+.PHONY: lint
+lint:
+	black --target-version py36 --check .
+
 .PHONY: build
 build:
 	python setup.py sdist bdist_wheel
 
-.PHONY: ci.docs
-ci.docs:
+.PHONY: docs
+docs:
 	rm -Rf gh-pages-build
 	mkdir gh-pages-build
 
@@ -79,7 +83,7 @@ ci.docs:
 	vue-cli package gh-pages-build/js
 
 .PHONY: ci
-ci: tests build ci.docs
+ci: lint tests build docs
 
 .PHONY: release.check
 release.check: ci
