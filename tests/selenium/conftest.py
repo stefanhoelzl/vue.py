@@ -1,5 +1,6 @@
 import re
 import os
+import json
 import inspect
 from pathlib import Path
 from contextlib import contextmanager
@@ -73,7 +74,12 @@ def selenium(selenium_session, request):
 
 class ErrorLogException(Exception):
     def __init__(self, errors):
-        super().__init__("\n".join(str(error) for error in errors))
+        formatted_errors = []
+        for error in errors:
+            formatted_error = {**error}
+            formatted_error["message"] = formatted_error["message"].split("\\n")
+            formatted_errors.append(formatted_error)
+        super().__init__(json.dumps(formatted_errors, indent=2))
         self.errors = errors
 
 
