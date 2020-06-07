@@ -90,24 +90,29 @@ release.check: ci
 	git diff --exit-code
 
 NEXT_VERSION=`python next_version.py`
-CHANGELOG=`cat CHANGELOG.md`
+CHANGELOG=`python changelog.py`
 COMMIT_MSG_FILE=/tmp/vue-release-commit-message
-CHANGELOG_FILE=CHANGELOG.md
 VERSION_FILE=vue/__version__.py
+LAST_RELEASE_COMMIT=`git log --pretty="%H" --grep="\[release\]" -1`
 
-.PHONY: release.commit.prepare
-release.commit.prepare:
+.PHONY: release.commit.prepare.branch
+release.commit.prepare.branch:
 	git checkout master
 	git pull
+
+.PHONY: release.commit.prepare.message
+release.commit.prepare.message:
 	echo "[release] v${NEXT_VERSION}\n\n${CHANGELOG}" > ${COMMIT_MSG_FILE}
+
+.PHONY: release.commit.prepare
+release.commit.prepare: release.commit.prepare.branch release.commit.prepare.message
 
 .PHONY: release.commit
 release.commit: release.commit.prepare
 	cat ${COMMIT_MSG_FILE}
 	read -p "Press enter for release commit!"
-	> ${CHANGELOG_FILE}
 	echo "__version__ = '${NEXT_VERSION}'\n" > ${VERSION_FILE}
-	git add ${CHANGELOG_FILE} ${VERSION_FILE}
+	git add ${VERSION_FILE}
 	git commit --file=${COMMIT_MSG_FILE}
 	git tag v`python -c "import vue; print(vue.__version__)"`
 
