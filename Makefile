@@ -57,7 +57,7 @@ tests.cli:
 
 .PHONY: tests
 tests:
-	PYTHONPATH=$(PYTHONPATH) pytest tests
+	PYTHONPATH=$(PYTHONPATH) pytest tests/${TEST}
 
 .PHONY: lint
 lint:
