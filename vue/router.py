@@ -13,4 +13,4 @@ class VueRouter(Wrapper):
 
 class VueRoute:
     def __new__(cls, path, component):
-        return {"path": path, "component": component}
+        return {"path": path, "component": component.init_dict()}

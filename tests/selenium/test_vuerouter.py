@@ -9,7 +9,8 @@ def test_routes(selenium):
             template = '<div id="content">foo</div>'
 
         class Bar(VueComponent):
-            template = '<div id="content">bar</div>'
+            text = "bar"
+            template = '<div id="content">{{ text }}</div>'
 
         class Router(VueRouter):
             routes = [VueRoute("/foo", Foo), VueRoute("/bar", Bar)]
