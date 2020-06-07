@@ -4,7 +4,7 @@ import json
 from vue import VueComponent, computed, filters, watch, directive
 from vue.bridge import Object
 
-STORAGE_KEY = 'todos-vue.py'
+STORAGE_KEY = "todos-vue.py"
 
 
 class ToDoStorage:
@@ -19,7 +19,7 @@ class ToDoStorage:
     @classmethod
     def fetch(cls):
         cls.NEXT_UID = 0
-        todos = json.loads(storage.get(STORAGE_KEY, '[]'))
+        todos = json.loads(storage.get(STORAGE_KEY, "[]"))
         return [{"id": cls.next_uid(), **todo} for todo in todos]
 
     @staticmethod
@@ -50,10 +50,10 @@ class VisibilityFilters:
 class App(VueComponent):
     template = "#app-template"
     todos = ToDoStorage.fetch()
-    new_todo = ''
+    new_todo = ""
     edited_todo = None
-    edit_cache = ''
-    visibility = 'all'
+    edit_cache = ""
+    visibility = "all"
 
     @watch("todos", deep=True)
     def save_todos(self, new, old):
@@ -85,16 +85,16 @@ class App(VueComponent):
         value = self.new_todo.strip()
         if not value:
             return
-        self.todos.append({
-            "id": ToDoStorage.next_uid(), "title": value, "completed": False,
-        })
-        self.new_todo = ''
+        self.todos.append(
+            {"id": ToDoStorage.next_uid(), "title": value, "completed": False}
+        )
+        self.new_todo = ""
 
     def remove_todo(self, todo):
         del self.todos[self.todos.index(todo)]
 
     def edit_todo(self, todo):
-        self.edit_cache = todo['title']
+        self.edit_cache = todo["title"]
         self.edited_todo = todo
 
     def done_edit(self, todo):
@@ -120,16 +120,16 @@ class App(VueComponent):
             el.focus()
 
 
-app = App('#app')
+app = App("#app")
 
 
 def on_hash_change(ev):
-    visibility = window.location.hash.replace('#', '').replace("/", '')
+    visibility = window.location.hash.replace("#", "").replace("/", "")
     if VisibilityFilters(visibility):
         app.visibility = visibility
     else:
-        window.location.hash = ''
-        app.visibility = 'all'
+        window.location.hash = ""
+        app.visibility = "all"
 
 
 window.bind("hashchange", on_hash_change)

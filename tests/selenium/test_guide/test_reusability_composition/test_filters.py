@@ -23,6 +23,7 @@ def test_global_filter(selenium):
         class ComponentUsesGlobalFilter(VueComponent):
             message = "Message"
             template = "<div id='content'>{{ message | lower_case }}</div>"
+
         return ComponentUsesGlobalFilter(el)
 
     with selenium.app(app):

@@ -13,6 +13,7 @@ class TestJSObjectWrapper:
         class This:
             def _isVue(self):
                 return True
+
         assert isinstance(Object.from_js(This()), VueInstance)
 
     def test_array(self):

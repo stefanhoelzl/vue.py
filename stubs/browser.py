@@ -33,7 +33,7 @@ class window:
         ...
 
     class location:
-        hash = ''
+        hash = ""
 
     class Array:
         def __init__(self, *objs):

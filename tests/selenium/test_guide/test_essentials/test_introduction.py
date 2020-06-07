@@ -16,17 +16,18 @@ def test_bind_element_title(selenium):
         template = "<div id='withtitle' v-bind:title='title'></div>"
 
     with selenium.app(BindElementTitle):
-        assert selenium.element_attribute_has_value("withtitle",
-                                                    "title", "TITLE")
+        assert selenium.element_attribute_has_value("withtitle", "title", "TITLE")
 
 
 def test_if_condition(selenium):
     class IfCondition(VueComponent):
         show = False
-        template = "<div>" \
-                   "    <div id='notpresent' v-if='show'>DONT SHOW</div>" \
-                   "    <div id='present' />" \
-                   "</div>"
+        template = (
+            "<div>"
+            "    <div id='notpresent' v-if='show'>DONT SHOW</div>"
+            "    <div id='present' />"
+            "</div>"
+        )
 
     with selenium.app(IfCondition):
         assert selenium.element_present("present")
@@ -36,9 +37,11 @@ def test_if_condition(selenium):
 def test_for_loop(selenium):
     class ForLoop(VueComponent):
         items = ["0", "1", "2"]
-        template = "<ol id='list'>" \
-                   "   <li v-for='item in items' :id='item'>{{ item }}</li>" \
-                   "</ol>"
+        template = (
+            "<ol id='list'>"
+            "   <li v-for='item in items' :id='item'>{{ item }}</li>"
+            "</ol>"
+        )
 
     with selenium.app(ForLoop):
         for idx in range(3):
@@ -62,10 +65,12 @@ def test_on_click_method(selenium):
 def test_v_model(selenium):
     class VModel(VueComponent):
         clicked = False
-        template = "<div>" \
-                   "    <p id='p'>{{ clicked }}</p>" \
-                   "    <input type='checkbox' id='c' v-model='clicked'>" \
-                   "</div>"
+        template = (
+            "<div>"
+            "    <p id='p'>{{ clicked }}</p>"
+            "    <input type='checkbox' id='c' v-model='clicked'>"
+            "</div>"
+        )
 
     with selenium.app(VModel):
         assert selenium.element_has_text("p", "false")

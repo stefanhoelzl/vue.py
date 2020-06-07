@@ -6,4 +6,3 @@ class Plugin(VueDecorator):
 
     def __init__(self, plugins):
         self.__value__ = list(plugins)
-

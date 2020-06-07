@@ -29,8 +29,12 @@ class VueStorePlugin:
         )
 
     def install(self, store):
-        self.initialize(VuexInstance(state=store.state,
-                                     getters=store.getters,
-                                     commit=store.commit,
-                                     dispatch=store.dispatch))
+        self.initialize(
+            VuexInstance(
+                state=store.state,
+                getters=store.getters,
+                commit=store.commit,
+                dispatch=store.dispatch,
+            )
+        )
         store.subscribe(self.__subscribe__)

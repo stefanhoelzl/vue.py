@@ -12,7 +12,7 @@ def deploy(provider_class, arguments):
     if provider_class is None:
         print(
             f"'pip install vuepy[{arguments.deploy}]' to use this provider",
-            file=sys.stderr
+            file=sys.stderr,
         )
         sys.exit(1)
 
@@ -41,15 +41,13 @@ def package(destination, app):
 
 
 def main():
-    cli = argparse.ArgumentParser(description='vue.py command line interface')
-    cli.add_argument(
-        '--version', action='version', version=f"vue.py {__version__}"
-    )
+    cli = argparse.ArgumentParser(description="vue.py command line interface")
+    cli.add_argument("--version", action="version", version=f"vue.py {__version__}")
 
     command = cli.add_subparsers(title="commands", dest="cmd")
 
     deploy_cmd = command.add_parser("deploy", help="deploy application")
-    provider_cmd = deploy_cmd.add_subparsers(help='Provider')
+    provider_cmd = deploy_cmd.add_subparsers(help="Provider")
     for name, provider in RegisteredProvider.items():
         sp = provider_cmd.add_parser(name)
         sp.set_defaults(deploy=name)
@@ -59,18 +57,18 @@ def main():
                     config = {"help": config}
                 sp.add_argument(arg_name, **config)
     deploy_cmd.add_argument(
-        "--src", default=".", nargs="?",
-        help="Path of the application to deploy (default: '.')"
+        "--src",
+        default=".",
+        nargs="?",
+        help="Path of the application to deploy (default: '.')",
     )
 
     package_cmd = command.add_parser("package", help="create vuepy.js")
     package_cmd.add_argument(
-        "destination", default=".", nargs="?",
-        help="(default: current directory)"
+        "destination", default=".", nargs="?", help="(default: current directory)"
     )
     package_cmd.add_argument(
-        "--app", nargs="?", default=False,
-        help="include application in package"
+        "--app", nargs="?", default=False, help="include application in package"
     )
 
     args = cli.parse_args()

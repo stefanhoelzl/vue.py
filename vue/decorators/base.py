@@ -30,5 +30,6 @@ def pyjs_bridge(fn, inject_vue_instance=False):
         args = tuple(Object.from_js(arg) for arg in args)
         kwargs = {k: Object.from_js(v) for k, v in kwargs.items()}
         return Object.to_js(fn(*args, **kwargs))
+
     wrapper.__name__ = fn.__name__
     return wrapper

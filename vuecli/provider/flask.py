@@ -20,8 +20,10 @@ class Flask(Provider):
             if not full_path.exists():
                 abort(404)
             return send_file(str(full_path.absolute()))
+
         flask_route = os.path.join(
-            route, "<{}filename>".format("path:" if deep else ""))
+            route, "<{}filename>".format("path:" if deep else "")
+        )
         self.app.add_url_rule(flask_route, endpoint, view_func)
 
     def deploy(self):

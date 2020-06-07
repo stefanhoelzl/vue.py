@@ -13,6 +13,7 @@ def render_index(tmp_path):
         provider = Provider(tmp_path)
         config = provider.load_config()
         return provider.render_index(config)
+
     return render
 
 
@@ -25,7 +26,7 @@ def parse_index(index):
             e.attrib["id"]: e.text.strip()
             for e in et.findall("body/script[@type='x-template']")
         },
-        "brython": et.find("body").attrib["onload"]
+        "brython": et.find("body").attrib["onload"],
     }
 
 
@@ -36,16 +37,16 @@ class TestRenderIndex:
             "stylesheets": [],
             "scripts": ["vuepy.js", "vue.js"],
             "templates": {},
-            "brython": "brython();"
+            "brython": "brython();",
         }
 
     def test_custom_stylesheets(self, render_index):
         index = render_index({"stylesheets": ["first.css", "second.css"]})
         assert parse_index(index)["stylesheets"] == ["first.css", "second.css"]
 
-    @pytest.mark.parametrize("ext, js", [
-        ("vuex", "vuex.js"), ("vue-router", "vue-router.js")
-    ])
+    @pytest.mark.parametrize(
+        "ext, js", [("vuex", "vuex.js"), ("vue-router", "vue-router.js")]
+    )
     def test_enable_builtin_script(self, render_index, ext, js):
         index = render_index({"scripts": {ext: True}})
         assert js in parse_index(index)["scripts"]

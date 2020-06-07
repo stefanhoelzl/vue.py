@@ -25,9 +25,7 @@ def copytree(src, dst, deep=True):
 class Static(Provider):
     Arguments = {
         "destination": "Path where the application should be deployed to",
-        "--package": {
-            "action": "store_true",  "help": "adds application to vuepy.js"
-        }
+        "--package": {"action": "store_true", "help": "adds application to vuepy.js"},
     }
 
     def __init__(self, *args, **kwargs):
@@ -54,16 +52,13 @@ class Static(Provider):
 
     def deploy(self, destination, package=False):
         try:
-            rel_depolypath = Path(destination).absolute().relative_to(
-                Path(self.path).absolute()
+            rel_depolypath = (
+                Path(destination).absolute().relative_to(Path(self.path).absolute())
             )
         except ValueError:
             pass
         else:
-            shutil.rmtree(
-                str(Path(self.temppath) / rel_depolypath),
-                ignore_errors=True
-            )
+            shutil.rmtree(str(Path(self.temppath) / rel_depolypath), ignore_errors=True)
 
         if package:
             self._create_package()
@@ -77,15 +72,14 @@ class Static(Provider):
         Path(self.temppath, "vuepy.js").write_text(
             Path(self.temppath, "vuepy.js").read_text(encoding="utf-8")
             + "\n"
-            + Path(self.temppath, "app.brython.js").read_text(
-                encoding="utf-8"
-            )
+            + Path(self.temppath, "app.brython.js").read_text(encoding="utf-8")
         )
-    
+
     def _brython(self, *args):
         completed_process = subprocess.run(
             [sys.executable, "-m", "brython", *args],
-            cwd=str(self.temppath), stdout=subprocess.PIPE
+            cwd=str(self.temppath),
+            stdout=subprocess.PIPE,
         )
         if completed_process.returncode:
             raise RuntimeError(completed_process.returncode)

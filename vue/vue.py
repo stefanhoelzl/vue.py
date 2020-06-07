@@ -16,8 +16,10 @@ class Vue:
             name = directive.__name__.lower()
 
         if not isinstance(directive, type):
+
             class FunctionDirective(VueDirective):
                 d = DirectiveHook(directive)
+
             directive = FunctionDirective
 
         window.Vue.directive(name, VueDirectiveFactory.get_item(directive))

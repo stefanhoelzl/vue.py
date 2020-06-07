@@ -98,12 +98,10 @@ class SeleniumSession:
             options.add_argument("no-sandbox")
 
         desired = DesiredCapabilities.CHROME
-        desired['goog:loggingPrefs'] = {"browser": "ALL"}
+        desired["goog:loggingPrefs"] = {"browser": "ALL"}
 
         self.driver = webdriver.Chrome(
-            CHROME_DRIVER_PATH,
-            options=options,
-            desired_capabilities=desired
+            CHROME_DRIVER_PATH, options=options, desired_capabilities=desired
         )
         return self
 
@@ -153,9 +151,9 @@ class SeleniumSession:
         path = self._app_output_path / test_name
         path.mkdir(exist_ok=True, parents=True)
 
-        code = "from vue import *\n"
+        code = "from vue import *\n\n\n"
         code += dedent("\n".join(inspect.getsource(app).split("\n")))
-        code += "app = {}('#app')".format(app.__name__)
+        code += """\n\napp = {}("#app")\n""".format(app.__name__)
         (path / "app.py").write_text(code)
 
         (path / "vuepy.yml").write_text(yaml.dump(config))
@@ -198,20 +196,21 @@ class SeleniumSession:
             r" Synchronous XMLHttpRequest on the main thread is deprecated"
             r" because of its detrimental effects to the end user's experience."
             r" For more help, check https://xhr.spec.whatwg.org/.",
-
-            r"[^ ]+ (\d+|-) {}".format(re.escape(
-                "Failed to load resource:"
-                " the server responded with a status of 404 (File not found)"
-            )),
+            r"[^ ]+ (\d+|-) {}".format(
+                re.escape(
+                    "Failed to load resource:"
+                    " the server responded with a status of 404 (File not found)"
+                )
+            ),
         ]
         self.get_logs()
         for log in self.logs:
-            if log['level'] != "INFO":
+            if log["level"] != "INFO":
                 for exception in exceptions + self.allowed_errors:
                     if re.match(exception, log["message"]):
                         break
                 else:
-                    if log["source"] not in ['deprecation']:
+                    if log["source"] not in ["deprecation"]:
                         errors.append(log)
         if errors:
             raise ErrorLogException(errors)
@@ -221,8 +220,7 @@ class SeleniumSession:
             ec.text_to_be_present_in_element((By.ID, id_), text)
         )
 
-    def element_with_tag_name_has_text(self, tag_name, text,
-                                       timeout=DEFAULT_TIMEOUT):
+    def element_with_tag_name_has_text(self, tag_name, text, timeout=DEFAULT_TIMEOUT):
         return WebDriverWait(self.driver, timeout).until(
             ec.text_to_be_present_in_element((By.TAG_NAME, tag_name), text)
         )
@@ -247,8 +245,9 @@ class SeleniumSession:
 
         return WebDriverWait(self.driver, timeout).until(check)
 
-    def element_attribute_has_value(self, id_, attribute, value,
-                                    timeout=DEFAULT_TIMEOUT):
+    def element_attribute_has_value(
+        self, id_, attribute, value, timeout=DEFAULT_TIMEOUT
+    ):
         def check(driver_):
             element = driver_.find_element_by_id(id_)
             if element.get_attribute(attribute) == value:

@@ -56,17 +56,13 @@ def test_svg_graph(selenium):
 
         a = selenium.find_elements_by_tag_name("input")[0]
         d = selenium.find_elements_by_tag_name("input")[3]
-        ActionChains(selenium.driver)\
-            .click_and_hold(a)\
-            .move_by_offset(20, 0)\
-            .release()\
-            .perform()
+        ActionChains(selenium.driver).click_and_hold(a).move_by_offset(
+            20, 0
+        ).release().perform()
 
-        ActionChains(selenium.driver)\
-            .click_and_hold(d)\
-            .move_by_offset(5, 0)\
-            .release()\
-            .perform()
+        ActionChains(selenium.driver).click_and_hold(d).move_by_offset(
+            5, 0
+        ).release().perform()
 
         polygon = selenium.find_elements_by_tag_name("polygon")[0]
         assert 5 == len(polygon.get_attribute("points").split(" "))
@@ -120,18 +116,23 @@ def test_elastic_header(selenium):
         header = selenium.find_element_by_id("header")
         content = selenium.find_element_by_id("content")
 
-        assert content.get_attribute("style") == "transform:" \
-                                                 " translate3d(0px, 0px, 0px);"
+        assert (
+            content.get_attribute("style") == "transform:"
+            " translate3d(0px, 0px, 0px);"
+        )
 
-        ActionChains(selenium.driver)\
-            .click_and_hold(header)\
-            .move_by_offset(xoffset=0, yoffset=100)\
-            .perform()
+        ActionChains(selenium.driver).click_and_hold(header).move_by_offset(
+            xoffset=0, yoffset=100
+        ).perform()
         selenium.screenshot()
-        assert content.get_attribute("style") == "transform:" \
-                                                 " translate3d(0px, 33px, 0px);"
+        assert (
+            content.get_attribute("style") == "transform:"
+            " translate3d(0px, 33px, 0px);"
+        )
 
         ActionChains(selenium.driver).release().perform()
         time.sleep(1)
-        assert content.get_attribute("style") == "transform:" \
-                                                 " translate3d(0px, 0px, 0px);"
+        assert (
+            content.get_attribute("style") == "transform:"
+            " translate3d(0px, 0px, 0px);"
+        )

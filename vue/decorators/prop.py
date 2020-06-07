@@ -13,20 +13,17 @@ class Prop(VueDecorator):
         list: window.Array,
         object: window.Object,
         dict: window.Object,
-        None: None
+        None: None,
     }
 
     def __init__(self, name, typ, mixin=None):
         mixin = mixin if mixin else {}
         self.__id__ = name
-        self.__value__ = {
-            "type": self.type_map[typ],
-            **mixin
-        }
+        self.__value__ = {"type": self.type_map[typ], **mixin}
 
 
 class Validator(VueDecorator):
-    __parents__ = ('props',)
+    __parents__ = ("props",)
     __id__ = "validator"
 
     def __init__(self, prop, fn):
@@ -37,4 +34,5 @@ class Validator(VueDecorator):
 def validator(prop):
     def decorator(fn):
         return Validator(prop, fn)
+
     return decorator

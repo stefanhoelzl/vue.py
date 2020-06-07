@@ -10,7 +10,4 @@ class Model(VueDecorator):
 
     @property
     def __value__(self):
-        return {
-            "prop": self.prop,
-            "event": self.event,
-        }
+        return {"prop": self.prop, "event": self.event}

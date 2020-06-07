@@ -27,7 +27,7 @@ class DraggableHeaderView(VueComponent):
     def content_position(self):
         dy = self.c["y"] - 160
         dampen = 2 if dy > 0 else 4
-        return {"transform": f'translate3d(0,{dy / dampen}px,0)'}
+        return {"transform": f"translate3d(0,{dy / dampen}px,0)"}
 
     def start_drag(self, e):
         e = e["changedTouches"][0] if "changedTouches" in e else e
@@ -49,11 +49,7 @@ class DraggableHeaderView(VueComponent):
             dynamics.animate(
                 Object.to_js(self.c),
                 {"x": 160, "y": 160},
-                {
-                    "type": dynamics.spring,
-                    "duration": 700,
-                    "friction": 280
-                }
+                {"type": dynamics.spring, "duration": 700, "friction": 280},
             )
 
 

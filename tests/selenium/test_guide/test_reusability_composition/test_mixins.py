@@ -16,6 +16,7 @@ def test_local_mixin(selenium):
             message = "Message"
             mixins = [MyMixin]
             template = "<div id='content'>{{ message | lower_case }}</div>"
+
         return ComponentUsesGlobalFilter(el)
 
     with selenium.app(app):

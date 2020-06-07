@@ -11,4 +11,5 @@ class Custom(VueDecorator):
 def custom(key, name=None, static=False):
     def wrapper(fn):
         return Custom(fn, key, name, static)
+
     return wrapper

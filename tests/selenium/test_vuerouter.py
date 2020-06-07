@@ -1,5 +1,6 @@
 VueRouterConfig = {"scripts": {"vue-router": True}}
 
+
 def test_routes(selenium):
     def app(el):
         from vue import VueComponent, VueRouter, VueRoute
@@ -11,10 +12,7 @@ def test_routes(selenium):
             template = '<div id="content">bar</div>'
 
         class Router(VueRouter):
-            routes = [
-                VueRoute("/foo", Foo),
-                VueRoute("/bar", Bar),
-            ]
+            routes = [VueRoute("/foo", Foo), VueRoute("/bar", Bar)]
 
         class ComponentUsingRouter(VueComponent):
             template = """
@@ -26,6 +24,7 @@ def test_routes(selenium):
                     <router-view></router-view>
                 </div>
             """
+
         return ComponentUsingRouter(el, router=Router())
 
     with selenium.app(app, config=VueRouterConfig):
@@ -46,9 +45,7 @@ def test_dynamic_route_matching(selenium):
             template = '<div id="user">{{ $route.params.id }}</div>'
 
         class Router(VueRouter):
-            routes = [
-                VueRoute("/user/:id", User),
-            ]
+            routes = [VueRoute("/user/:id", User)]
 
         class ComponentUsingRouter(VueComponent):
             template = """
@@ -59,6 +56,7 @@ def test_dynamic_route_matching(selenium):
                     <router-view></router-view>
                 </div>
             """
+
         return ComponentUsingRouter(el, router=Router())
 
     with selenium.app(app, config=VueRouterConfig):

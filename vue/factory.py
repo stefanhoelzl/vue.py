@@ -22,8 +22,9 @@ def merge_templates(sub):
         return template_slots
 
     base = sub.__base__
-    template_merging = hasattr(base, "template") \
-                       and getattr(sub, "template_slots", False)
+    template_merging = hasattr(base, "template") and getattr(
+        sub, "template_slots", False
+    )
     if template_merging:
         base_template = merge_templates(base)
         base_slots = get_template_slots(base)
@@ -39,6 +40,7 @@ class BrythonObjectWorkarounds(type):
     Fixes the following Brython bugs:
     * https://github.com/brython-dev/brython/issues/904
     """
+
     @property
     def __base__(cls):
         return cls.__bases__[0]
@@ -68,10 +70,8 @@ class AttributeDictFactory:
 
     def __attributes__(self):
         all_objects = set(dir(self.wrapper))
-        all_objects.update(
-            getattr(self.wrapper, "__annotations__", {}).keys()
-        )
-        own_objects = all_objects - set(dir(self.base)) - {'__annotations__'}
+        all_objects.update(getattr(self.wrapper, "__annotations__", {}).keys())
+        own_objects = all_objects - set(dir(self.base)) - {"__annotations__"}
         for obj_name in own_objects:
             yield obj_name, getattr(self.wrapper, obj_name, None)
 
@@ -101,8 +101,7 @@ class VueComponentFactory(AttributeDictFactory):
             obj = Template(merge_templates(self.wrapper))
         elif obj_name == "extends":
             if obj:
-                extends = self.wrapper.__base__ if isinstance(obj, bool) \
-                    else obj
+                extends = self.wrapper.__base__ if isinstance(obj, bool) else obj
                 obj = Extends(VueComponentFactory.get_item(extends))
         elif obj_name == "mixins":
             obj = Mixins(*(VueComponentFactory.get_item(m) for m in obj))
@@ -116,7 +115,7 @@ class VueComponentFactory(AttributeDictFactory):
             obj = Prop(
                 obj_name,
                 self.wrapper.__annotations__[obj_name],
-                self._property_mixin(obj_name)
+                self._property_mixin(obj_name),
             )
         elif not isinstance(obj, VueDecorator):
             obj = Data(obj_name, obj)
@@ -132,8 +131,7 @@ class VueComponentFactory(AttributeDictFactory):
         def get_initialized_data(this):
             initialized_data = {}
             for name, date in _data.items():
-                initialized_data[name] = date(this) if callable(
-                    date) else date
+                initialized_data[name] = date(this) if callable(date) else date
             return initialized_data
 
         init_dict.update(data=get_initialized_data)

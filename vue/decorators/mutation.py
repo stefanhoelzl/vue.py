@@ -12,7 +12,10 @@ class Mutation(VueDecorator):
 
 def mutation(fn):
     def wrapper(state, payload):
-        return fn(VuexInstance(state=state),
-                  *payload.get("args", ()),
-                  **payload.get("kwargs", {}))
+        return fn(
+            VuexInstance(state=state),
+            *payload.get("args", ()),
+            **payload.get("kwargs", {}),
+        )
+
     return Mutation(fn.__name__, pyjs_bridge(wrapper))

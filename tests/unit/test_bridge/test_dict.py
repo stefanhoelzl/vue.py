@@ -9,8 +9,9 @@ from vue.bridge.dict import window, Dict
 
 @pytest.fixture(scope="module", autouse=True)
 def window_object():
-    with mock.patch.object(window, "Object", new=ObjectMock), \
-         mock.patch.object(window, "Vue", new=VueMock):
+    with mock.patch.object(window, "Object", new=ObjectMock), mock.patch.object(
+        window, "Vue", new=VueMock
+    ):
         yield
 
 

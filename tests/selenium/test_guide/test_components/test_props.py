@@ -15,6 +15,7 @@ def test_prop_types(selenium):
                 self.content = "text"
 
         SubComponent.register()
+
         class App(VueComponent):
             template = """
             <sub-component id="component" :prop="100"></sub-component>
@@ -38,6 +39,7 @@ def test_prop_default(selenium):
                 self.content = "text"
 
         SubComponent.register()
+
         class App(VueComponent):
             template = """
             <sub-component id="component"></sub-component>
@@ -60,6 +62,7 @@ def test_prop_required(selenium):
                 self.content = "text"
 
         SubComponent.register()
+
         class App(VueComponent):
             template = """
             <sub-component id="component">SUB</sub-component>
@@ -70,8 +73,7 @@ def test_prop_required(selenium):
     with pytest.raises(Exception) as excinfo:
         with selenium.app(app):
             selenium.element_has_text("component", "text")
-    assert "[Vue warn]: Missing required prop:" \
-           in excinfo.value.errors[0]["message"]
+    assert "[Vue warn]: Missing required prop:" in excinfo.value.errors[0]["message"]
 
 
 def test_prop_as_initial_value(selenium):
@@ -146,5 +148,7 @@ def test_prop_validator(selenium):
     with pytest.raises(Exception) as excinfo:
         with selenium.app(app):
             assert selenium.element_has_text("component", "not text")
-    assert "[Vue warn]: Invalid prop: custom validator check failed for prop" \
-           in excinfo.value.errors[0]["message"]
+    assert (
+        "[Vue warn]: Invalid prop: custom validator check failed for prop"
+        in excinfo.value.errors[0]["message"]
+    )

@@ -9,9 +9,11 @@ class Dict(Object):
 
     @staticmethod
     def __can_wrap__(obj):
-        return (str(type(obj)) == "<undefined>") or \
-               (obj.__class__.__name__ == "JSObject"
-                and not callable(obj) and not isinstance(obj, dict))
+        return (str(type(obj)) == "<undefined>") or (
+            obj.__class__.__name__ == "JSObject"
+            and not callable(obj)
+            and not isinstance(obj, dict)
+        )
 
     def __eq__(self, other):
         return other == {k: v for k, v in self.items()}
