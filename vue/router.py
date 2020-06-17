@@ -2,6 +2,10 @@ from browser import window
 from .factory import Wrapper, VueRouterFactory
 
 
+def init_dict(component):
+    return component.init_dict()
+
+
 class VueRouter(Wrapper):
     @classmethod
     def init_dict(cls):
@@ -12,5 +16,13 @@ class VueRouter(Wrapper):
 
 
 class VueRoute:
-    def __new__(cls, path, component):
-        return {"path": path, "component": component}
+    def __new__(cls, path, component=None, components=None, **kwargs):
+        route = {"path": path}
+        route.update(kwargs)
+        
+        if component is not None:
+            route["component"] = component.init_dict()
+        elif components is not None:
+            route["components"] = {k: init_dict(v) for k, v in components.items()}
+        
+        return route
