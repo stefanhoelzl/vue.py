@@ -18,12 +18,15 @@ class VueRouter(Wrapper):
 
 class VueRoute:
     def __new__(cls, path, component=None, components=None, **kwargs):
-        route = {"path": path}
+        route = {"path": path, **kwargs}
         route.update(kwargs)
         
         if component is not None:
             route["component"] = component.init_dict()
         elif components is not None:
-            route["components"] = {k: init_dict(v) for k, v in components.items()}
+            route["components"] = {
+                name: component.init_dict() 
+                for name, component in components.items()
+            }
         
         return route
