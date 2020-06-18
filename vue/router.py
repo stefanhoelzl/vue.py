@@ -7,8 +7,8 @@ class VueRouter(Wrapper):
     def init_dict(cls):
         return VueRouterFactory.get_item(cls)
 
-    def __new__(cls, VueRouterObject=window.VueRouter):
-        return VueRouterObject.new(cls.init_dict())
+    def __new__(cls, vue_router_class=window.VueRouter):
+        return vue_router_class.new(cls.init_dict())
 
 
 class VueRoute:
