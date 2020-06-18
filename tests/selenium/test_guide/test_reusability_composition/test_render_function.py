@@ -20,6 +20,7 @@ def test_slots(selenium):
         class WithSlots(VueComponent):
             def render(self, create_element):
                 return create_element(f"p", self.slots.get("default"))
+
         WithSlots.register()
 
         class Component(VueComponent):
@@ -37,6 +38,7 @@ def test_empty_slots(selenium):
         class WithSlots(VueComponent):
             def render(self, create_element):
                 return create_element(f"div", self.slots.get("default"))
+
         WithSlots.register()
 
         class Component(VueComponent):
@@ -58,9 +60,7 @@ def test_props(selenium):
 
         class ComponentRendersWithAttrs(VueComponent):
             def render(self, create_element):
-                return create_element(
-                    "ComponentWithProps", {"props": {"prop": "p"}},
-                )
+                return create_element("ComponentWithProps", {"props": {"prop": "p"}})
 
         return ComponentRendersWithAttrs(el)
 

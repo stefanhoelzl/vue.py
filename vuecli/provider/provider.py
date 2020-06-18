@@ -10,15 +10,12 @@ VuePath = resource_filename("vue", "")
 IndexTemplate = resource_string("vuecli", "index.html")
 StaticContents = {
     "/loading.gif": resource_string("vuecli", "loading.gif"),
-
-    "/brython.js": resource_string("data", "brython.js"),
-    "/brython_stdlib.js": resource_string("data", "brython_stdlib.js"),
-
-    "/vuepy.js": b"\n".join([
-        resource_string("data", "brython.js"),
-        resource_string("data", "brython_stdlib.js"),
-    ]),
-
+    "/vuepy.js": b"\n".join(
+        [
+            resource_string("brython", "data/brython.js"),
+            resource_string("brython", "data/brython_stdlib.js"),
+        ]
+    ),
     "/vue.js": resource_string("vuecli", "js/vue.js"),
     "/vuex.js": resource_string("vuecli", "js/vuex.js"),
     "/vue-router.js": resource_string("vuecli", "js/vue-router.js"),
@@ -45,8 +42,7 @@ class Provider:
             custom_scripts = {k: k for k in custom_scripts}
         scripts.update(custom_scripts)
         config["scripts"] = {
-            k: default_scripts[k] if v is True else v
-            for k, v in scripts.items() if v
+            k: default_scripts[k] if v is True else v for k, v in scripts.items() if v
         }
 
     def load_config(self):
@@ -79,7 +75,7 @@ class Provider:
                 id_: Path(self.path, template).read_text("utf-8")
                 for id_, template in config.get("templates", {}).items()
             },
-            brython_args=brython_args
+            brython_args=brython_args,
         )
 
     def setup(self):
@@ -89,8 +85,7 @@ class Provider:
 
         entry_point = config.get("entry_point", "app")
         self.content(
-            "entry_point", "/__entry_point__.py",
-            lambda: f"import {entry_point}"
+            "entry_point", "/__entry_point__.py", lambda: f"import {entry_point}\n"
         )
         self.content("index", "/", lambda: self.render_index(config))
         for route in StaticContents:

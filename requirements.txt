@@ -9,3 +9,9 @@ wheel
 pytest==5.0.1
 selenium==3.8.0
 chromedriver-install==0.3.0
+
+# linting
+black==19.10.b
+
+# releasing
+semver==2.10.1

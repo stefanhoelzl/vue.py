@@ -12,14 +12,11 @@ class Watcher(VueDecorator):
 
     @property
     def __value__(self):
-        return {
-            "handler": self._fn,
-            "deep": self._deep,
-            "immediate": self._immediate
-        }
+        return {"handler": self._fn, "deep": self._deep, "immediate": self._immediate}
 
 
 def watch(name, deep=False, immediate=False):
     def decorator(fn):
         return Watcher(name, fn, deep, immediate)
+
     return decorator

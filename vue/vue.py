@@ -16,8 +16,10 @@ class Vue:
             name = directive.__name__.lower()
 
         if not isinstance(directive, type):
+
             class FunctionDirective(VueDirective):
                 d = DirectiveHook(directive)
+
             directive = FunctionDirective
 
         window.Vue.directive(name, VueDirectiveFactory.get_item(directive))
@@ -65,7 +67,7 @@ class VueComponent(Wrapper):
             if key == "props_data":
                 key = "propsData"
             init_dict.update({key: value})
-        return Object.from_js(window.Vue.new(init_dict))
+        return Object.from_js(window.Vue.new(Object.to_js(init_dict)))
 
     @classmethod
     def register(cls, name=None):

@@ -1,5 +1,6 @@
 import re
 import os
+import json
 import inspect
 from pathlib import Path
 from contextlib import contextmanager
@@ -73,7 +74,12 @@ def selenium(selenium_session, request):
 
 class ErrorLogException(Exception):
     def __init__(self, errors):
-        super().__init__("\n".join(str(error) for error in errors))
+        formatted_errors = []
+        for error in errors:
+            formatted_error = {**error}
+            formatted_error["message"] = formatted_error["message"].split("\\n")
+            formatted_errors.append(formatted_error)
+        super().__init__(json.dumps(formatted_errors, indent=2))
         self.errors = errors
 
 
@@ -84,6 +90,7 @@ class SeleniumSession:
 
         self.allowed_errors = []
         self.logs = []
+        self._screenshot_file = None
 
     def __getattr__(self, item):
         return getattr(self.driver, item)
@@ -97,12 +104,10 @@ class SeleniumSession:
             options.add_argument("no-sandbox")
 
         desired = DesiredCapabilities.CHROME
-        desired['goog:loggingPrefs'] = {"browser": "ALL"}
+        desired["goog:loggingPrefs"] = {"browser": "ALL"}
 
         self.driver = webdriver.Chrome(
-            CHROME_DRIVER_PATH,
-            options=options,
-            desired_capabilities=desired
+            CHROME_DRIVER_PATH, options=options, desired_capabilities=desired
         )
         return self
 
@@ -129,9 +134,9 @@ class SeleniumSession:
             self.analyze_logs()
 
     @contextmanager
-    def app(self, app, config=None):
+    def app(self, app, config=None, files=None):
         test_name = self.request.function.__name__
-        self._create_app_html(test_name, app, config or {})
+        self._create_app_content(test_name, app, config or {}, files or {})
         url_base = str(self._app_output_path.relative_to(Path(".").absolute()))
         url = APP_URL.format(url_base, test_name)
         with self.url(url):
@@ -148,16 +153,19 @@ class SeleniumSession:
         output_path.mkdir(exist_ok=True, parents=True)
         return output_path
 
-    def _create_app_html(self, test_name, app, config):
+    def _create_app_content(self, test_name, app, config, files):
         path = self._app_output_path / test_name
         path.mkdir(exist_ok=True, parents=True)
 
-        code = "from vue import *\n"
+        code = "from vue import *\n\n\n"
         code += dedent("\n".join(inspect.getsource(app).split("\n")))
-        code += "app = {}('#app')".format(app.__name__)
-
+        code += """\n\napp = {}("#app")\n""".format(app.__name__)
         (path / "app.py").write_text(code)
+
         (path / "vuepy.yml").write_text(yaml.dump(config))
+
+        for filename, content in files.items():
+            (path / filename).write_text(content)
 
         provider = Static(path)
         provider.setup()
@@ -167,12 +175,12 @@ class SeleniumSession:
     def example(self, hash_=None):
         test_name = self.request.function.__name__
         name = test_name[5:]
-        img_file = Path(EXAMPLE_SCREENSHOT_PATH.format(name))
+        self._screenshot_file = Path(EXAMPLE_SCREENSHOT_PATH.format(name))
         url = EXAMPLE_URL.format(name)
 
         provider = Static("examples/{}".format(name))
         provider.setup()
-        provider.deploy("examples_static/{}".format(name))
+        provider.deploy("examples_static/{}".format(name), package=True)
 
         if hash_:
             url = "{}#{}".format(url, hash_)
@@ -180,7 +188,12 @@ class SeleniumSession:
             try:
                 yield
             finally:
-                self.driver.save_screenshot(str(img_file))
+                self.screenshot()
+
+    def screenshot(self):
+        if self._screenshot_file:
+            self.driver.save_screenshot(str(self._screenshot_file))
+        self._screenshot_file = None
 
     def analyze_logs(self):
         errors = []
@@ -189,20 +202,21 @@ class SeleniumSession:
             r" Synchronous XMLHttpRequest on the main thread is deprecated"
             r" because of its detrimental effects to the end user's experience."
             r" For more help, check https://xhr.spec.whatwg.org/.",
-
-            r"[^ ]+ (\d+|-) {}".format(re.escape(
-                "Failed to load resource:"
-                " the server responded with a status of 404 (File not found)"
-            )),
+            r"[^ ]+ (\d+|-) {}".format(
+                re.escape(
+                    "Failed to load resource:"
+                    " the server responded with a status of 404 (File not found)"
+                )
+            ),
         ]
         self.get_logs()
         for log in self.logs:
-            if log['level'] != "INFO":
+            if log["level"] != "INFO":
                 for exception in exceptions + self.allowed_errors:
                     if re.match(exception, log["message"]):
                         break
                 else:
-                    if log["source"] not in ['deprecation']:
+                    if log["source"] not in ["deprecation"]:
                         errors.append(log)
         if errors:
             raise ErrorLogException(errors)
@@ -212,8 +226,7 @@ class SeleniumSession:
             ec.text_to_be_present_in_element((By.ID, id_), text)
         )
 
-    def element_with_tag_name_has_text(self, tag_name, text,
-                                       timeout=DEFAULT_TIMEOUT):
+    def element_with_tag_name_has_text(self, tag_name, text, timeout=DEFAULT_TIMEOUT):
         return WebDriverWait(self.driver, timeout).until(
             ec.text_to_be_present_in_element((By.TAG_NAME, tag_name), text)
         )
@@ -238,8 +251,9 @@ class SeleniumSession:
 
         return WebDriverWait(self.driver, timeout).until(check)
 
-    def element_attribute_has_value(self, id_, attribute, value,
-                                    timeout=DEFAULT_TIMEOUT):
+    def element_attribute_has_value(
+        self, id_, attribute, value, timeout=DEFAULT_TIMEOUT
+    ):
         def check(driver_):
             element = driver_.find_element_by_id(id_)
             if element.get_attribute(attribute) == value:

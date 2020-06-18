@@ -8,7 +8,9 @@ def test_data_must_be_function(selenium):
             template = """
             <button v-on:click="count++">{{ count }}</button>
             """
+
         ClickCounter.register()
+
         class App(VueComponent):
             template = """
             <div id="components-demo">
@@ -33,7 +35,9 @@ def test_register_with_name(selenium):
             template = """
             <div>TEXT</div>
             """
+
         SubComponent.register("another-name")
+
         class App(VueComponent):
             template = """
             <another-name id="component"></another-name>
@@ -52,7 +56,9 @@ def test_passing_data_with_props(selenium):
             template = """
             <div>{{ prop }}</div>
             """
+
         SubComponent.register()
+
         class App(VueComponent):
             template = """
             <sub-component id="component" prop="message"></sub-component>
@@ -70,7 +76,9 @@ def test_emit_event(selenium):
             template = """
             <button @click="$emit('my-event', 'value')"></button>
             """
+
         SubComponent.register()
+
         class App(VueComponent):
             text = ""
 

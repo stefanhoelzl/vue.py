@@ -88,6 +88,15 @@ $ make env.down
 $ make env.up
 ```
 
+Publish a new release
+```
+$ make release
+```
+
+### Contributing
+see [CONTRIBUTING](CONTRIBUTING)
+
+
 ### Workflow
 Development happens on the [master branch](https://github.com/stefanhoelzl/vue.py).
 This also means the latest documentation can be found 

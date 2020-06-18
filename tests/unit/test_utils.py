@@ -24,8 +24,9 @@ def fix_load_and_window():
                 if mod:
                     setattr(WindowMock, mod, mod)
 
-    with mock.patch.object(utils, "load", new=LoadMock()), \
-         mock.patch.object(utils, "window", new=WindowMock):
+    with mock.patch.object(utils, "load", new=LoadMock()), mock.patch.object(
+        utils, "window", new=WindowMock
+    ):
         yield
 
 

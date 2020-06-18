@@ -15,7 +15,7 @@ class List(Object):
         if isinstance(slc, int):
             if slc < 0:
                 slc = len(self) + slc
-            return slc, slc+1
+            return slc, slc + 1
         start = slc.start if slc.start is not None else 0
         stop = slc.stop if slc.stop is not None else len(self)
         return start, stop
@@ -24,9 +24,9 @@ class List(Object):
         return other == [i for i in self]
 
     def __mul__(self, other):
-        return [i for i in self]*other
+        return [i for i in self] * other
 
-    def index(self, obj, start=0, stop=-1):
+    def index(self, obj, start=0, _stop=-1):
         index = self._js.indexOf(Object.to_js(obj), start)
         if index == -1:
             raise ValueError("{} not in list".format(obj))
@@ -56,12 +56,12 @@ class List(Object):
 
     def __delitem__(self, key):
         start, stop = self._slice(key)
-        self._js.splice(start, stop-start)
+        self._js.splice(start, stop - start)
 
     def __setitem__(self, key, value):
         start, stop = self._slice(key)
         value = value if isinstance(value, list) else [value]
-        self._js.splice(start, stop-start, *value)
+        self._js.splice(start, stop - start, *value)
 
     def __getitem__(self, item):
         start, stop = self._slice(item)
@@ -95,6 +95,7 @@ class List(Object):
         def _iter(lst):
             for i in range(lst.__len__()):
                 yield lst[i]
+
         return _iter(self)
 
     def pop(self, index=-1):
@@ -123,7 +124,7 @@ class List(Object):
 
     def __js__(self):
         if isinstance(self, (list, tuple)):
-            return [Object.to_js(item) for item in self]
+            return window.Array(*[Object.to_js(item) for item in self])
         return self._js
 
 

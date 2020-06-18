@@ -4,7 +4,7 @@ from vue import VueComponent, filters, watch
 
 from browser import window, ajax
 
-url = 'https://api.github.com/repos/stefanhoelzl/vue.py/commits?per_page=10&sha={}'
+url = "https://api.github.com/repos/stefanhoelzl/vue.py/commits?per_page=10&sha={}"
 
 if window.location.hash == "#testing":
     url = "data.json"
@@ -13,7 +13,7 @@ if window.location.hash == "#testing":
 class App(VueComponent):
     template = "#commits"
 
-    branches = ['master', '2948e6b']
+    branches = ["master", "2948e6b"]
     current_branch = "master"
     commits = []
 

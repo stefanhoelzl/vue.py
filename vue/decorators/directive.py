@@ -15,14 +15,14 @@ class DirectiveHook(VueDecorator):
         self.__value__ = pyjs_bridge(fn)
 
         if hooks:
-            self.__value__ = {map_hook(hook): self.__value__
-                              for hook in hooks}
+            self.__value__ = {map_hook(hook): self.__value__ for hook in hooks}
 
 
 def _directive_hook(name, hooks):
     def wrapper(fn):
         _hooks = (fn.__name__,) if not hooks else hooks
         return DirectiveHook(fn, hooks=_hooks, name=name)
+
     return wrapper
 
 

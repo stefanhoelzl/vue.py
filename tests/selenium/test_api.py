@@ -8,7 +8,9 @@ def test_app_with_props_and_data(selenium):
             template = """
             <div id="el">{{ text }}</div>
             """
+
         return App(el, props_data={"text": "TEXT"})
+
     with selenium.app(app_with_props_data):
         assert selenium.element_has_text("el", "TEXT")
 
@@ -20,6 +22,7 @@ def test_emit_method(selenium):
 
             def created(self):
                 self.emit("creation", "YES")
+
         Emitter.register()
 
         class App(VueComponent):
@@ -33,7 +36,9 @@ def test_emit_method(selenium):
 
             def change(self, ev=None):
                 self.text = ev
+
         return App(el)
+
     with selenium.app(call_emit):
         assert selenium.element_has_text("el", "YES")
 
@@ -58,6 +63,7 @@ def test_extend(selenium):
                 self.comps.append("SUB")
 
         return Sub(el)
+
     with selenium.app(extended_component):
         assert selenium.element_has_text("comps", "BASE SUB")
 
@@ -66,9 +72,7 @@ def test_extend_from_dict(selenium):
     class Component(VueComponent):
         template = "<div id='done'>{{ done }}</div>"
         done = "NO"
-        extends = {
-            "created": lambda: print("CREATED BASE")
-        }
+        extends = {"created": lambda: print("CREATED BASE")}
 
         def created(self):
             print("CREATED SUB")

@@ -17,7 +17,9 @@ def test_customize_v_model(selenium):
                 >
             </div>
             """
+
         CustomVModel.register("custom-vmodel")
+
         class App(VueComponent):
             clicked = False
             template = """
@@ -26,6 +28,7 @@ def test_customize_v_model(selenium):
                 <custom-vmodel v-model="clicked"></custom-vmodel>
             </div>
             """
+
         return App(el)
 
     with selenium.app(app):

@@ -7,6 +7,7 @@ from vue import *
 def test_empty():
     class Empty(VueComponent):
         pass
+
     assert {} == Empty.init_dict()
 
 
@@ -34,6 +35,7 @@ def test_method_as_coroutine():
 def test_data():
     class Component(VueComponent):
         attribute = 1
+
     assert {"attribute": 1} == Component.init_dict()["data"]("THIS")
 
 
@@ -214,23 +216,20 @@ def test_full_directive_different_hooks():
 
     init_dict = Component.init_dict()
     directive_map = init_dict["directives"]["focus"]
-    for fn_name in ("bind", "inserted", "update",
-                    "componentUpdated", "unbind"):
+    for fn_name in ("bind", "inserted", "update", "componentUpdated", "unbind"):
         assert fn_name == directive_map[fn_name]()
 
 
 def test_full_directive_single_hook():
     class Component(VueComponent):
         @staticmethod
-        @directive("focus", "bind", "inserted",
-                   "update", "component_updated", "unbind")
+        @directive("focus", "bind", "inserted", "update", "component_updated", "unbind")
         def hook():
             return "hook"
 
     init_dict = Component.init_dict()
     directive_map = init_dict["directives"]["focus"]
-    for fn_name in ("bind", "inserted", "update",
-                    "componentUpdated", "unbind"):
+    for fn_name in ("bind", "inserted", "update", "componentUpdated", "unbind"):
         assert "hook" == directive_map[fn_name]()
 
 
@@ -258,6 +257,7 @@ def test_vuepy_mixin():
 
     class Component(VueComponent):
         mixins = [MyMixin]
+
     assert [{}] == Component.init_dict()["mixins"]
 
 
@@ -265,6 +265,7 @@ def test_render_function():
     class Component(VueComponent):
         def render(self, create_element):
             pass
+
     assert "render" in Component.init_dict()
 
 
@@ -329,4 +330,5 @@ def test_vuepy_components():
 
     class Component(VueComponent):
         components = [SubComponent]
+
     assert [{}] == Component.init_dict()["components"]

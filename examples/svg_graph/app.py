@@ -4,12 +4,12 @@ from vue import VueComponent, computed
 
 
 stats = [
-  {"label": 'A', "value": 100},
-  {"label": 'B', "value": 100},
-  {"label": 'C', "value": 100},
-  {"label": 'D', "value": 100},
-  {"label": 'E', "value": 100},
-  {"label": 'F', "value": 100},
+    {"label": "A", "value": 100},
+    {"label": "B", "value": 100},
+    {"label": "C", "value": 100},
+    {"label": "D", "value": 100},
+    {"label": "E", "value": 100},
+    {"label": "F", "value": 100},
 ]
 
 
@@ -33,16 +33,14 @@ class AxisLabel(VueComponent):
 
     @computed
     def point(self):
-        return value_to_point(+int(self.stat["value"])+10,
-                              self.index,
-                              self.total)
+        return value_to_point(+int(self.stat["value"]) + 10, self.index, self.total)
 
 
 AxisLabel.register()
 
 
 class Polygraph(VueComponent):
-    template = '#polygraph-template'
+    template = "#polygraph-template"
     stats: list
 
     @computed
@@ -51,10 +49,9 @@ class Polygraph(VueComponent):
             map(
                 lambda e: ",".join(
                     str(p)
-                    for p in value_to_point(int(e[1]["value"]), e[0],
-                                            len(self.stats))
+                    for p in value_to_point(int(e[1]["value"]), e[0], len(self.stats))
                 ),
-                enumerate(self.stats)
+                enumerate(self.stats),
             )
         )
 
@@ -64,7 +61,7 @@ Polygraph.register()
 
 class App(VueComponent):
     template = "#app-template"
-    new_label = ''
+    new_label = ""
     stats = stats
 
     @computed
@@ -75,7 +72,7 @@ class App(VueComponent):
         event.preventDefault()
         if self.new_label:
             self.stats.append({"label": self.new_label, "value": 100})
-            self.new_label = ''
+            self.new_label = ""
 
     def remove(self, stat):
         del self.stats[self.stats.index(stat)]

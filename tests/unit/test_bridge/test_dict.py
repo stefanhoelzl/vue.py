@@ -9,8 +9,9 @@ from vue.bridge.dict import window, Dict
 
 @pytest.fixture(scope="module", autouse=True)
 def window_object():
-    with mock.patch.object(window, "Object", new=ObjectMock), \
-         mock.patch.object(window, "Vue", new=VueMock):
+    with mock.patch.object(window, "Object", new=ObjectMock), mock.patch.object(
+        window, "Vue", new=VueMock
+    ):
         yield
 
 
@@ -50,7 +51,7 @@ class TestDict:
         assert {"a": 0, "b": 1} == make_dict({"a": 0, "b": 1})
 
     def test_keys(self):
-        assert ["a", "b"] == make_dict({"a": 0, "b": 1}).keys()
+        assert ("a", "b") == make_dict({"a": 0, "b": 1}).keys()
 
     def test_iter(self):
         assert ["a", "b"] == list(iter(make_dict({"a": 0, "b": 1})))

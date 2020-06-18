@@ -15,9 +15,10 @@ def getter(fn):
         if fn.__code__.co_argcount == 1:
             return fn(VuexInstance(state=state, getters=getters))
         else:
+
             def getter_method(*args_, **kwargs):
-                return fn(VuexInstance(state=state, getters=getters),
-                          *args_,
-                          **kwargs)
+                return fn(VuexInstance(state=state, getters=getters), *args_, **kwargs)
+
             return getter_method
+
     return Getter(fn.__name__, pyjs_bridge(wrapper))

@@ -10,10 +10,12 @@ class VueInstance(Object):
     @property
     def store(self):
         store = self.__getattr__("store")
-        return VuexInstance(state=store.state,
-                            getters=store.getters,
-                            commit=store.commit,
-                            dispatch=store.dispatch)
+        return VuexInstance(
+            state=store.state,
+            getters=store.getters,
+            commit=store.commit,
+            dispatch=store.dispatch,
+        )
 
     def __getattr__(self, item):
         try:

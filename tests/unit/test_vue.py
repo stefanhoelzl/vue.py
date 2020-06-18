@@ -1,7 +1,16 @@
 from contextlib import contextmanager
 from unittest import mock
 
-from vue import *
+import pytest
+
+from vue import Vue, VueComponent, VueDirective, VueMixin
+from vue.bridge.dict import window
+
+
+@pytest.fixture(autouse=True)
+def window_object():
+    with mock.patch.object(window, "Object", new=dict):
+        yield
 
 
 class VueMock(mock.MagicMock):
@@ -23,9 +32,9 @@ class VueMock(mock.MagicMock):
         with mock.patch("vue.vue.window.Vue.component", new=self) as component:
             component.side_effect = lambda *args, **kwargs: self.init_dict
             yield self
-        self.init_dict = component.call_args[0][1] \
-            if len(component.call_args[0]) > 1\
-            else component
+        self.init_dict = (
+            component.call_args[0][1] if len(component.call_args[0]) > 1 else component
+        )
         self.register_name = component.call_args[0][0]
 
     @contextmanager
@@ -34,8 +43,7 @@ class VueMock(mock.MagicMock):
             drctv.side_effect = lambda *args, **kwargs: self._directive
             yield self
         self.directive_name = drctv.call_args[0][0]
-        self._directive = drctv.call_args[0][1] if len(drctv.call_args[0]) > 1\
-            else None
+        self._directive = drctv.call_args[0][1] if len(drctv.call_args[0]) > 1 else None
 
     @contextmanager
     def filter(self):
@@ -111,6 +119,7 @@ class TestVue:
     def test_function_directive(self):
         def function_directive(a):
             return a
+
         with VueMock().directive() as dirctv:
             Vue.directive("my-directive", function_directive)
         assert "my-directive" == dirctv.directive_name
@@ -119,6 +128,7 @@ class TestVue:
     def test_function_directive_with_implicit_name(self):
         def function_directive(a):
             return a
+
         with VueMock().directive() as dirctv:
             Vue.directive(function_directive)
         assert "function_directive" == dirctv.directive_name
@@ -139,6 +149,7 @@ class TestVue:
     def test_filter_use_function_name(self):
         def flt(v):
             return "filtered({})".format(v)
+
         with VueMock().filter() as filter_mock:
             Vue.filter(flt)
         assert "flt" == filter_mock._filter_name

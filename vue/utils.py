@@ -10,9 +10,7 @@ def js_load(path):
     load(path)
     after = dir(window)
     diff = set(after) - set(before)
-    mods = {module: getattr(window, module)
-            for module in diff
-            if "$" not in module}
+    mods = {module: getattr(window, module) for module in diff if "$" not in module}
     if len(mods) == 0:
         mods = None
     elif len(mods) == 1:

@@ -11,7 +11,7 @@ class App(VueComponent):
 
     @computed
     def compiled_markdown(self):
-        return marked(self.input, {'sanitize': True})
+        return marked(self.input, {"sanitize": True})
 
     def update(self, event):
         self.input = event.target.value

@@ -8,7 +8,7 @@ class GridComponent(VueComponent):
     columns: list
     filter_key: str
 
-    sort_key = ''
+    sort_key = ""
 
     @data
     def sort_orders(self):
@@ -18,10 +18,11 @@ class GridComponent(VueComponent):
     def filtered_data(self):
         return list(
             sorted(
-                filter(lambda f: self.filter_key.lower() in f['name'].lower(),
-                       self.content),
+                filter(
+                    lambda f: self.filter_key.lower() in f["name"].lower(), self.content
+                ),
                 reverse=self.sort_orders.get(self.sort_key, False),
-                key=lambda c: c.get(self.sort_key, self.columns[0])
+                key=lambda c: c.get(self.sort_key, self.columns[0]),
             )
         )
 
@@ -44,10 +45,10 @@ class App(VueComponent):
     search_query = ""
     grid_columns = ["name", "power"]
     grid_data = [
-      {"name": 'Chuck Norris', "power": float('inf')},
-      {"name": 'Bruce Lee', "power": 9000},
-      {"name": 'Jackie Chan', "power": 7000},
-      {"name": 'Jet Li', "power": 8000}
+        {"name": "Chuck Norris", "power": float("inf")},
+        {"name": "Bruce Lee", "power": 9000},
+        {"name": "Jackie Chan", "power": 7000},
+        {"name": "Jet Li", "power": 8000},
     ]
 
 

@@ -14,7 +14,9 @@ class Method(VueDecorator):
 def coroutine(_coroutine):
     def wrapper(*args, **kwargs):
         import asyncio
+
         return asyncio.ensure_future(_coroutine(*args, **kwargs))
+
     wrapper.__name__ = _coroutine.__name__
     return wrapper
 

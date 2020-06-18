@@ -14,6 +14,7 @@ def test_state(selenium):
                 return self.store.message
 
             template = "<div id='content'>{{ message }}</div>"
+
         return ComponentUsingStore(el, store=Store())
 
     with selenium.app(app, config=VuexConfig):
@@ -36,6 +37,7 @@ def test_mutation_noargs(selenium):
                 return self.store.message
 
             template = "<div id='content'>{{ message }}</div>"
+
         return ComponentUsingMutation(el, store=Store())
 
     with selenium.app(app, config=VuexConfig):
@@ -58,6 +60,7 @@ def test_mutation(selenium):
                 return self.store.message
 
             template = "<div id='content'>{{ message }}</div>"
+
         return ComponentUsingMutation(el, store=Store())
 
     with selenium.app(app, config=VuexConfig):
@@ -80,6 +83,7 @@ def test_mutation_kwargs(selenium):
                 return self.store.message
 
             template = "<div id='content'>{{ message }}</div>"
+
         return ComponentUsingMutation(el, store=Store())
 
     with selenium.app(app, config=VuexConfig):
@@ -108,11 +112,11 @@ def test_action(selenium):
                 return self.store.message
 
             template = "<div id='content'>{{ message }}</div>"
+
         return ComponentUsingAction(el, store=Store())
 
     with selenium.app(app, config=VuexConfig):
         assert selenium.element_has_text("content", "Message")
-
 
 
 def test_action_noargs(selenium):
@@ -137,6 +141,7 @@ def test_action_noargs(selenium):
                 return self.store.message
 
             template = "<div id='content'>{{ message }}</div>"
+
         return ComponentUsingAction(el, store=Store())
 
     with selenium.app(app, config=VuexConfig):
@@ -165,6 +170,7 @@ def test_action_kwargs(selenium):
                 return self.store.message
 
             template = "<div id='content'>{{ message }}</div>"
+
         return ComponentUsingAction(el, store=Store())
 
     with selenium.app(app, config=VuexConfig):
@@ -186,6 +192,7 @@ def test_getter_noargs(selenium):
                 return self.store.msg
 
             template = "<div id='content'>{{ message }}</div>"
+
         return ComponentUsingGetter(el, store=Store())
 
     with selenium.app(app, config=VuexConfig):
@@ -207,6 +214,7 @@ def test_getter_method(selenium):
                 return self.store.msg("pre")
 
             template = "<div id='content'>{{ message }}</div>"
+
         return ComponentUsingGetter(el, store=Store())
 
     with selenium.app(app, config=VuexConfig):
@@ -228,6 +236,7 @@ def test_getter_kwargs(selenium):
                 return self.store.msg("pre", "!")
 
             template = "<div id='content'>{{ message }}</div>"
+
         return ComponentUsingGetter(el, store=Store())
 
     with selenium.app(app, config=VuexConfig):
@@ -260,6 +269,7 @@ def test_plugin(selenium):
                 self.store.commit("msg", "Hallo", postfix="!")
 
             template = "<div id='content'>{{ message }}</div>"
+
         return ComponentUsingGetter(el, store=Store())
 
     with selenium.app(app, config=VuexConfig):
@@ -267,3 +277,28 @@ def test_plugin(selenium):
         last_log_message = selenium.get_logs()[-1]["message"]
         expected_msg = "Message msg ('Hallo',) {'postfix': '!'}"
         assert expected_msg in last_log_message
+
+
+def test_using_state_within_native_vue_component(selenium):
+    def app(el):
+        class Store(VueStore):
+            message = "Message"
+
+        class ComponentUsingNativeComponent(VueComponent):
+            template = "<native />"
+
+        return ComponentUsingNativeComponent(el, store=Store())
+
+    config = {"scripts": {"vuex": True, "my": "my.js"}}
+    myjs = """
+        Vue.component('native', {
+          template: '<div id="content">{{ message }}</div>',
+          computed: {
+            message () {
+              return this.$store.state.message
+            }
+          }
+        });
+    """
+    with selenium.app(app, config=config, files={"my.js": myjs}):
+        assert selenium.element_has_text("content", "Message")

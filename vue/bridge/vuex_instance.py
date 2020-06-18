@@ -1,8 +1,13 @@
 class VuexInstance:
-    def __init__(self,
-                 state=None, getters=None,
-                 root_state=None, root_getters=None,
-                 commit=None, dispatch=None):
+    def __init__(
+        self,
+        state=None,
+        getters=None,
+        root_state=None,
+        root_getters=None,
+        commit=None,
+        dispatch=None,
+    ):
         self.__state__ = state if state else {}
         self.__getter__ = getters
         self.__root_getter__ = root_getters

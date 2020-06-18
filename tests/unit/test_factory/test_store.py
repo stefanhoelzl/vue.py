@@ -5,6 +5,7 @@ from vue.bridge import VuexInstance
 def test_state():
     class Store(VueStore):
         attribute = 1
+
     assert {"attribute": 1} == Store.init_dict()["state"]
 
 
@@ -34,8 +35,7 @@ def test_action():
         def action(self, payload):
             return self, payload
 
-    store, arg = Store.init_dict()["actions"]["action"](Context(),
-                                                        {"args": (2,)})
+    store, arg = Store.init_dict()["actions"]["action"](Context(), {"args": (2,)})
     assert 2 == arg
     assert isinstance(store, VuexInstance)
 
