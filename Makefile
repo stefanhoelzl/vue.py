@@ -59,6 +59,10 @@ tests.cli:
 tests:
 	PYTHONPATH=$(PYTHONPATH) pytest tests/${TEST}
 
+.PHONY: format
+format:
+	black --target-version py36 .
+
 .PHONY: lint
 lint:
 	black --target-version py36 --check .
