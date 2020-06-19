@@ -106,13 +106,13 @@ def test_named_routes(selenium):
     with selenium.app(app, config=VueRouterConfig):
         assert selenium.element_present("foo")
         selenium.find_element_by_id("foo").click()
-        assert selenium.element_has_text("header", "foo header")
-        assert selenium.element_has_text("body", "foo body")
+        assert selenium.element_has_text("header", "foo top")
+        assert selenium.element_has_text("body", "foo bottom")
 
         assert selenium.element_present("bar")
         selenium.find_element_by_id("bar").click()
-        assert selenium.element_has_text("header", "bar header")
-        assert selenium.element_has_text("body", "bar body")
+        assert selenium.element_has_text("header", "bar top")
+        assert selenium.element_has_text("body", "bar bottom")
 
 
 def test_nested_routes_and_redirect(selenium):
