@@ -35,7 +35,7 @@ class TestVueRoute:
 
     def test_path_and_redirect(self):
         route = VueRoute("/path", redirect="/path2")
-        assert route == {"path": "/path", "redirect": "path2"}
+        assert route == {"path": "/path", "redirect": "/path2"}
 
 
 class TestVueRouter:
