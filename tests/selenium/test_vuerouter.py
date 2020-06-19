@@ -75,23 +75,17 @@ def test_named_routes(selenium):
 
         class FooBottom(VueComponent):
             template = '<div id="body">foo bottom</div>'
-        
+
         class BarTop(VueComponent):
             template = '<div id="header">bar top</div>'
 
         class BarBottom(VueComponent):
             template = '<div id="body">bar bottom</div>'
-        
+
         class Router(VueRouter):
             routes = [
-                VueRoute("/foo", components={
-                    "default": FooBottom,
-                    "top": FooTop
-                }),
-                VueRoute("/bar", components={
-                    "default": BarBottom,
-                    "top": BarTop
-                }),
+                VueRoute("/foo", components={"default": FooBottom, "top": FooTop}),
+                VueRoute("/bar", components={"default": BarBottom, "top": BarTop}),
             ]
 
         class ComponentUsingRouter(VueComponent):
@@ -106,6 +100,7 @@ def test_named_routes(selenium):
                     <router-view></router-view>
                 </div>
             """
+
         return ComponentUsingRouter(el, router=Router())
 
     with selenium.app(app, config=VueRouterConfig):
@@ -145,15 +140,19 @@ def test_nested_routes_and_redirect(selenium):
                     <router-view></router-view>
                 </div>
             """
-        
+
         class Router(VueRouter):
             routes = [
                 VueRoute("/", redirect="/user/foo"),
-                VueRoute("/user/:id", ComponentUsingRouter, children=[
-                    VueRoute("", UserHome),
-                    VueRoute("profile", UserProfile),
-                    VueRoute("posts", UserPosts),
-                ]),
+                VueRoute(
+                    "/user/:id",
+                    ComponentUsingRouter,
+                    children=[
+                        VueRoute("", UserHome),
+                        VueRoute("profile", UserProfile),
+                        VueRoute("posts", UserPosts),
+                    ],
+                ),
             ]
 
         return ComponentUsingRouter(el, router=Router())
