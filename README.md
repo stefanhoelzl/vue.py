@@ -63,9 +63,20 @@ $ git clone https://github.com/stefanhoelzl/vue.py.git
 $ cd vue.py
 ```
 
+Optionally you can create a [venv](https://docs.python.org/3.8/library/venv.html)
+```bash
+$ python -m venv venv
+$ source venv/bin/activate
+```
+
 Install required python packages, the chromedriver for selenium and brython
 ```bash
 $ make env.up
+```
+
+Format the code
+```bash
+$ make format
 ```
 
 Run tests
@@ -89,8 +100,10 @@ $ make env.up
 ```
 
 Publish a new release
-```
-$ make release
+```bash
+$ make release            # bumps minor version number
+$ make release MODE=major # bumps major version number
+$ make release MODE=patch # bumps patch number
 ```
 
 ### Contributing
