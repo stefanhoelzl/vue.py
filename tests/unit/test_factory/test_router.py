@@ -22,7 +22,7 @@ class TestVueRoute:
         route = VueRoute(
             "/path",
             VueComponent,
-            children=[VueRoute("path", VueComponent), VueRoute("path2", VueComponent),],
+            children=[VueRoute("/path", VueComponent), VueRoute("/path2", VueComponent),],
         )
         assert route == {
             "path": "/path",
