@@ -12,5 +12,14 @@ class VueRouter(Wrapper):
 
 
 class VueRoute:
-    def __new__(cls, path, component):
-        return {"path": path, "component": component.init_dict()}
+    def __new__(cls, path, component=None, components=None, **kwargs):
+        route = {"path": path, **kwargs}
+
+        if component is not None:
+            route["component"] = component.init_dict()
+        elif components is not None:
+            route["components"] = {
+                name: component.init_dict() for name, component in components.items()
+            }
+
+        return route

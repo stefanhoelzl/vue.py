@@ -6,6 +6,40 @@ class TestVueRoute:
         route = VueRoute("/path", VueComponent)
         assert route == {"path": "/path", "component": VueComponent.init_dict()}
 
+    def test_path_and_components(self):
+        route = VueRoute(
+            "/path", components={"default": VueComponent, "named": VueComponent}
+        )
+        assert route == {
+            "path": "/path",
+            "components": {
+                "default": VueComponent.init_dict(),
+                "named": VueComponent.init_dict(),
+            },
+        }
+
+    def test_path_and_components_and_children(self):
+        route = VueRoute(
+            "/path",
+            VueComponent,
+            children=[
+                VueRoute("/path", VueComponent),
+                VueRoute("/path2", VueComponent),
+            ],
+        )
+        assert route == {
+            "path": "/path",
+            "component": VueComponent.init_dict(),
+            "children": [
+                {"path": "/path", "component": VueComponent.init_dict()},
+                {"path": "/path2", "component": VueComponent.init_dict()},
+            ],
+        }
+
+    def test_path_and_redirect(self):
+        route = VueRoute("/path", redirect="/path2")
+        assert route == {"path": "/path", "redirect": "/path2"}
+
 
 class TestVueRouter:
     def test_routes(self):
