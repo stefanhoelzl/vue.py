@@ -98,10 +98,9 @@ class SeleniumSession:
     def __enter__(self):
         options = webdriver.ChromeOptions()
         options.add_argument("headless")
-        if os.environ.get("CI"):
-            options.add_argument("disable-gpu")
-            options.add_argument("disable-dev-shm-usage")
-            options.add_argument("no-sandbox")
+        options.add_argument("disable-gpu")
+        options.add_argument("disable-dev-shm-usage")
+        options.add_argument("no-sandbox")
 
         desired = DesiredCapabilities.CHROME
         desired["goog:loggingPrefs"] = {"browser": "ALL"}
