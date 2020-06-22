@@ -43,6 +43,10 @@ env.down:
 serve:
 	python -m http.server 8000
 
+.PHONY: run
+run:
+	cd ${APP} && vue-cli deploy flask
+
 .PHONY: tests.selenium
 tests.selenium:
 	PYTHONPATH=$(PYTHONPATH) pytest tests/selenium

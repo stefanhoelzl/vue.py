@@ -8,3 +8,5 @@ ports:
     onOpen: open-browser
   - port: 8001
     onOpen: ignore
+  - port: 5000
+    onOpen: ignore

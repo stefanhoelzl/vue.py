@@ -90,6 +90,11 @@ $ make tests.cli       # runs cli tests
 $ make tests TEST=cli/test_provider.py::TestRenderIndex::test_defaults # run explicit test
 ```
 
+Run an example
+```bash
+$ make run APP=examples/tree_view  # makes example available on port 5000
+```
+
 Clean up your working directory.
 ```bash
 $ make env.clean
