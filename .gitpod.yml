@@ -1,0 +1,10 @@
+image:
+  file: .gitpod.Dockerfile
+tasks:
+- init: make env.up
+  command: make serve
+ports:
+  - port: 8000
+    onOpen: open-browser
+  - port: 8001
+    onOpen: ignore

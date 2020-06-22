@@ -57,6 +57,8 @@ as soon as the app was fully loaded.
 
 ## Development
 ### Getting Started
+Open in [gitpod.io](https://gitpod.io#github.com/stefanhoelzl/vue.py)
+
 Get the code
 ```bash
 $ git clone https://github.com/stefanhoelzl/vue.py.git
@@ -85,6 +87,7 @@ $ make tests           # runs all tets
 $ make tests.unit      # runs unit tests
 $ make tests.selenium  # runs selenium tests
 $ make tests.cli       # runs cli tests
+$ make tests TEST=cli/test_provider.py::TestRenderIndex::test_defaults # run explicit test
 ```
 
 Clean up your working directory.
@@ -112,15 +115,15 @@ see [CONTRIBUTING](CONTRIBUTING)
 
 ### Workflow
 Development happens on the [master branch](https://github.com/stefanhoelzl/vue.py).
-This also means the latest documentation can be found 
+This also means the latest documentation can be found
 [here](https://github.com/stefanhoelzl/vue.py/blob/master/docs/docs/index.md).
 
-The [release branch](https://github.com/stefanhoelzl/vue.py/tree/release) 
+The [release branch](https://github.com/stefanhoelzl/vue.py/tree/release)
 should always be even with the latest release.
 Changes to this branch also trigger a update of gh-pages.
 Therefor fixes to the documentation can be made on the release branch.
 So that the [documentation](https://stefanhoelzl.github.io/vue.py/docs/)
-is always valid for the latest release. 
+is always valid for the latest release.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/stefanhoelzl/vue.py/blob/master/LICENSE) file for details

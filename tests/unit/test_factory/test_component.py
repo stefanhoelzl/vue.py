@@ -1,5 +1,4 @@
 from unittest import mock
-import asyncio
 
 from vue import *
 
@@ -25,8 +24,7 @@ def test_method():
 
 def test_method_as_coroutine():
     class Component(VueComponent):
-        @asyncio.coroutine
-        def co(self):
+        async def co(self):
             return self
 
     assert "co" in Component.init_dict()["methods"]

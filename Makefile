@@ -61,11 +61,11 @@ tests:
 
 .PHONY: format
 format:
-	black --target-version py36 .
+	black --target-version py38 .
 
 .PHONY: lint
 lint:
-	black --target-version py36 --check .
+	black --target-version py38 --check .
 
 .PHONY: build
 build:
