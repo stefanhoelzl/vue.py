@@ -3,12 +3,15 @@ from .factory import Wrapper, VueRouterFactory
 
 
 class VueRouter(Wrapper):
+    RouterClass = None
+
     @classmethod
     def init_dict(cls):
         return VueRouterFactory.get_item(cls)
 
     def __new__(cls):
-        return window.VueRouter.new(cls.init_dict())
+        router_class = cls.RouterClass or window.VueRouter
+        return router_class.new(cls.init_dict())
 
 
 class VueRoute:

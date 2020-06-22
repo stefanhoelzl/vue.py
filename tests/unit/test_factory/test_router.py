@@ -1,3 +1,4 @@
+from unittest.mock import Mock
 from vue import *
 
 
@@ -48,3 +49,14 @@ class TestVueRouter:
 
         routes = Router.init_dict()["routes"]
         assert routes == [{"path": "/path", "component": VueComponent.init_dict()}]
+
+    def test_custom_router(self):
+        router_class_mock = Mock()
+        router_class_mock.new.return_value = "CustomRouter"
+
+        class Router(VueRouter):
+            RouterClass = router_class_mock
+
+        router = Router()
+        assert router == "CustomRouter"
+        router_class_mock.new.assert_called_with(Router.init_dict())
