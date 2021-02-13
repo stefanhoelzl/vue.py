@@ -19,8 +19,8 @@ def _raise_failed_process(proc, error_msg):
     raise RuntimeError(error_msg)
 
 
-def shell(*args, env=None):
-    proc = subprocess.run(args, env=env, capture_output=True)
+def shell(*args, env=None, cwd=None):
+    proc = subprocess.run(args, env=env, cwd=cwd, capture_output=True)
     if proc.returncode:
         _raise_failed_process(proc, str(args))
 
@@ -53,9 +53,9 @@ def install(wheel, venv):
 
 
 @contextmanager
-def background_task(*args, env=None):
+def background_task(*args, env=None, cwd=None):
     proc = subprocess.Popen(
-        args, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        args, env=env, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE
     )
     try:
         yield
@@ -76,9 +76,32 @@ def request(url, retries=0, retry_delay=0):
         time.sleep(retry_delay)
 
 
-def test_flask(install, venv):
+@pytest.fixture
+def app(tmp_path):
+    app_path = tmp_path / "app"
+    app_path.mkdir()
+    return app_path
+
+
+def test_static(install, venv, tmp_path, app):
+    destination = tmp_path / "destination"
+    install()
+    shell(
+        "vue-cli",
+        "deploy",
+        "static",
+        str(destination),
+        env={"PATH": f"{venv / 'bin'}"},
+        cwd=str(app),
+    )
+    assert (destination / "index.html").is_file()
+
+
+def test_flask(install, venv, app):
     install(extra="flask")
-    with background_task("vue-cli", "deploy", "flask", env={"PATH": f"{venv / 'bin'}"}):
+    with background_task(
+        "vue-cli", "deploy", "flask", env={"PATH": f"{venv / 'bin'}"}, cwd=str(app)
+    ):
         assert (
             request("http://localhost:5000", retries=5, retry_delay=0.5).status == 200
         )

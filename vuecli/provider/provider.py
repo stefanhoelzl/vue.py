@@ -54,12 +54,6 @@ class Provider:
         self._normalize_config(config)
         return config
 
-    def content(self, endpoint, route, content):
-        raise NotImplementedError()
-
-    def directory(self, endpoint, route, path, deep=False):
-        raise NotImplementedError()
-
     def render_index(self, config):
         brython_args = config.get("brython_args", {})
         if brython_args:
@@ -90,6 +84,12 @@ class Provider:
         self.content("index", "/", lambda: self.render_index(config))
         for route in StaticContents:
             self.content(route, route, partial(StaticContents.get, route))
+
+    def content(self, endpoint, route, content):
+        raise NotImplementedError()
+
+    def directory(self, endpoint, route, path, deep=False):
+        raise NotImplementedError()
 
     def deploy(self, **kwargs):
         raise NotImplementedError()
