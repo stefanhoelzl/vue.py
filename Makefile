@@ -110,22 +110,27 @@ release.check:
 	git diff HEAD --exit-code --no-patch
 	python release/check_ci.py ${CURRENT_COMMIT}
 
-.PHONY: release.commit
-release.commit:
+.PHONY: release.commit.prepare
+release.commit.prepare:
 	echo "[release] v${NEXT_VERSION}\n\n${CHANGELOG}" > ${COMMIT_MSG_FILE}
 	cat ${COMMIT_MSG_FILE}
 	read -p "Press enter for release commit!" var
-	echo "__version__ = '${NEXT_VERSION}'\n" > ${VERSION_FILE}
+	echo "__version__ = '${NEXT_VERSION}'" > ${VERSION_FILE}
+
+.PHONY: release.commit
+release.commit: release.commit.prepare format
 	git add ${VERSION_FILE}
 	git commit --file=${COMMIT_MSG_FILE}
-	git tag v${NEXT_VERSION}
+	git tag v`python -c "import vue; print(vue.__version__)"`
 
 .PHONY: release.push
 release.push:
+	git push
 	git push --tags
+	git fetch
 	git checkout release
 	git merge master
-	git push
+	git push --set-upstream origin release
 	git checkout master
 
 .PHONY: release
