@@ -34,7 +34,7 @@ setup(
     license="MIT",
     packages=["vuecli", "vuecli.provider", "vue", "vue.bridge", "vue.decorators"],
     install_requires=["brython==3.8.9", "Jinja2~=2.10", "pyyaml~=5.1"],
-    extra_requires={"flask": "Flask~=1.0"},
+    extras_require={"flask": ["Flask~=1.0"]},
     package_data={"vuecli": ["js/*.js", "js/LICENSE_*", "index.html", "loading.gif"]},
     entry_points={
         "console_scripts": ["vue-cli=vuecli.cli:main"],
