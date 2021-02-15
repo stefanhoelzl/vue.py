@@ -30,12 +30,19 @@ jobs:
       - name: Run CI jobs
         run: |
           make ci
+      # Set deployment environments
+      - name: Set default env variables
+        run: |
+          echo "PYPI_INDEX_URL=https://test.pypi.org/legacy/" >> $GITHUB_ENV
+          echo "PYPI_API_TOKEN=${{ secrets.PYPI_TEST_API_TOKEN }}" >> $GITHUB_ENV
+          echo "GH_PAGES_BRANCH=gh-pages-test" >> $GITHUB_ENV
+      - name: Update env variables for release
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          echo "PYPI_INDEX_URL=https://upload.pypi.org/legacy/" >> $GITHUB_ENV
+          echo "PYPI_API_TOKEN=${{ secrets.PYPI_API_TOKEN }}" >> $GITHUB_ENV
+          echo "GH_PAGES_BRANCH=gh-pages" >> $GITHUB_ENV
       # Publish documentation
-      - name: Set default gh-pages branch
-        run: echo "GH_PAGES_BRANCH=gh-pages-test" >> $GITHUB_ENV
-      - name: Update gh-pages branch on release branch
-        if: github.ref == 'refs/heads/release'
-        run: echo "GH_PAGES_BRANCH=gh-pages" >> $GITHUB_ENV
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2
         with:
@@ -44,15 +51,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # Deploy to pypi
-      - name: Set default pypi url
-        run: |
-          echo "PYPI_INDEX_URL=https://test.pypi.org/legacy/" >> $GITHUB_ENV
-          echo "PYPI_API_TOKEN=${{ secrets.PYPI_TEST_API_TOKEN }}" >> $GITHUB_ENV
-      - name: Update pypi url on release tag
-        if: startsWith(github.ref, 'refs/tags/v')
-        run: |
-          echo "PYPI_INDEX_URL=https://upload.pypi.org/legacy/" >> $GITHUB_ENV
-          echo "PYPI_API_TOKEN=${{ secrets.PYPI_API_TOKEN }}" >> $GITHUB_ENV
       - name: Publish PyPI
         uses: pypa/gh-action-pypi-publish@master
         with:

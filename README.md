@@ -42,7 +42,9 @@ Have a look [here](https://stefanhoelzl.github.io/vue.py/planning.html) to see w
 See also the [Limitations](https://stefanhoelzl.github.io/vue.py/docs/pyjs_bridge.html)
 
 ## Documentation
-Documentation is available [here](https://stefanhoelzl.github.io/vue.py/docs/).
+Documentation for the last release is available [here](https://stefanhoelzl.github.io/vue.py/docs/).
+
+Documentation fo the current master branch can be found [here](https://github.com/stefanhoelzl/vue.py/blob/master/docs/docs/index.md).
 
 Examples can be found [here](https://stefanhoelzl.github.io/vue.py/examples).
 These are vue.py versions of the [Vue.js examples](https://vuejs.org/v2/examples/)
@@ -116,19 +118,6 @@ $ make release MODE=patch # bumps patch number
 
 ### Contributing
 see [CONTRIBUTING](CONTRIBUTING)
-
-
-### Workflow
-Development happens on the [master branch](https://github.com/stefanhoelzl/vue.py).
-This also means the latest documentation can be found
-[here](https://github.com/stefanhoelzl/vue.py/blob/master/docs/docs/index.md).
-
-The [release branch](https://github.com/stefanhoelzl/vue.py/tree/release)
-should always be even with the latest release.
-Changes to this branch also trigger a update of gh-pages.
-Therefor fixes to the documentation can be made on the release branch.
-So that the [documentation](https://stefanhoelzl.github.io/vue.py/docs/)
-is always valid for the latest release.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/stefanhoelzl/vue.py/blob/master/LICENSE) file for details

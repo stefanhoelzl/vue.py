@@ -127,11 +127,6 @@ release.commit: release.commit.prepare format
 release.push:
 	git push
 	git push --tags
-	git fetch
-	git checkout release
-	git merge master
-	git push --set-upstream origin release
-	git checkout master
 
 .PHONY: release
 release: release.prepare release.check release.commit release.push
