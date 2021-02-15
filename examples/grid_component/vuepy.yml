@@ -1,0 +1,5 @@
+templates:
+  form: form.html
+  grid: grid.html
+stylesheets:
+  - style.css

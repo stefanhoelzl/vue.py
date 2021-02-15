@@ -1,0 +1,5 @@
+templates:
+  modal-template: modal-template.html
+  main: main.html
+stylesheets:
+  - style.css

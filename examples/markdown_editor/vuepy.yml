@@ -1,0 +1,6 @@
+templates:
+  editor-template: editor.html
+stylesheets:
+  - style.css
+scripts:
+  - https://unpkg.com/marked@0.3.6

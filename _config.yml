@@ -1,0 +1,15 @@
+theme: jekyll-theme-cayman
+title: vue.py
+description: Pythonic Vue.js
+include:
+  - __init__.py
+  - __entry_point__.py
+navigation:
+  - title: Start
+    link: /
+  - title: Documentation
+    link: docs
+  - title: Gallery
+    link: examples
+  - title: Demo
+    link: https://stefanhoelzl.github.io/mqtt-dashboard/

@@ -1,0 +1,52 @@
+<div>
+  <section class="todoapp">
+    <header class="header">
+      <h1>todos</h1>
+      <input class="new-todo"
+        autofocus autocomplete="off"
+        placeholder="What needs to be done?"
+        v-model="new_todo"
+        id="title-input"
+        @keyup.enter="add_todo">
+    </header>
+    <section class="main" v-show="todos.length" v-cloak>
+      <input class="toggle-all" type="checkbox" v-model="all_done">
+      <ul class="todo-list">
+        <li v-for="todo in filtered_todos"
+          class="todo"
+          :key="todo.id"
+          :class="{ completed: todo.completed, editing: todo == edited_todo }">
+          <div class="view">
+            <input class="toggle" type="checkbox" v-model="todo.completed">
+            <label @dblclick="edit_todo(todo)">{{ todo.title }}</label>
+            <button class="destroy" @click="remove_todo(todo)"></button>
+          </div>
+          <input class="edit" type="text"
+            v-model="todo.title"
+            v-todo-focus="todo == edited_todo"
+            @blur="done_edit(todo)"
+            @keyup.enter="done_edit(todo)"
+            @keyup.esc="cancel_edit(todo)">
+        </li>
+      </ul>
+    </section>
+    <footer class="footer" v-show="todos.length" v-cloak>
+      <span class="todo-count">
+        <strong>{{ remaining }}</strong> {{ remaining | pluralize }} left
+      </span>
+      <ul class="filters">
+        <li><a href="#all" :class="{ selected: visibility == 'all' }" id="show-all">All</a></li>
+        <li><a href="#active" :class="{ selected: visibility == 'active' }" id="show-active">Active</a></li>
+        <li><a href="#completed" :class="{ selected: visibility == 'completed' }" id="show-acompleted">Completed</a></li>
+      </ul>
+      <button class="clear-completed" @click="remove_completed" v-show="todos.length > remaining">
+        Clear completed
+      </button>
+    </footer>
+  </section>
+  <footer class="info">
+    <p>Double-click to edit a todo</p>
+    <p>Written by <a href="https://github.com/stefanhoelzl">Stefan Hoelzl</a></p>
+    <p>Original JS verison by <a href="http://evanyou.me">Evan You</a></p>
+  </footer>
+</div>

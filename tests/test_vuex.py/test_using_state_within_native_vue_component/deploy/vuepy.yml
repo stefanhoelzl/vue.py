@@ -1,0 +1,3 @@
+scripts:
+  my: my.js
+  vuex: true

@@ -1,0 +1,5 @@
+templates:
+  app-template: app-template.html
+stylesheets:
+  - style.css
+  - https://unpkg.com/todomvc-app-css@2.0.6/index.css

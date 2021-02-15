@@ -1,0 +1,21 @@
+<table>
+  <thead>
+    <tr>
+      <th v-for="key in columns"
+        @click="sort_by(key)"
+        :id="key"
+        :class="{ active: sort_key == key }">
+        {{ key | capitalize }}
+        <span class="arrow" :class="sort_orders[key] ? 'asc' : 'dsc'">
+        </span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="entry in filtered_data">
+      <td v-for="key in columns">
+        {{ entry[key] }}
+      </td>
+    </tr>
+  </tbody>
+</table>

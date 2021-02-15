@@ -1,0 +1,7 @@
+templates:
+  header-view: header-view.html
+  main: main.html
+stylesheets:
+  - style.css
+scripts:
+  - https://unpkg.com/dynamics.js@1.1.5/lib/dynamics.js
