@@ -1,0 +1,24 @@
+name: run tests
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v1.2.0
+        with:
+          submodules: true
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - uses: browser-actions/setup-chrome@latest
+      - name: Setup environment
+        shell: bash
+        run: |
+          make env.up
+      - name: Run Unittests
+        shell: bash
+        run: |
+          make ci
