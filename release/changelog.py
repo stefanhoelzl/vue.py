@@ -16,6 +16,8 @@ last_release_hash = git("log", "--pretty='%H'", "--grep=\\[release\\]", "-1").st
 commits_since_last_release = git(
     "log", "--pretty='%s'", f"{last_release_hash}..HEAD"
 ).split("\n")
+if commits_since_last_release == [""]:
+    raise RuntimeError(f"no commits since last release")
 
 messages_by_category = defaultdict(list)
 for commit in commits_since_last_release:
@@ -23,7 +25,7 @@ for commit in commits_since_last_release:
     if match:
         messages_by_category[match.group("category")].append(match.group("message"))
     else:
-        raise RuntimeError("Invalid commit: {commit}")
+        raise RuntimeError(f"Invalid commit: {commit}")
 
 for pretty, category in ChangelogCategories.items():
     if category in messages_by_category:
