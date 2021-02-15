@@ -51,7 +51,7 @@ jobs:
       - name: Update pypi url on release tag
         if: startsWith(github.ref, 'refs/tags/v')
         run: |
-          echo "PYPI_INDEX_URL=https://upload.pypi.org/legacy/ >> $GITHUB_ENV
+          echo "PYPI_INDEX_URL=https://upload.pypi.org/legacy/" >> $GITHUB_ENV
           echo "PYPI_API_TOKEN=${{ secrets.PYPI_API_TOKEN }}" >> $GITHUB_ENV
       - name: Publish PyPI
         uses: pypa/gh-action-pypi-publish@master
