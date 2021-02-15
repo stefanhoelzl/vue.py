@@ -1,10 +1,15 @@
 name: CI
 on: [push]
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
-  tests:
+  all:
     runs-on: ubuntu-20.04
     steps:
+      # Setup
       - name: Checkout Repository
         uses: actions/checkout@v1.2.0
       - name: Setup Python
@@ -13,10 +18,22 @@ jobs:
           python-version: 3.8
       - uses: browser-actions/setup-chrome@latest
       - name: Setup environment
-        shell: bash
         run: |
           make env.up
-      - name: Run Unittests
-        shell: bash
+      # Build and Test
+      - name: Run CI jobs
         run: |
           make ci
+      # Publish documentation
+      - name: Set default gh-pages branch
+        run: echo "GH_PAGES_BRANCH=gh-pages-test" >> $GITHUB_ENV
+      - name: Update gh-pages branch for release branch
+        if: github.ref == 'refs/heads/release'
+        run: echo "GH_PAGES_BRANCH=gh-pages" >> $GITHUB_ENV
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v2
+        with:
+          target_branch: ${{ env.GH_PAGES_BRANCH }}
+          build_dir: gh-pages-build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
