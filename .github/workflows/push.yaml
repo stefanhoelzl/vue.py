@@ -1,4 +1,4 @@
-name: run tests
+name: CI
 on: [push]
 
 jobs:
@@ -7,8 +7,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v1.2.0
-        with:
-          submodules: true
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
