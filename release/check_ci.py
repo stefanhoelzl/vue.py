@@ -8,7 +8,7 @@ url = f"https://api.github.com/repos/stefanhoelzl/vue.py/commits/{ref}/check-run
 with urllib.request.urlopen(url) as response:
     checks = json.loads(response.read())
 
-assert checks["total_count"] == 1
-assert checks["check_runs"][0]["status"] == "completed"
-assert checks["check_runs"][0]["conclusion"] == "success"
-assert checks["check_runs"][0]["name"] == "Travis CI - Branch"
+assert checks["total_count"]
+for check in checks["check_runs"]:
+    assert check["status"] == "completed", f"{check['name']} still running"
+    assert check["conclusion"] == "success", f"{check['name']} failed"
