@@ -27,6 +27,7 @@ class Provider:
 
     def __init__(self, path=None):
         self.path = Path(path if path else ".")
+        self.config = self.load_config()
 
     @staticmethod
     def _normalize_config(config):
@@ -54,8 +55,8 @@ class Provider:
         self._normalize_config(config)
         return config
 
-    def render_index(self, config):
-        brython_args = config.get("brython_args", {})
+    def render_index(self):
+        brython_args = self.config.get("brython_args", {})
         if brython_args:
             joined = ", ".join(f"{k}: {v}" for k, v in brython_args.items())
             brython_args = f"{{ {joined} }}"
@@ -63,25 +64,24 @@ class Provider:
             brython_args = ""
 
         return Template(IndexTemplate.decode("utf-8")).render(
-            stylesheets=config.get("stylesheets", []),
-            scripts=config.get("scripts", {}),
+            stylesheets=self.config.get("stylesheets", []),
+            scripts=self.config.get("scripts", {}),
             templates={
                 id_: Path(self.path, template).read_text("utf-8")
-                for id_, template in config.get("templates", {}).items()
+                for id_, template in self.config.get("templates", {}).items()
             },
             brython_args=brython_args,
         )
 
     def setup(self):
-        config = config = self.load_config()
         self.directory("application", "/", Path(self.path), deep=True)
         self.directory("vuepy", "/vue", VuePath, deep=True)
 
-        entry_point = config.get("entry_point", "app")
+        entry_point = self.config.get("entry_point", "app")
         self.content(
             "entry_point", "/__entry_point__.py", lambda: f"import {entry_point}\n"
         )
-        self.content("index", "/", lambda: self.render_index(config))
+        self.content("index", "/", lambda: self.render_index())
         for route in StaticContents:
             self.content(route, route, partial(StaticContents.get, route))
 

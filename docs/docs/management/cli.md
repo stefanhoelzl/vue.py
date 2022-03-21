@@ -23,6 +23,14 @@ $ vue-cli deploy flask
 ```
 This is the best deployment method when debugging.
 
+#### Configuration
+`vuepy.yml` can be used to set [Flask Builtin Configuration Values](https://flask.palletsprojects.com/en/2.0.x/config/#builtin-configuration-values)
+```yaml
+provider:
+  flask:
+    SERVER_NAME: "localhost:5001"
+```
+
 ### Static
 With a static deployment everything your application needs,
 gets packaged into a single folder,

@@ -11,8 +11,7 @@ def render_index(tmp_path):
     def render(config=None):
         tmp_path.joinpath("vuepy.yml").write_text(yaml.dump(config or {}))
         provider = Provider(tmp_path)
-        config = provider.load_config()
-        return provider.render_index(config)
+        return provider.render_index()
 
     return render
 

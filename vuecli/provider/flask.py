@@ -27,4 +27,7 @@ class Flask(Provider):
         self.app.add_url_rule(flask_route, endpoint, view_func)
 
     def deploy(self):
+        flask_config = self.config.get("provider", {}).get("flask", {})
+        for key, value in flask_config.items():
+            self.app.config[key] = value
         self.app.run()

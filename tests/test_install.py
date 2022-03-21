@@ -1,3 +1,4 @@
+import json
 import subprocess
 import urllib.request
 import time
@@ -84,6 +85,14 @@ def app(tmp_path):
     return app_path
 
 
+@pytest.fixture
+def config(app):
+    def _config(values):
+        app.joinpath("vuepy.yml").write_text(json.dumps(values, indent=2))
+
+    return _config
+
+
 def test_static(install, venv, tmp_path, app):
     destination = tmp_path / "destination"
     install()
@@ -105,4 +114,15 @@ def test_flask(install, venv, app):
     ):
         assert (
             request("http://localhost:5000", retries=5, retry_delay=0.5).status == 200
+        )
+
+
+def test_flask_settings(install, config, venv, app):
+    install(extra="flask")
+    config({"provider": {"flask": {"SERVER_NAME": "localhost:5001"}}})
+    with background_task(
+        "vue-cli", "deploy", "flask", env={"PATH": f"{venv / 'bin'}"}, cwd=str(app)
+    ):
+        assert (
+            request("http://localhost:5001", retries=5, retry_delay=0.5).status == 200
         )
