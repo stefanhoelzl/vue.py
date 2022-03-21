@@ -1,5 +1,7 @@
 from vue import *
 
+from selenium.webdriver.common.by import By
+
 
 def test_declarative_rendering(selenium):
     class DeclarativeRendering(VueComponent):
@@ -58,7 +60,7 @@ def test_on_click_method(selenium):
 
     with selenium.app(OnClickMethod):
         assert selenium.element_has_text("btn", "message")
-        selenium.find_element_by_id("btn").click()
+        selenium.find_element(by=By.ID, value="btn").click()
         assert selenium.element_has_text("btn", "egassem")
 
 
@@ -74,7 +76,7 @@ def test_v_model(selenium):
 
     with selenium.app(VModel):
         assert selenium.element_has_text("p", "false")
-        selenium.find_element_by_id("c").click()
+        selenium.find_element(by=By.ID, value="c").click()
         assert selenium.element_has_text("p", "true")
 
 

@@ -1,10 +1,15 @@
 import re
 from subprocess import run
 
-import chromedriver_install as cdi
+import pyderman
 
 # https://chromedriver.chromium.org/downloads
-Versions = {"88": "88.0.4324.96", "83": "83.0.4103.39"}
+Versions = {
+    "88": "88.0.4324.96",
+    "83": "83.0.4103.39",
+    "96": "96.0.4664.45",
+    "98": "98.0.4758.102",
+}
 
 chrome_version = (
     run(["google-chrome", "--version"], capture_output=True)
@@ -14,4 +19,10 @@ chrome_version = (
 print(chrome_version)
 major = re.search("Google Chrome (\d+)", chrome_version).group(1)
 
-cdi.install(file_directory="tests/selenium", overwrite=True, version=Versions[major])
+pyderman.install(
+    browser=pyderman.chrome,
+    file_directory="tests/selenium",
+    filename="chromedriver",
+    overwrite=True,
+    version=Versions[major],
+)

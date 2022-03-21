@@ -63,6 +63,7 @@ def background_task(*args, env=None, cwd=None):
         if proc.poll() is not None:
             _raise_failed_process(proc, "background task finished early")
         proc.kill()
+        proc.communicate()
 
 
 def request(url, retries=0, retry_delay=0):

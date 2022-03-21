@@ -1,5 +1,7 @@
 from vue import *
 
+from selenium.webdriver.common.by import By
+
 
 def test_basics(selenium):
     def app(el):
@@ -30,7 +32,7 @@ def test_slots(selenium):
 
     with selenium.app(app):
         div = selenium.element_with_tag_name_present("p")
-        assert len(div.find_elements_by_tag_name("p")) == 2
+        assert len(div.find_elements(by=By.TAG_NAME, value="p")) == 2
 
 
 def test_empty_slots(selenium):

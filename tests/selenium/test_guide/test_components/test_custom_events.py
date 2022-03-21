@@ -1,5 +1,7 @@
 from vue import *
 
+from selenium.webdriver.common.by import By
+
 
 def test_customize_v_model(selenium):
     def app(el):
@@ -34,6 +36,6 @@ def test_customize_v_model(selenium):
     with selenium.app(app):
         assert selenium.element_has_text("instance", "false")
         assert selenium.element_has_text("component", "false")
-        selenium.find_element_by_id("c").click()
+        selenium.find_element(by=By.ID, value="c").click()
         assert selenium.element_has_text("component", "true")
         assert selenium.element_has_text("instance", "true")

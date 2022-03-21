@@ -1,3 +1,5 @@
+from selenium.webdriver.common.by import By
+
 VueRouterConfig = {"scripts": {"vue-router": True}}
 
 
@@ -30,11 +32,11 @@ def test_routes(selenium):
 
     with selenium.app(app, config=VueRouterConfig):
         assert selenium.element_present("foo")
-        selenium.find_element_by_id("foo").click()
+        selenium.find_element(by=By.ID, value="foo").click()
         assert selenium.element_has_text("content", "foo")
 
         assert selenium.element_present("bar")
-        selenium.find_element_by_id("bar").click()
+        selenium.find_element(by=By.ID, value="bar").click()
         assert selenium.element_has_text("content", "bar")
 
 
@@ -62,7 +64,7 @@ def test_dynamic_route_matching(selenium):
 
     with selenium.app(app, config=VueRouterConfig):
         assert selenium.element_present("link")
-        selenium.find_element_by_id("link").click()
+        selenium.find_element(by=By.ID, value="link").click()
         assert selenium.element_has_text("user", "123")
 
 
@@ -105,12 +107,12 @@ def test_named_routes(selenium):
 
     with selenium.app(app, config=VueRouterConfig):
         assert selenium.element_present("foo")
-        selenium.find_element_by_id("foo").click()
+        selenium.find_element(by=By.ID, value="foo").click()
         assert selenium.element_has_text("header", "foo top")
         assert selenium.element_has_text("body", "foo bottom")
 
         assert selenium.element_present("bar")
-        selenium.find_element_by_id("bar").click()
+        selenium.find_element(by=By.ID, value="bar").click()
         assert selenium.element_has_text("header", "bar top")
         assert selenium.element_has_text("body", "bar bottom")
 
@@ -159,13 +161,13 @@ def test_nested_routes_and_redirect(selenium):
 
     with selenium.app(app, config=VueRouterConfig):
         assert selenium.element_present("link-home")
-        selenium.find_element_by_id("link-home").click()
+        selenium.find_element(by=By.ID, value="link-home").click()
         assert selenium.element_has_text("home", "Home")
 
         assert selenium.element_present("link-profile")
-        selenium.find_element_by_id("link-profile").click()
+        selenium.find_element(by=By.ID, value="link-profile").click()
         assert selenium.element_has_text("profile", "Profile")
 
         assert selenium.element_present("link-posts")
-        selenium.find_element_by_id("link-posts").click()
+        selenium.find_element(by=By.ID, value="link-posts").click()
         assert selenium.element_has_text("posts", "Posts")

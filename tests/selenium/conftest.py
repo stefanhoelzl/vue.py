@@ -51,6 +51,7 @@ def http_server():
         c = HTTPConnection(Address, Port, timeout=timeout)
         c.request("GET", "/", "")
         assert c.getresponse().status == 200
+        c.close()
 
         try:
             yield httpd
@@ -101,12 +102,13 @@ class SeleniumSession:
         options.add_argument("disable-gpu")
         options.add_argument("disable-dev-shm-usage")
         options.add_argument("no-sandbox")
-
-        desired = DesiredCapabilities.CHROME
-        desired["goog:loggingPrefs"] = {"browser": "ALL"}
+        options.set_capability("goog:loggingPrefs", {"browser": "ALL"})
 
         self.driver = webdriver.Chrome(
-            CHROME_DRIVER_PATH, options=options, desired_capabilities=desired
+            service=webdriver.chrome.service.Service(
+                executable_path=CHROME_DRIVER_PATH,
+            ),
+            options=options,
         )
         return self
 
@@ -243,7 +245,7 @@ class SeleniumSession:
     def element_not_present(self, id_, timeout=DEFAULT_TIMEOUT):
         def check(driver_):
             try:
-                driver_.find_element_by_id(id_)
+                driver_.find_element(by=By.ID, value=id_)
             except NoSuchElementException:
                 return True
             return False
@@ -254,7 +256,7 @@ class SeleniumSession:
         self, id_, attribute, value, timeout=DEFAULT_TIMEOUT
     ):
         def check(driver_):
-            element = driver_.find_element_by_id(id_)
+            element = driver_.find_element(by=By.ID, value=id_)
             if element.get_attribute(attribute) == value:
                 return element
             else:

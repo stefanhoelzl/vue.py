@@ -1,5 +1,7 @@
 from vue import *
 
+from selenium.webdriver.common.by import By
+
 
 def test_data_must_be_function(selenium):
     def app(el):
@@ -24,7 +26,7 @@ def test_data_must_be_function(selenium):
     with selenium.app(app):
         assert selenium.element_has_text("btn0", "0")
         assert selenium.element_has_text("btn1", "0")
-        selenium.find_element_by_id("btn1").click()
+        selenium.find_element(by=By.ID, value="btn1").click()
         assert selenium.element_has_text("btn0", "0")
         assert selenium.element_has_text("btn1", "1")
 
@@ -96,5 +98,5 @@ def test_emit_event(selenium):
 
     with selenium.app(app):
         assert selenium.element_present("component")
-        selenium.find_element_by_id("component").click()
+        selenium.find_element(by=By.ID, value="component").click()
         assert selenium.element_has_text("content", "value")

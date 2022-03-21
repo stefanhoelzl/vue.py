@@ -1,6 +1,7 @@
 import time
 
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 
@@ -32,7 +33,7 @@ def test_grid_component(selenium):
         query.send_keys("j")
         power = selenium.element_present("power")
         power.click()
-        rows = selenium.driver.find_elements_by_tag_name("td")
+        rows = selenium.driver.find_elements(by=By.TAG_NAME, value="td")
         assert "Jet Li" == rows[0].text
         assert "8000" == rows[1].text
         assert "Jackie Chan" == rows[2].text
@@ -42,20 +43,20 @@ def test_grid_component(selenium):
 def test_tree_view(selenium):
     with selenium.example():
         time.sleep(0.5)
-        lis = selenium.find_elements_by_tag_name("li")
+        lis = selenium.find_elements(by=By.TAG_NAME, value="li")
         lis[0].click()
         lis[3].click()
         ActionChains(selenium.driver).double_click(lis[8]).perform()
-        assert selenium.find_elements_by_tag_name("li")[9].text == "new stuff"
+        assert selenium.find_elements(by=By.TAG_NAME, value="li")[9].text == "new stuff"
 
 
 def test_svg_graph(selenium):
     with selenium.example():
         time.sleep(0.5)
-        selenium.find_elements_by_tag_name("button")[5].click()
+        selenium.find_elements(by=By.TAG_NAME, value="button")[5].click()
 
-        a = selenium.find_elements_by_tag_name("input")[0]
-        d = selenium.find_elements_by_tag_name("input")[3]
+        a = selenium.find_elements(by=By.TAG_NAME, value="input")[0]
+        d = selenium.find_elements(by=By.TAG_NAME, value="input")[3]
         ActionChains(selenium.driver).click_and_hold(a).move_by_offset(
             20, 0
         ).release().perform()
@@ -64,7 +65,7 @@ def test_svg_graph(selenium):
             5, 0
         ).release().perform()
 
-        polygon = selenium.find_elements_by_tag_name("polygon")[0]
+        polygon = selenium.find_elements(by=By.TAG_NAME, value="polygon")[0]
         assert 5 == len(polygon.get_attribute("points").split(" "))
 
 
@@ -87,17 +88,17 @@ def test_todo_mvc(selenium):
         title_input.send_keys("completed")
         title_input.send_keys(Keys.ENTER)
 
-        toggle_buttons = selenium.driver.find_elements_by_class_name("toggle")
+        toggle_buttons = selenium.driver.find_elements(by=By.CLASS_NAME, value="toggle")
         assert 2 == len(toggle_buttons)
 
         toggle_buttons[1].click()
         selenium.element_present("show-active").click()
-        labels = selenium.driver.find_elements_by_tag_name("label")
+        labels = selenium.driver.find_elements(by=By.TAG_NAME, value="label")
         assert 1 == len(labels)
         assert "new todo" == labels[0].text
 
         selenium.element_present("show-all").click()
-        labels = selenium.driver.find_elements_by_tag_name("label")
+        labels = selenium.driver.find_elements(by=By.TAG_NAME, value="label")
         assert 2 == len(labels)
         assert "new todo" == labels[0].text
         assert "completed" == labels[1].text
@@ -107,14 +108,14 @@ def test_github_commits(selenium):
     with selenium.example(hash_="testing"):
         assert selenium.element_with_tag_name_present("ul")
         time.sleep(2)
-        assert 10 == len(selenium.driver.find_elements_by_tag_name("li"))
+        assert 10 == len(selenium.driver.find_elements(by=By.TAG_NAME, value="li"))
 
 
 def test_elastic_header(selenium):
     with selenium.example():
         assert selenium.element_present("header")
-        header = selenium.find_element_by_id("header")
-        content = selenium.find_element_by_id("content")
+        header = selenium.find_element(by=By.ID, value="header")
+        content = selenium.find_element(by=By.ID, value="content")
 
         assert (
             content.get_attribute("style") == "transform:"
