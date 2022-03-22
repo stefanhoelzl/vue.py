@@ -13,3 +13,5 @@ examples_static
 vuepy.egg-info
 dist
 build
+vue/__version__.py
+changelog.md

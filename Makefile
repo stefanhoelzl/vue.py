@@ -37,7 +37,8 @@ env.clean:
 .PHONY: env.down
 env.down:
 	git clean -xdf --exclude .idea --exclude venv --exclude debug
-	pip freeze | xargs pip uninstall -y
+	pip freeze > /tmp/vuepy-delete-requirements.txt
+	pip uninstall -y -r /tmp/vuepy-delete-requirements.txt
 
 .PHONY: serve
 serve:
@@ -92,41 +93,3 @@ docs:
 
 .PHONY: ci
 ci: lint tests build docs
-
-NEXT_VERSION=`python release/next_version.py`
-CHANGELOG=`python release/changelog.py`
-COMMIT_MSG_FILE=/tmp/vue-release-commit-message
-VERSION_FILE=vue/__version__.py
-CURRENT_COMMIT=`git log --pretty="%H" -1`
-LAST_RELEASE_COMMIT=`git log --pretty="%H" --grep="\[release\]" -1`
-
-.PHONY: release.prepare
-release.prepare:
-	git checkout master
-	git pull
-
-.PHONY: release.check
-release.check:
-	git diff HEAD --exit-code --no-patch
-	python release/check_ci.py ${CURRENT_COMMIT}
-
-.PHONY: release.commit.prepare
-release.commit.prepare:
-	echo "[release] v${NEXT_VERSION}\n\n${CHANGELOG}" > ${COMMIT_MSG_FILE}
-	cat ${COMMIT_MSG_FILE}
-	read -p "Press enter for release commit!" var
-	echo "__version__ = '${NEXT_VERSION}'" > ${VERSION_FILE}
-
-.PHONY: release.commit
-release.commit: release.commit.prepare format
-	git add ${VERSION_FILE}
-	git commit --file=${COMMIT_MSG_FILE}
-	git tag v`python -c "import vue; print(vue.__version__)"`
-
-.PHONY: release.push
-release.push:
-	git push
-	git push --tags
-
-.PHONY: release
-release: release.prepare release.check release.commit release.push

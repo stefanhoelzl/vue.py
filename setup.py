@@ -1,17 +1,20 @@
+from pathlib import Path
 from setuptools import setup
-from vue import __version__
+
+from tools import release
 
 
-def readme():
-    with open("README.md") as f:
-        return f.read()
+def make_version():
+    version = release.version()
+    Path("vue/__version__.py").write_text(f'__version__ = "{version}"\n')
+    return version
 
 
 setup(
     name="vuepy",
-    version=__version__,
+    version=make_version(),
     description="Pythonic Vue",
-    long_description=readme(),
+    long_description=Path("README.md").read_text(),
     long_description_content_type="text/markdown",
     classifiers=[
         "Development Status :: 4 - Beta",

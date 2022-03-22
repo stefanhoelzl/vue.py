@@ -5,13 +5,24 @@ on:
     branches:
       - '**'
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'release-candidate'
 
 defaults:
   run:
     shell: bash
 
 jobs:
+  cleanup:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Clean Up Release Candiate Tag
+        if: ${{ github.ref == 'refs/tags/release-candidate' }}
+        uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        with:
+          tag_name: release-candidate
+          delete_release: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   all:
     runs-on: ubuntu-20.04
     steps:
@@ -30,19 +41,14 @@ jobs:
       - name: Run CI jobs
         run: |
           make ci
-      # Set deployment environments
+      # Publish documentation
       - name: Set default env variables
         run: |
-          echo "PYPI_INDEX_URL=https://test.pypi.org/legacy/" >> $GITHUB_ENV
-          echo "PYPI_API_TOKEN=${{ secrets.PYPI_TEST_API_TOKEN }}" >> $GITHUB_ENV
           echo "GH_PAGES_BRANCH=gh-pages-test" >> $GITHUB_ENV
       - name: Update env variables for release
         if: startsWith(github.ref, 'refs/tags/v')
         run: |
-          echo "PYPI_INDEX_URL=https://upload.pypi.org/legacy/" >> $GITHUB_ENV
-          echo "PYPI_API_TOKEN=${{ secrets.PYPI_API_TOKEN }}" >> $GITHUB_ENV
           echo "GH_PAGES_BRANCH=gh-pages" >> $GITHUB_ENV
-      # Publish documentation
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2
         with:
@@ -50,11 +56,38 @@ jobs:
           build_dir: gh-pages-build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # Deploy to pypi
+      # Release
+      - name: Check Commit Messages
+        run: |
+          release check-commit-messages
+      - name: Generate Changelog
+        run: |
+          release changelog > changelog.md
+      - name: Delete Previous Master Github Release
+        if: ${{ github.ref == 'refs/heads/master' }}
+        uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        with:
+          tag_name: master
+          delete_release: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish Master Github Release
+        if: ${{ github.ref == 'refs/heads/master' }}
+        run: |
+          gh release create master ./dist/*.whl -F changelog.md --prerelease
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish Github Release
+        if: ${{ github.ref == 'refs/tags/release-candidate' }}
+        run: |
+          gh release create v`release version` ./dist/*.whl -F changelog.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish PyPI
+        if: ${{ github.ref == 'refs/tags/release-candidate' }}
         uses: pypa/gh-action-pypi-publish@master
         with:
           user: __token__
-          password: ${{ env.PYPI_API_TOKEN }}
-          repository_url: ${{ env.PYPI_INDEX_URL }}
-          skip_existing: ${{ env.PYPI_INDEX_URL == 'https://test.pypi.org/legacy/' }}
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          repository_url: https://upload.pypi.org/legacy/
+          skip_existing: false

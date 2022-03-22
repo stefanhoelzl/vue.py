@@ -1,0 +1,8 @@
+[build-system]
+requires = [
+    "setuptools",
+    "python-project-tools@git+https://github.com/stefanhoelzl/python-project-tools.git"
+]
+
+[tool.python-project-tools]
+start-commit = "f4256454256ddfe54a8be6dea493d3fc915ef1a2"

@@ -111,9 +111,7 @@ $ make env.up
 
 Publish a new release
 ```bash
-$ make release            # bumps minor version number
-$ make release MODE=major # bumps major version number
-$ make release MODE=patch # bumps patch number
+$ release release-candidate
 ```
 
 ### Contributing
