@@ -74,7 +74,7 @@ jobs:
       - name: Publish Master Github Release
         if: ${{ github.ref == 'refs/heads/master' }}
         run: |
-          gh release create master ./dist/*.whl -F changelog.md --prerelease
+          gh release create master ./dist/*.whl -F changelog.md --prerelease --target master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish Github Release
