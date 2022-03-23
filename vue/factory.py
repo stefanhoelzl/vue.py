@@ -37,12 +37,30 @@ def merge_templates(sub):
 
 class BrythonObjectWorkarounds(type):
     """
-    Fixes the following Brython bugs:
-    * https://github.com/brython-dev/brython/issues/904
+    Fixes several brython bugs
     """
+
+    def __init__(cls, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        bases = cls.__bases__
+        cls.__bases__ = bases if bases else (object,)
+        if not hasattr(cls, "__annotations__"):
+            cls.__annotations__ = {}
+
+        # fixes https://github.com/brython-dev/brython/issues/1931
+        cls.__annotations__.update(getattr(cls.__base__, "__annotations__", {}))
+
+        # fixes https://github.com/brython-dev/brython/issues/1932
+        for key, value in cls.__annotations__.items():
+            if isinstance(value, str):
+                try:
+                    cls.__annotations__[key] = eval(value)
+                except:
+                    pass
 
     @property
     def __base__(cls):
+        # fixes https://github.com/brython-dev/brython/issues/904
         return cls.__bases__[0]
 
 

@@ -10,7 +10,21 @@ def test_inherit_annotations(selenium):
         class B(A):
             pass
 
-        assert {"prop": str} == B.__annotations__
+        assert "prop" in B.__annotations__, B.__annotations__
+
+    with selenium.app(inherit_annotations):
+        time.sleep(0.1)
+
+
+def test_annotation_value_type(selenium):
+    def inherit_annotations(el):
+        class A(VueComponent):
+            prop: str
+
+        class B(A):
+            pass
+
+        assert {"prop": str} == B.__annotations__, B.__annotations__
 
     with selenium.app(inherit_annotations):
         time.sleep(0.1)

@@ -49,7 +49,7 @@ setup(
     author_email="stefan.hoelzl@posteo.de",
     license="MIT",
     packages=["vuecli", "vuecli.provider", "vue", "vue.bridge", "vue.decorators"],
-    install_requires=["brython==3.8.9", "Jinja2>=2.10", "pyyaml>=5.1"],
+    install_requires=["brython==3.10.5", "Jinja2>=2.10", "pyyaml>=5.1"],
     extras_require={"flask": ["Flask>=1.0"]},
     package_data={
         "vuecli": [
