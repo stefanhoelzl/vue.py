@@ -1,23 +1,5 @@
 PYTHONPATH=.:stubs
 
-.PHONY: env.vuejs
-env.vuejs:
-	mkdir -p vuecli/js
-	curl https://unpkg.com/vue@2.6.11/dist/vue.js > vuecli/js/vue.js
-	curl https://raw.githubusercontent.com/vuejs/vue/dev/LICENSE > vuecli/js/LICENSE_VUE
-
-.PHONY: env.vuex
-env.vuex:
-	mkdir -p vuecli/js
-	curl https://unpkg.com/vuex@3.4.0/dist/vuex.js > vuecli/js/vuex.js
-	curl https://raw.githubusercontent.com/vuejs/vuex/master/LICENSE > vuecli/js/LICENSE_VUEX
-
-.PHONY: env.vue-router
-env.vue-router:
-	mkdir -p vuecli/js
-	curl https://unpkg.com/vue-router@3.3.2/dist/vue-router.js > vuecli/js/vue-router.js
-	curl https://raw.githubusercontent.com/vuejs/vue-router/dev/LICENSE > vuecli/js/LICENSE_VUE_ROUTER
-
 .PHONY: env.pip
 env.pip:
 	pip install -r requirements.txt
@@ -28,11 +10,7 @@ env.chrome:
 	python tests/selenium/chromedriver.py
 
 .PHONY: env.up
-env.up: env.pip env.vuejs env.vuex env.vue-router env.chrome
-
-.PHONY: env.clean
-env.clean:
-	git clean -xdf --exclude .idea --exclude venv --exclude vuecli/js
+env.up: env.pip env.chrome
 
 .PHONY: env.down
 env.down:

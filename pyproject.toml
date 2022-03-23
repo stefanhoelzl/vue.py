@@ -1,6 +1,7 @@
 [build-system]
 requires = [
     "setuptools",
+    "requests",
     "python-project-tools@git+https://github.com/stefanhoelzl/python-project-tools.git"
 ]
 

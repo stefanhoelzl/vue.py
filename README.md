@@ -97,11 +97,6 @@ Run an example
 $ make run APP=examples/tree_view  # makes example available on port 5000
 ```
 
-Clean up your working directory.
-```bash
-$ make env.clean
-```
-
 Reset your development environment
 _(clean up, reinstall packages and redownload needed files)_
 ```bash
