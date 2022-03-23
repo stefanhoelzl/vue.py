@@ -13,5 +13,6 @@ There a four main guidelines I try to follow in this projects:
   * type can be one of the following
     * feature: use when adding new features
     * bugfix: use when a bug gets fixed but function stays the same
+    * internal: use when refactoring or no user-facing changed are made
     * docs: use when updating documentation
-    * internal: use when changing tooling or refactoring
+    * tooling: use when changing tooling
