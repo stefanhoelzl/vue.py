@@ -16,10 +16,9 @@ def fetch_vue_cli_js_file(source: str, name: str) -> str:
     js_data_base.mkdir(exist_ok=True)
 
     dest_path = js_data_base / name
-    if not dest_path.is_file():
-        resp = requests.get(source)
-        assert resp.ok
-        dest_path.write_bytes(resp.content)
+    resp = requests.get(source)
+    assert resp.ok
+    dest_path.write_bytes(resp.content)
 
     return f"js/{name}"
 
@@ -56,19 +55,19 @@ setup(
         "vuecli": [
             "index.html",
             "loading.gif",
-            fetch_vue_cli_js_file("https://unpkg.com/vue@2.6.11/dist/vue.js", "vue.js"),
+            fetch_vue_cli_js_file("https://unpkg.com/vue@2.6.14/dist/vue.js", "vue.js"),
             fetch_vue_cli_js_file(
                 "https://raw.githubusercontent.com/vuejs/vue/dev/LICENSE", "LICENSE_VUE"
             ),
             fetch_vue_cli_js_file(
-                "https://unpkg.com/vuex@3.4.0/dist/vuex.js", "vuex.js"
+                "https://unpkg.com/vuex@3.6.2/dist/vuex.js", "vuex.js"
             ),
             fetch_vue_cli_js_file(
                 "https://raw.githubusercontent.com/vuejs/vuex/master/LICENSE",
                 "LICENSE_VUEX",
             ),
             fetch_vue_cli_js_file(
-                "https://unpkg.com/vue-router@3.3.2/dist/vue-router.js", "vue-router.js"
+                "https://unpkg.com/vue-router@3.5.1/dist/vue-router.js", "vue-router.js"
             ),
             fetch_vue_cli_js_file(
                 "https://raw.githubusercontent.com/vuejs/vue-router/dev/LICENSE",
