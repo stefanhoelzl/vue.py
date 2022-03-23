@@ -51,7 +51,7 @@ class Provider:
         config = {}
         if config_file.exists():
             with open(config_file, "r") as fh:
-                config = yaml.safe_load(fh.read())
+                config = yaml.safe_load(fh.read()) or config
         self._normalize_config(config)
         return config
 

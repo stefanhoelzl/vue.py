@@ -6,7 +6,7 @@ from contextlib import contextmanager
 
 import pytest
 
-from vue import __version__ as vue_version
+from tools.release import version
 
 
 def _raise_failed_process(proc, error_msg):
@@ -29,7 +29,7 @@ def shell(*args, env=None, cwd=None):
 @pytest.fixture
 def wheel(scope="session"):
     shell("make", "build")
-    return f"dist/vuepy-{vue_version}-py3-none-any.whl"
+    return f"dist/vuepy-{version()}-py3-none-any.whl"
 
 
 @pytest.fixture
@@ -119,7 +119,7 @@ def test_flask(install, venv, app):
 
 def test_flask_settings(install, config, venv, app):
     install(extra="flask")
-    config({"provider": {"flask": {"SERVER_NAME": "localhost:5001"}}})
+    config({"provider": {"flask": {"PORT": 5001}}})
     with background_task(
         "vue-cli", "deploy", "flask", env={"PATH": f"{venv / 'bin'}"}, cwd=str(app)
     ):

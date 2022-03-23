@@ -28,6 +28,8 @@ class Flask(Provider):
 
     def deploy(self):
         flask_config = self.config.get("provider", {}).get("flask", {})
+        host = flask_config.pop("HOST", None)
+        port = flask_config.pop("PORT", None)
         for key, value in flask_config.items():
             self.app.config[key] = value
-        self.app.run()
+        self.app.run(host=host, port=port)

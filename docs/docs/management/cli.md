@@ -24,11 +24,12 @@ $ vue-cli deploy flask
 This is the best deployment method when debugging.
 
 #### Configuration
-`vuepy.yml` can be used to set [Flask Builtin Configuration Values](https://flask.palletsprojects.com/en/2.0.x/config/#builtin-configuration-values)
+`vuepy.yml` can be used to set `HOST`, `PORT` and [Flask Builtin Configuration Values](https://flask.palletsprojects.com/en/2.0.x/config/#builtin-configuration-values)
 ```yaml
 provider:
   flask:
-    SERVER_NAME: "localhost:5001"
+    HOST: "0.0.0.0"
+    PORT: 5001
 ```
 
 ### Static
