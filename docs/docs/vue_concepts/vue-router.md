@@ -7,10 +7,10 @@ and set the `router` parameter when initializing a app.
 from vue import VueComponent, VueRouter, VueRoute
 
 class Foo(VueComponent):
-    template = "<div>foo</div>'"
+    template = "<div>foo</div>"
 
 class Bar(VueComponent):
-    template = "<div>bar</div>'"
+    template = "<div>bar</div>"
 
 class Router(VueRouter):
     routes = [
