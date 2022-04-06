@@ -57,6 +57,7 @@ jobs:
           echo "GH_PAGES_BRANCH=gh-pages" >> $GITHUB_ENV
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2
+        if: ${{ github.event_name != 'pull_request' }}
         with:
           target_branch: ${{ env.GH_PAGES_BRANCH }}
           build_dir: gh-pages-build
