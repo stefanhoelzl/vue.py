@@ -32,7 +32,8 @@ and as last step create a `app.py` where you create your Vue Component
 from vue import *
 
 class App(VueComponent):
-    template = "<div>Hello vue.py</div>"
+    msg = "Hello vue.py!"
+    template = "<div>{{msg}}</div>"
 App("#app")
 ```
 
