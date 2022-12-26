@@ -2,7 +2,7 @@
 Flask==2.1.1
 
 # packaging
-wheel==0.37.1
+wheel==0.38.1
 
 # testing
 pytest==7.1.1
