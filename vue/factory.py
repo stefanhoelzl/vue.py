@@ -1,6 +1,7 @@
 from .decorators.base import VueDecorator
 from .decorators.prop import Prop
 from .decorators.data import Data
+from .decorators.computed import Computed
 from .decorators.lifecycle_hook import LifecycleHook
 from .decorators.method import Method
 from .decorators.render import Render
@@ -109,7 +110,7 @@ class VueComponentFactory(AttributeDictFactory):
             obj = Components(*(VueComponentFactory.get_item(m) for m in obj))
         elif obj_name == "render":
             obj = Render(obj)
-        elif callable(obj):
+        elif callable(obj) and not isinstance(obj, Computed):
             obj = Method(obj)
         elif obj_name in getattr(self.wrapper, "__annotations__", {}):
             obj = Prop(

@@ -62,10 +62,15 @@ def test_extend(selenium):
             def created(self):
                 self.comps.append("SUB")
 
+            @computed
+            def components_string(self):
+                comps = super().components_string()
+                return f"SUB({comps})"
+
         return Sub(el)
 
     with selenium.app(extended_component):
-        assert selenium.element_has_text("comps", "BASE SUB")
+        assert selenium.element_has_text("comps", "SUB(BASE SUB)")
 
 
 def test_extend_from_dict(selenium):

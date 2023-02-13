@@ -6,7 +6,8 @@ class Computed(VueDecorator):
 
     def __init__(self, fn):
         self.__id__ = fn.__name__
-        self._getter = pyjs_bridge(fn)
+        self.__name__ = fn.__name__
+        self.__call__ = pyjs_bridge(fn)
         self._setter = None
 
     def setter(self, fn):
@@ -15,7 +16,7 @@ class Computed(VueDecorator):
 
     @property
     def __value__(self):
-        vue_object = {"get": self._getter}
+        vue_object = {"get": self.__call__}
         if self._setter:
             vue_object["set"] = self._setter
         return vue_object
