@@ -1,0 +1,792 @@
+[
+  {
+    "sha": "0a644f825e780555e62d2e4647786d2a3eb06afc",
+    "node_id": "MDY6Q29tbWl0MTM5NDg4NjkwOjBhNjQ0ZjgyNWU3ODA1NTVlNjJkMmU0NjQ3Nzg2ZDJhM2ViMDZhZmM=",
+    "commit": {
+      "author": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T20:53:14Z"
+      },
+      "committer": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-21T10:45:58Z"
+      },
+      "message": "[testing] refactored VueComponentFactory out and separated decorators",
+      "tree": {
+        "sha": "e04efd554a872923b487128493f29046de778387",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/trees/e04efd554a872923b487128493f29046de778387"
+      },
+      "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/commits/0a644f825e780555e62d2e4647786d2a3eb06afc",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/0a644f825e780555e62d2e4647786d2a3eb06afc",
+    "html_url": "https://github.com/stefanhoelzl/vue.py/commit/0a644f825e780555e62d2e4647786d2a3eb06afc",
+    "comments_url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/0a644f825e780555e62d2e4647786d2a3eb06afc/comments",
+    "author": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "37fb44c39be49ed40d7dce3d4d5978853e4d82f0",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/37fb44c39be49ed40d7dce3d4d5978853e4d82f0",
+        "html_url": "https://github.com/stefanhoelzl/vue.py/commit/37fb44c39be49ed40d7dce3d4d5978853e4d82f0"
+      }
+    ]
+  },
+  {
+    "sha": "37fb44c39be49ed40d7dce3d4d5978853e4d82f0",
+    "node_id": "MDY6Q29tbWl0MTM5NDg4NjkwOjM3ZmI0NGMzOWJlNDllZDQwZDdkY2UzZDRkNTk3ODg1M2U0ZDgyZjA=",
+    "commit": {
+      "author": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T20:06:42Z"
+      },
+      "committer": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T20:06:42Z"
+      },
+      "message": "[refactoring] renamed Vue to VueInstance",
+      "tree": {
+        "sha": "f98aa2b72ca181035a1f6a988a02dbb6d8b3d530",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/trees/f98aa2b72ca181035a1f6a988a02dbb6d8b3d530"
+      },
+      "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/commits/37fb44c39be49ed40d7dce3d4d5978853e4d82f0",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/37fb44c39be49ed40d7dce3d4d5978853e4d82f0",
+    "html_url": "https://github.com/stefanhoelzl/vue.py/commit/37fb44c39be49ed40d7dce3d4d5978853e4d82f0",
+    "comments_url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/37fb44c39be49ed40d7dce3d4d5978853e4d82f0/comments",
+    "author": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "5f907e1325d56ba0736f9702d29a523d8a2d00fb",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/5f907e1325d56ba0736f9702d29a523d8a2d00fb",
+        "html_url": "https://github.com/stefanhoelzl/vue.py/commit/5f907e1325d56ba0736f9702d29a523d8a2d00fb"
+      }
+    ]
+  },
+  {
+    "sha": "5f907e1325d56ba0736f9702d29a523d8a2d00fb",
+    "node_id": "MDY6Q29tbWl0MTM5NDg4NjkwOjVmOTA3ZTEzMjVkNTZiYTA3MzZmOTcwMmQyOWE1MjNkOGEyZDAwZmI=",
+    "commit": {
+      "author": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T19:54:39Z"
+      },
+      "committer": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T19:54:39Z"
+      },
+      "message": "[docs] directives docs updated",
+      "tree": {
+        "sha": "7bf96997338f7352247027ee3dad9af699c9f0cb",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/trees/7bf96997338f7352247027ee3dad9af699c9f0cb"
+      },
+      "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/commits/5f907e1325d56ba0736f9702d29a523d8a2d00fb",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/5f907e1325d56ba0736f9702d29a523d8a2d00fb",
+    "html_url": "https://github.com/stefanhoelzl/vue.py/commit/5f907e1325d56ba0736f9702d29a523d8a2d00fb",
+    "comments_url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/5f907e1325d56ba0736f9702d29a523d8a2d00fb/comments",
+    "author": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "94a4affca971fc463dd200affd34e2389aef4c0d",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/94a4affca971fc463dd200affd34e2389aef4c0d",
+        "html_url": "https://github.com/stefanhoelzl/vue.py/commit/94a4affca971fc463dd200affd34e2389aef4c0d"
+      }
+    ]
+  },
+  {
+    "sha": "94a4affca971fc463dd200affd34e2389aef4c0d",
+    "node_id": "MDY6Q29tbWl0MTM5NDg4NjkwOjk0YTRhZmZjYTk3MWZjNDYzZGQyMDBhZmZkMzRlMjM4OWFlZjRjMGQ=",
+    "commit": {
+      "author": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T19:41:14Z"
+      },
+      "committer": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T19:52:42Z"
+      },
+      "message": "[feature] full local directives supported",
+      "tree": {
+        "sha": "0c2fa597175f483f83b87ae6be83d4938906467f",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/trees/0c2fa597175f483f83b87ae6be83d4938906467f"
+      },
+      "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/commits/94a4affca971fc463dd200affd34e2389aef4c0d",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/94a4affca971fc463dd200affd34e2389aef4c0d",
+    "html_url": "https://github.com/stefanhoelzl/vue.py/commit/94a4affca971fc463dd200affd34e2389aef4c0d",
+    "comments_url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/94a4affca971fc463dd200affd34e2389aef4c0d/comments",
+    "author": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "9ad2d7a56ca8cad51366bd317cab9591c65e72dc",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/9ad2d7a56ca8cad51366bd317cab9591c65e72dc",
+        "html_url": "https://github.com/stefanhoelzl/vue.py/commit/9ad2d7a56ca8cad51366bd317cab9591c65e72dc"
+      }
+    ]
+  },
+  {
+    "sha": "9ad2d7a56ca8cad51366bd317cab9591c65e72dc",
+    "node_id": "MDY6Q29tbWl0MTM5NDg4NjkwOjlhZDJkN2E1NmNhOGNhZDUxMzY2YmQzMTdjYWI5NTkxYzY1ZTcyZGM=",
+    "commit": {
+      "author": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T18:40:26Z"
+      },
+      "committer": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T18:40:26Z"
+      },
+      "message": "[docs] updated informations to py/js bridge",
+      "tree": {
+        "sha": "a33ad0f207db1f77786792d31dc11a8785562210",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/trees/a33ad0f207db1f77786792d31dc11a8785562210"
+      },
+      "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/commits/9ad2d7a56ca8cad51366bd317cab9591c65e72dc",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/9ad2d7a56ca8cad51366bd317cab9591c65e72dc",
+    "html_url": "https://github.com/stefanhoelzl/vue.py/commit/9ad2d7a56ca8cad51366bd317cab9591c65e72dc",
+    "comments_url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/9ad2d7a56ca8cad51366bd317cab9591c65e72dc/comments",
+    "author": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "cd655a5bf24284aa0544e84810f3a5eb298336e7",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/cd655a5bf24284aa0544e84810f3a5eb298336e7",
+        "html_url": "https://github.com/stefanhoelzl/vue.py/commit/cd655a5bf24284aa0544e84810f3a5eb298336e7"
+      }
+    ]
+  },
+  {
+    "sha": "cd655a5bf24284aa0544e84810f3a5eb298336e7",
+    "node_id": "MDY6Q29tbWl0MTM5NDg4NjkwOmNkNjU1YTViZjI0Mjg0YWEwNTQ0ZTg0ODEwZjNhNWViMjk4MzM2ZTc=",
+    "commit": {
+      "author": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T18:05:02Z"
+      },
+      "committer": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T18:05:02Z"
+      },
+      "message": "[docs] updated limitations",
+      "tree": {
+        "sha": "40c98949632915ce909caf5abf651f94bebc6002",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/trees/40c98949632915ce909caf5abf651f94bebc6002"
+      },
+      "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/commits/cd655a5bf24284aa0544e84810f3a5eb298336e7",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/cd655a5bf24284aa0544e84810f3a5eb298336e7",
+    "html_url": "https://github.com/stefanhoelzl/vue.py/commit/cd655a5bf24284aa0544e84810f3a5eb298336e7",
+    "comments_url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/cd655a5bf24284aa0544e84810f3a5eb298336e7/comments",
+    "author": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "3f4b7ae5db7c445acade2e5421cc58d508eab755",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/3f4b7ae5db7c445acade2e5421cc58d508eab755",
+        "html_url": "https://github.com/stefanhoelzl/vue.py/commit/3f4b7ae5db7c445acade2e5421cc58d508eab755"
+      }
+    ]
+  },
+  {
+    "sha": "3f4b7ae5db7c445acade2e5421cc58d508eab755",
+    "node_id": "MDY6Q29tbWl0MTM5NDg4NjkwOjNmNGI3YWU1ZGI3YzQ0NWFjYWRlMmU1NDIxY2M1OGQ1MDhlYWI3NTU=",
+    "commit": {
+      "author": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T17:46:58Z"
+      },
+      "committer": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T17:46:58Z"
+      },
+      "message": "[examples] separate app and components",
+      "tree": {
+        "sha": "56d5e522c853a6ff1312ea4c59e030e09b9f005e",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/trees/56d5e522c853a6ff1312ea4c59e030e09b9f005e"
+      },
+      "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/commits/3f4b7ae5db7c445acade2e5421cc58d508eab755",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/3f4b7ae5db7c445acade2e5421cc58d508eab755",
+    "html_url": "https://github.com/stefanhoelzl/vue.py/commit/3f4b7ae5db7c445acade2e5421cc58d508eab755",
+    "comments_url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/3f4b7ae5db7c445acade2e5421cc58d508eab755/comments",
+    "author": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "cdd9ea9bfbb1993c6d62370456f8cd3f7a182aae",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/cdd9ea9bfbb1993c6d62370456f8cd3f7a182aae",
+        "html_url": "https://github.com/stefanhoelzl/vue.py/commit/cdd9ea9bfbb1993c6d62370456f8cd3f7a182aae"
+      }
+    ]
+  },
+  {
+    "sha": "cdd9ea9bfbb1993c6d62370456f8cd3f7a182aae",
+    "node_id": "MDY6Q29tbWl0MTM5NDg4NjkwOmNkZDllYTliZmJiMTk5M2M2ZDYyMzcwNDU2ZjhjZDNmN2ExODJhYWU=",
+    "commit": {
+      "author": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T17:45:44Z"
+      },
+      "committer": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T17:45:44Z"
+      },
+      "message": "[feature] wrap types for directives and filter methods",
+      "tree": {
+        "sha": "32d8ffca8bbfc96855e1f1388371f48b9cfac544",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/trees/32d8ffca8bbfc96855e1f1388371f48b9cfac544"
+      },
+      "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/commits/cdd9ea9bfbb1993c6d62370456f8cd3f7a182aae",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/cdd9ea9bfbb1993c6d62370456f8cd3f7a182aae",
+    "html_url": "https://github.com/stefanhoelzl/vue.py/commit/cdd9ea9bfbb1993c6d62370456f8cd3f7a182aae",
+    "comments_url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/cdd9ea9bfbb1993c6d62370456f8cd3f7a182aae/comments",
+    "author": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "6ced874bbcc8d6db932b6714f30669bf8c5e5e91",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/6ced874bbcc8d6db932b6714f30669bf8c5e5e91",
+        "html_url": "https://github.com/stefanhoelzl/vue.py/commit/6ced874bbcc8d6db932b6714f30669bf8c5e5e91"
+      }
+    ]
+  },
+  {
+    "sha": "6ced874bbcc8d6db932b6714f30669bf8c5e5e91",
+    "node_id": "MDY6Q29tbWl0MTM5NDg4NjkwOjZjZWQ4NzRiYmNjOGQ2ZGI5MzJiNjcxNGYzMDY2OWJmOGM1ZTVlOTE=",
+    "commit": {
+      "author": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T17:31:31Z"
+      },
+      "committer": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T17:31:31Z"
+      },
+      "message": "[refactoring] separate wrapping decorator from inject vue instance decorator",
+      "tree": {
+        "sha": "4f264bde73993a57ed958ffee2de060083f68ea1",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/trees/4f264bde73993a57ed958ffee2de060083f68ea1"
+      },
+      "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/commits/6ced874bbcc8d6db932b6714f30669bf8c5e5e91",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/6ced874bbcc8d6db932b6714f30669bf8c5e5e91",
+    "html_url": "https://github.com/stefanhoelzl/vue.py/commit/6ced874bbcc8d6db932b6714f30669bf8c5e5e91",
+    "comments_url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/6ced874bbcc8d6db932b6714f30669bf8c5e5e91/comments",
+    "author": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "c9f4b8309fa288d82e33b10fe7dfecb7e4cb7e55",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/c9f4b8309fa288d82e33b10fe7dfecb7e4cb7e55",
+        "html_url": "https://github.com/stefanhoelzl/vue.py/commit/c9f4b8309fa288d82e33b10fe7dfecb7e4cb7e55"
+      }
+    ]
+  },
+  {
+    "sha": "c9f4b8309fa288d82e33b10fe7dfecb7e4cb7e55",
+    "node_id": "MDY6Q29tbWl0MTM5NDg4NjkwOmM5ZjRiODMwOWZhMjg4ZDgyZTMzYjEwZmU3ZGZlY2I3ZTRjYjdlNTU=",
+    "commit": {
+      "author": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T17:19:34Z"
+      },
+      "committer": {
+        "name": "Stefan Hoelzl",
+        "email": "stefan.hoelzl@posteo.de",
+        "date": "2018-07-20T17:19:34Z"
+      },
+      "message": "[feature] access dict items also as attributes",
+      "tree": {
+        "sha": "ec4eb5123a1f44f8a8166671de14697ff7c44437",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/trees/ec4eb5123a1f44f8a8166671de14697ff7c44437"
+      },
+      "url": "https://api.github.com/repos/stefanhoelzl/vue.py/git/commits/c9f4b8309fa288d82e33b10fe7dfecb7e4cb7e55",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/c9f4b8309fa288d82e33b10fe7dfecb7e4cb7e55",
+    "html_url": "https://github.com/stefanhoelzl/vue.py/commit/c9f4b8309fa288d82e33b10fe7dfecb7e4cb7e55",
+    "comments_url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/c9f4b8309fa288d82e33b10fe7dfecb7e4cb7e55/comments",
+    "author": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "stefanhoelzl",
+      "id": 1478183,
+      "node_id": "MDQ6VXNlcjE0NzgxODM=",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1478183?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/stefanhoelzl",
+      "html_url": "https://github.com/stefanhoelzl",
+      "followers_url": "https://api.github.com/users/stefanhoelzl/followers",
+      "following_url": "https://api.github.com/users/stefanhoelzl/following{/other_user}",
+      "gists_url": "https://api.github.com/users/stefanhoelzl/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/stefanhoelzl/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/stefanhoelzl/subscriptions",
+      "organizations_url": "https://api.github.com/users/stefanhoelzl/orgs",
+      "repos_url": "https://api.github.com/users/stefanhoelzl/repos",
+      "events_url": "https://api.github.com/users/stefanhoelzl/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/stefanhoelzl/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "f9b50084be79b819be262d2e8a37f68d80a182b2",
+        "url": "https://api.github.com/repos/stefanhoelzl/vue.py/commits/f9b50084be79b819be262d2e8a37f68d80a182b2",
+        "html_url": "https://github.com/stefanhoelzl/vue.py/commit/f9b50084be79b819be262d2e8a37f68d80a182b2"
+      }
+    ]
+  }
+]

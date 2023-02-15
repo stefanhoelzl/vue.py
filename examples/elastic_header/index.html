@@ -1,0 +1,65 @@
+<html>
+<head>
+  
+    <script src="vuepy.js"></script>
+  
+    <script src="vue.js"></script>
+  
+    <script src="https://unpkg.com/dynamics.js@1.1.5/lib/dynamics.js"></script>
+  
+
+  
+    <link rel="stylesheet" media="screen" href="style.css" />
+  
+</head>
+<body onload="brython();">
+  
+    <script type="x-template" id="header-view">
+      <div class="draggable-header-view"
+  @mousedown="start_drag" @touchstart="start_drag"
+  @mousemove="on_drag" @touchmove="on_drag"
+  @mouseup="stop_drag" @touchend="stop_drag" @mouseleave="stop_drag">
+  <svg class="bg" width="320" height="560">
+    <path :d="header_path" fill="#3F51B5"></path>
+  </svg>
+  <div class="header" id="header">
+    <slot name="header"></slot>
+  </div>
+  <div class="content" :style="content_position" id="content">
+    <slot name="content"></slot>
+  </div>
+</div>
+
+    </script>
+  
+    <script type="x-template" id="main">
+      <draggable-header-view>
+  <template slot="header">
+    <h1>Elastic Draggable SVG Header</h1>
+    <p>
+      with <a href="https://stefanhoelzl.github.io/vue.py/">vue.py</a>
+      + <a href="http://dynamicsjs.com">dynamics.js</a>
+    </p>
+  </template>
+  <template slot="content">
+    <p>
+      Note this is just an effect demo
+      - there are of course many additional details
+        if you want to use this in production,
+        e.g. handling responsive sizes, reload threshold and content scrolling.
+        Those are out of scope for this quick little hack.
+        However, the idea is that you can hide them as internal details
+        of a vue.py component and expose a simple Web-Component-like interface.
+    </p>
+  </template>
+</draggable-header-view>
+
+    </script>
+  
+
+  <div id="app">
+    <img style="display: block; margin: auto;" src="loading.gif" height="50%" />
+  </div>
+  <script type="text/python" src="__entry_point__.py"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<li>
+  <div
+    :class="{bold: is_folder}"
+    @click="toggle"
+    @dblclick="change_type">
+    {{ model.name }}
+    <span v-if="is_folder">[{{ open ? '-' : '+' }}]</span>
+  </div>
+  <ul v-show="open" v-if="is_folder">
+    <tree
+      class="tree"
+      v-for="(model, index) in model.children"
+      :key="index"
+      :model="model">
+    </tree>
+    <li class="add" @click="add_child">+</li>
+  </ul>
+</li>

@@ -1,0 +1,61 @@
+<html>
+<head>
+  
+    <script src="vuepy.js"></script>
+  
+    <script src="vue.js"></script>
+  
+
+  
+    <link rel="stylesheet" media="screen" href="style.css" />
+  
+</head>
+<body onload="brython();">
+  
+    <script type="x-template" id="app-template">
+      <div>
+  <!-- Use the component -->
+  <svg width="200" height="200">
+    <polygraph :stats="stats"></polygraph>
+  </svg>
+  <!-- controls -->
+  <div v-for="stat in stats">
+    <label>{{stat.label}}</label>
+    <input type="range" v-model="stat.value" min="0" max="100">
+    <span>{{stat.value}}</span>
+    <button @click="remove(stat)"
+            class="remove"
+            :disabled="disable_remove">X</button>
+  </div>
+  <form id="add">
+    <input name="new_label" v-model="new_label">
+    <button @click="add">Add a Stat</button>
+  </form>
+  <pre id="raw">{{ stats }}</pre>
+  <p style="font-size:12px">* input[type="range"] requires IE10 or above.</p>
+</div>
+
+    </script>
+  
+    <script type="x-template" id="polygraph-template">
+      <g>
+  <polygon :points="points"></polygon>
+  <circle cx="100" cy="100" r="80"></circle>
+  <axis-label
+    v-for="(stat, index) in stats"
+    :key="index"
+    :stat="stat"
+    :index="index"
+    :total="stats.length">
+  </axis-label>
+</g>
+
+    </script>
+  
+
+  <div id="app">
+    <img style="display: block; margin: auto;" src="loading.gif" height="50%" />
+  </div>
+  <script type="text/python" src="__entry_point__.py"></script>
+</body>
+</html>

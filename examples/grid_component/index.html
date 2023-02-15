@@ -1,0 +1,60 @@
+<html>
+<head>
+  
+    <script src="vuepy.js"></script>
+  
+    <script src="vue.js"></script>
+  
+
+  
+    <link rel="stylesheet" media="screen" href="style.css" />
+  
+</head>
+<body onload="brython();">
+  
+    <script type="x-template" id="form">
+      <div>
+  <form id="search">
+    Search <input id="query" name="query" v-model="search_query">
+  </form>
+  <demo-grid
+    :content="grid_data"
+    :columns="grid_columns"
+    :filter_key="search_query">
+  </demo-grid>
+</div>
+
+    </script>
+  
+    <script type="x-template" id="grid">
+      <table>
+  <thead>
+    <tr>
+      <th v-for="key in columns"
+        @click="sort_by(key)"
+        :id="key"
+        :class="{ active: sort_key == key }">
+        {{ key | capitalize }}
+        <span class="arrow" :class="sort_orders[key] ? 'asc' : 'dsc'">
+        </span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="entry in filtered_data">
+      <td v-for="key in columns">
+        {{ entry[key] }}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+    </script>
+  
+
+  <div id="app">
+    <img style="display: block; margin: auto;" src="loading.gif" height="50%" />
+  </div>
+  <script type="text/python" src="__entry_point__.py"></script>
+</body>
+</html>
