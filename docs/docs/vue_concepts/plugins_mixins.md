@@ -26,7 +26,7 @@ Local registration of a Mixin within a Component works just like in Vue.js.
 from vue import VueComponent
 
 class MyComponent(VueComponent):
-    mixins: [MyPyMixin, AnotherVueJsMixin]
+    mixins = [MyPyMixin, AnotherVueJsMixin]
 ```
 Mixins wirtten in Vue.js and `vue.py` can be mixed.
 
