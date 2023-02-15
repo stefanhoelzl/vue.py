@@ -1,13 +1,13 @@
 from browser import window
-from .factory import Wrapper, VueStoreFactory
+from .transformers import Transformable, VueStoreTransformer
 from .bridge import Object
 from .bridge.vuex_instance import VuexInstance
 
 
-class VueStore(Wrapper):
+class VueStore(Transformable):
     @classmethod
     def init_dict(cls):
-        return VueStoreFactory.get_item(cls)
+        return VueStoreTransformer.transform(cls)
 
     def __new__(cls):
         return Object.from_js(window.Vuex.Store.new(cls.init_dict()))

@@ -3,10 +3,8 @@ from vue.bridge import VuexInstance
 
 
 class Action(VueDecorator):
-    __key__ = "actions"
-
     def __init__(self, name, value):
-        self.__id__ = name
+        self.__key__ = f"actions.{name}"
         self.__value__ = value
 
 

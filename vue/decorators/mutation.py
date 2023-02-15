@@ -3,10 +3,8 @@ from .base import pyjs_bridge, VueDecorator
 
 
 class Mutation(VueDecorator):
-    __key__ = "mutations"
-
     def __init__(self, name, value):
-        self.__id__ = name
+        self.__key__ = f"mutations.{name}"
         self.__value__ = value
 
 

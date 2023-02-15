@@ -2,10 +2,8 @@ from .base import pyjs_bridge, VueDecorator
 
 
 class Data(VueDecorator):
-    __key__ = "data"
-
     def __init__(self, name, value):
-        self.__id__ = name
+        self.__key__ = f"data.{name}"
         self.__value__ = value
 
 

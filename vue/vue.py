@@ -1,5 +1,9 @@
 from browser import window
-from .factory import VueComponentFactory, Wrapper, VueDirectiveFactory
+from .transformers import (
+    VueComponentTransformer,
+    Transformable,
+    VueDirectiveTransformer,
+)
 from .bridge import Object
 from .decorators.directive import DirectiveHook
 from .decorators.filters import Filter
@@ -22,7 +26,7 @@ class Vue:
 
             directive = FunctionDirective
 
-        window.Vue.directive(name, VueDirectiveFactory.get_item(directive))
+        window.Vue.directive(name, VueDirectiveTransformer.transform(directive))
 
     @staticmethod
     def filter(method_or_name, method=None):
@@ -33,11 +37,11 @@ class Vue:
             method = method
             name = method_or_name
         flt = Filter(method, name)
-        window.Vue.filter(flt.__id__, flt.__value__)
+        window.Vue.filter(flt.name, flt.__value__)
 
     @staticmethod
     def mixin(mixin):
-        window.Vue.mixin(VueComponentFactory.get_item(mixin))
+        window.Vue.mixin(VueComponentTransformer.transform(mixin))
 
     @staticmethod
     def use(plugin, *args, **kwargs):
@@ -52,13 +56,13 @@ class Vue:
         else:
             component = component_or_name
             name = component.__name__
-        window.Vue.component(name, VueComponentFactory.get_item(component))
+        window.Vue.component(name, VueComponentTransformer.transform(component))
 
 
-class VueComponent(Wrapper):
+class VueComponent(Transformable):
     @classmethod
     def init_dict(cls):
-        return VueComponentFactory.get_item(cls)
+        return VueComponentTransformer.transform(cls)
 
     def __new__(cls, el, **kwargs):
         init_dict = cls.init_dict()
@@ -77,11 +81,11 @@ class VueComponent(Wrapper):
             Vue.component(cls)
 
 
-class VueMixin(Wrapper):
+class VueMixin(Transformable):
     pass
 
 
-class VueDirective(Wrapper):
+class VueDirective(Transformable):
     name = None
 
 

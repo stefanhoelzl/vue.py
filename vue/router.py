@@ -1,13 +1,13 @@
 from browser import window
-from .factory import Wrapper, VueRouterFactory
+from .transformers import Transformable, VueRouterTransformer
 
 
-class VueRouter(Wrapper):
+class VueRouter(Transformable):
     RouterClass = None
 
     @classmethod
     def init_dict(cls):
-        return VueRouterFactory.get_item(cls)
+        return VueRouterTransformer.transform(cls)
 
     def __new__(cls):
         router_class = cls.RouterClass or window.VueRouter

@@ -2,10 +2,8 @@ from .base import pyjs_bridge, VueDecorator
 
 
 class Computed(VueDecorator):
-    __key__ = "computed"
-
     def __init__(self, fn):
-        self.__id__ = fn.__name__
+        self.__key__ = f"computed.{fn.__name__}"
         self.__name__ = fn.__name__
         self.__call__ = pyjs_bridge(fn)
         self._setter = None

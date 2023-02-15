@@ -1,5 +1,3 @@
-import json
-
 from vue import VueComponent, filters, watch
 
 from browser import window, ajax
@@ -43,7 +41,7 @@ class App(VueComponent):
         req.send()
 
     def loaded(self, ev):
-        self.commits = json.loads(ev.text)
+        self.commits = window.JSON.parse(ev.text)
 
 
 App("#app")

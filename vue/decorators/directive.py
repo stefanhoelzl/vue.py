@@ -10,8 +10,7 @@ def map_hook(hook_name):
 class DirectiveHook(VueDecorator):
     def __init__(self, fn, hooks=(), name=None):
         name = name if name else fn.__name__
-        self.__key__ = "directives"
-        self.__id__ = name.replace("_", "-")
+        self.__key__ = f"directives.{name.replace('_', '-')}"
         self.__value__ = pyjs_bridge(fn)
 
         if hooks:
