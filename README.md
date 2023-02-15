@@ -110,7 +110,7 @@ $ release release-candidate
 ```
 
 ### Contributing
-see [CONTRIBUTING](CONTRIBUTING)
+see [CONTRIBUTING](https://github.com/stefanhoelzl/vue.py/blob/master/CONTRIBUTING.md)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/stefanhoelzl/vue.py/blob/master/LICENSE) file for details
